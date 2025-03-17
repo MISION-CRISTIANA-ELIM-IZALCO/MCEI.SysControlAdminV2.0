@@ -40,7 +40,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="#"><img src="/assets/images/logos/Logo-Elim-Black.png" alt="logo"></a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="/assets/images/logos/Logo-Elim-Black.png" alt="logo"></a>
                         </div>
                     </div>
                     <!-- profile info & task notification -->
@@ -70,19 +70,20 @@
                                 <ul id="nav_menu">
                                     <!-- Seccion Inicio -->
                                     <li>
-                                        <a href="#"><i class="ti-home"></i><span>Inicio</span></a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index"><i class="ti-home"></i><span>Inicio</span></a>
                                     </li>
                                     <!-- Seccion Dashboard -->
                                     <li>
-                                        <a href="#"><i class="ti-dashboard"></i><span>Dashboard</span></a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Dashboard"><i class="ti-dashboard"></i><span>Dashboard</span></a>
                                     </li>
                                     <!-- Seccion Seguridad -->
                                     <li>
                                         <a href="javascript:void(0)"><i class="ti-lock"></i><span>Seguridad</span></a>
                                         <ul class="submenu">
-                                            <li><a href="www.google.com">Roles</a></li>
-                                            @* <li><a href="linechart.html">line Chart</a></li>
-                                            <li><a href="piechart.html">pie chart</a></li> *@
+                                            <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
+                                            <li><a a asp-area="" asp-controller="User" asp-action="Index">Usuarios</a></li>
+                                            @* <li><a a asp-area="" asp-controller="User" asp-action="ChangePassword">Cambiar Contraseña</a></li>
+                                            <li><a a asp-area="" asp-controller="Support" asp-action="Index">Cambiar Contraseña a Usuarios Externos</a></li> *@
                                         </ul>
                                     </li>
                                     @* <li class="active">
