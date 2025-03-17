@@ -56,5 +56,33 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
             return View(roles);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo Para Mostrar La Vista De Modificar
+        public async Task<IActionResult> Edit(int id)
+        {
+            var role = await roleBL.GetByIdAsync(new Role { Id = id });
+            ViewBag.Error = "";
+            return View(role);
+        }
+
+        // Metodo Que Recibe y Envia a La Base De Datos
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Role role)
+        {
+            try
+            {
+                int result = await roleBL.UpdateAsync(role);
+                TempData["SuccessMessageUpdate"] = "Rol Modificado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(role);
+            }
+        }
+        #endregion
     }
 }
