@@ -22,6 +22,8 @@
     <!-- modernizr css -->
     <script src="~/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 
+    <link href="~/lib/SweetAlert2/css/min.css" rel="stylesheet" />
+
 </head>
 <body class="body-bg">
     <div id="preloader">
@@ -210,6 +212,8 @@
         // Obtiene el año actual y lo inserta en el elemento con id "currentYear"
         document.getElementById("currentYear").textContent = new Date().getFullYear();
     </script>
+
+    <script src="~/lib/SweetAlert2/js/min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
