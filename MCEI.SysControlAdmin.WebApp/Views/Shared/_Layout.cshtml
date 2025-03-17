@@ -170,7 +170,7 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+                <p>© Copyright <span id="currentYear"></span>. Desarrollado Por Hector Garcia</p>
             </div>
         </footer>
         <!-- footer area end-->
@@ -202,6 +202,10 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Obtiene el año actual y lo inserta en el elemento con id "currentYear"
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
