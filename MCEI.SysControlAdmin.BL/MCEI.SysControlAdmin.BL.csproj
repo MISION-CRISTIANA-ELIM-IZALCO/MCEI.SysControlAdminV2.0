@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MCEI.SysControlAdmin.DAL\MCEI.SysControlAdmin.DAL.csproj" />
+    <ProjectReference Include="..\MCEI.SysControlAdmin.EN\MCEI.SysControlAdmin.EN.csproj" />
+  </ItemGroup>
+
 </Project>
