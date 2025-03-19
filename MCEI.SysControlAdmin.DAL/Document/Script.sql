@@ -10,9 +10,12 @@ CREATE TABLE [Role](
 	DateModification DATETIME NOT NULL
 );
 GO
-INSERT INTO [Role] VALUES('Desarrollador');
-INSERT INTO [Role] VALUES('Administrador');
-INSERT INTO [Role] VALUES('Digitador');
+	INSERT INTO [Role] ([Name], [Status], DateCreated, DateModification) 
+	VALUES('Desarrollador', 1, SYSDATETIME(), SYSDATETIME());
+	INSERT INTO [Role] ([Name], [Status], DateCreated, DateModification)
+	VALUES('Administrador', 1, SYSDATETIME(), SYSDATETIME());
+	INSERT INTO [Role] ([Name], [Status], DateCreated, DateModification)
+	VALUES('Digitador', 1, SYSDATETIME(), SYSDATETIME());
 GO
 CREATE TABLE [User](
     Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
