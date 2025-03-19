@@ -1,0 +1,66 @@
+﻿    @model MCEI.SysControlAdmin.EN.User___EN.User
+
+@{
+    ViewData["Title"] = "Inicio De Sesión";
+}
+
+<div class="login-area">
+    <div class="container">
+        <div class="login-box ptb--100">
+            <form asp-action="Login">
+                <div class="login-form-head">
+                    <img src="/assets/images/logos/Logo-Elim-White.png" width="50%" alt="Logo Oficial" />
+                </div>
+                <div class="login-form-body">
+                    <div class="form-gp">
+                        <input asp-for="Email" type="email" id="exampleInputEmail1" placeholder="Correo Electronico" required>
+                        <i class="ti-email"></i>
+                        <div class="text-danger"></div>
+                        <span asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-gp">
+                        <input asp-for="Password" required type="password" id="exampleInputPassword1" placeholder="XXXXXXXXX">
+                        <i class="ti-lock"></i>
+                        <div class="text-danger"></div>
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                    <div class="submit-btn-area">
+                        <button id="form_submit" type="submit">Iniciar Sesión</button>
+                        <br />
+                        <div class="text-center text-danger mt-3">
+                            <span>@ViewBag.Error</span>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none">¿Olvidaste Tu Contraseña?</a>
+                        </div>
+                    </div>
+                    <div class="form-footer text-center mt-4">
+                        <p class="text-muted">© Copyright <span id="currentYear"></span>. Desarrollado Por Hector Garcia</p>
+                    </div>
+                </div>
+            </form>>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        // Funcion De Configuracion De Alert
+        function showErrorAlert(message) {
+            Swal.fire({
+                title: 'Ups!',
+                text: message,
+                icon: 'error'
+            });
+        }
+        // Mostrar alerta de ViewBag.Error si es necesario
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            @:showErrorAlert('@ViewBag.Error');
+        }
+
+        // Obtiene el año actual y lo inserta en el elemento con id "currentYear"
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+}
