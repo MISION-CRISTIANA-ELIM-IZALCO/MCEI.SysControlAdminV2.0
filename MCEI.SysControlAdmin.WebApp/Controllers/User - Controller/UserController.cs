@@ -2,6 +2,7 @@
 // Referencias Necesarios Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.BL.Role___BL;
 using MCEI.SysControlAdmin.BL.User___BL;
+using MCEI.SysControlAdmin.EN.Role___EN;
 using MCEI.SysControlAdmin.EN.User___EN;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +74,67 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
             ViewBag.Roles = roles;
 
             return View(users);
+        }
+        #endregion
+
+        #region METODO PARA MODIFICAR
+        // Acción que muestra el formulario
+        public async Task<IActionResult> Edit(int id)
+        {
+            var user = await userBL.GetByIdAsync(new User { Id = id });
+            user.Role = await roleBL.GetByIdAsync(new Role { Id = user.Id });
+
+            // Convertir el array de bytes en imagen para mostrar en la vista (si la imagen existe)
+            if (user.ImageData != null && user.ImageData.Length > 0)
+            {
+                ViewBag.ImageUrl = Convert.ToBase64String(user.ImageData);
+            }
+            ViewBag.Roles = await roleBL.GetAllAsync();
+            return View(user);
+        }
+
+        // Acción que recibe los datos del formulario y los envía a la base de datos
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, User user, IFormFile imagen)
+        {
+            try
+            {
+                // Verificar que el id coincida con el usuario que se está modificando
+                if (id != user.Id)
+                {
+                    return BadRequest();
+                }
+                // Si se ha subido una nueva imagen, actualizar el campo de imagen
+                if (imagen != null && imagen.Length > 0)
+                {
+                    byte[] imagenData = null!;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await imagen.CopyToAsync(memoryStream);
+                        imagenData = memoryStream.ToArray();
+                    }
+                    user.ImageData = imagenData; // Asignar el array de bytes de la nueva imagen al objeto User
+                }
+                else
+                {
+                    // Si no se proporciona una nueva imagen, mantener la imagen existente
+                    User existingUser = await userBL.GetByIdAsync(new User { Id = id });
+                    user.ImageData = existingUser.ImageData;
+                }
+
+                // Actualizar la fecha de modificación
+                user.DateModification = DateTime.Now;
+                int result = await userBL.UpdateAsync(user);
+                TempData["SuccessMessageUpdate"] = "Usuario Modificado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                ViewBag.Roles = await roleBL.GetAllAsync();
+                return View(user);
+            }
         }
         #endregion
     }
