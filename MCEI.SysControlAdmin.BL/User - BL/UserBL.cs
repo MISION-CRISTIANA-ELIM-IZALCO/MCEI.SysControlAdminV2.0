@@ -86,5 +86,13 @@ namespace MCEI.SysControlAdmin.BL.User___BL
             return await UserDAL.ChangePasswordAsync(user, oldPassword);
         }
         #endregion
+
+        #region METODO PARA CAMBIAR LA CONTRASEÑA DESDE DESARROLLADOR
+        // Metodo Para Cambiar La Contraseña Del Usuario
+        public async Task<int> ChangePasswordRoleDesAsync(User user)
+        {
+            return await UserDAL.ChangePasswordRoleDesAsync(user);
+        }
+        #endregion
     }
 }
