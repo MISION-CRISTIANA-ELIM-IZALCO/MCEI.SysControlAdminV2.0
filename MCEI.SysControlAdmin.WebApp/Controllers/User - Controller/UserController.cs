@@ -4,14 +4,18 @@ using MCEI.SysControlAdmin.BL.Role___BL;
 using MCEI.SysControlAdmin.BL.User___BL;
 using MCEI.SysControlAdmin.EN.Role___EN;
 using MCEI.SysControlAdmin.EN.User___EN;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 
 #endregion
 
 namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador")]
     public class UserController : Controller
     {
         // Creamos Las Instancias Para Acceder a Los Metodos
@@ -20,6 +24,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA GUARDAR
         // Accion Que Muestra El Formulario
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Create()
         {
             var roles = await roleBL.GetAllAsync();
@@ -28,6 +33,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
         }
 
         // Accion Que Recibe Los Datos y Los Envia a La Base De Datos
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user, IFormFile imagen)
@@ -63,6 +69,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA INDEX
         // Metodo Para Mostrar La Vista Index
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Index(User user = null!)
         {
             if (user == null)
@@ -79,6 +86,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA MODIFICAR
         // Acción que muestra el formulario
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Edit(int id)
         {
             var user = await userBL.GetByIdAsync(new User { Id = id });
@@ -94,6 +102,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
         }
 
         // Acción que recibe los datos del formulario y los envía a la base de datos
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, User user, IFormFile imagen)
@@ -140,6 +149,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA DETALLES
         // Acción que muestra los detalles de un registro
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Details(int id)
         {
             try
@@ -169,6 +179,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA ELIMINAR
         // Acción que muestra el formulario de eliminación
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -196,6 +207,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
         }
 
         // Acción que recibe los datos del formulario para ser eliminados en la base de datos
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, User user)
@@ -230,6 +242,58 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
                 return View(userDb); // Devolver la vista con los datos del usuario para que pueda corregir o revisar
             }
+        }
+        #endregion
+
+        #region METODO DE INICIO DE SESION Y CERRAR SESION (LOGIN, LOGOUT)
+        // Accion Que Muestra El Formulario
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string returnUrl = null!)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            ViewBag.Url = returnUrl;
+            ViewBag.Error = "";
+            return View();
+        }
+
+        // Accion Que Ejecuta La Autenticacion Del Usuario
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(User user, string returnUrl = null!)
+        {
+            try
+            {
+                var userDb = await userBL.LoginAsync(user);
+                if (userDb != null && userDb.Id > 0 && userDb.Email == user.Email)
+                {
+                    userDb.Role = await roleBL.GetByIdAsync(new Role { Id = userDb.IdRole });
+                    var claims = new[] { new Claim(ClaimTypes.Name, userDb.Email), new Claim(ClaimTypes.Role, userDb.Role.Name) };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                }
+                else
+                    throw new Exception("Credenciales Incorrectas, Vuelve a Intentarlo");
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                    return Redirect(returnUrl);
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Url = returnUrl;
+                ViewBag.Error = e.Message;
+                return View(new User { Email = user.Email });
+            }
+        }
+
+        // Accion Que Permite Cerrar La Sesion
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout(string returnUrl = null!)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "User");
         }
         #endregion
     }

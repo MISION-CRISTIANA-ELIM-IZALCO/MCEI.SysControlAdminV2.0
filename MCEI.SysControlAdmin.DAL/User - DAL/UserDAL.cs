@@ -243,5 +243,21 @@ namespace MCEI.SysControlAdmin.DAL.User___DAL
             return result;
         }
         #endregion
+
+        #region METODO PARA INICIAR SESION (LOGIARSE)
+        // Metodo Para Autenticar El Usuario
+        public static async Task<User> LoginAsync(User user)
+        {
+            var userDb = new User();
+            using (var dbContext = new ContextDB())
+            {
+                EncryptMD5(user);
+                userDb = await dbContext.User.FirstOrDefaultAsync(
+                    u => u.Email == user.Email && u.Password == user.Password
+                    && u.Status == 1);
+            }
+            return userDb!;
+        }
+        #endregion
     }
 }

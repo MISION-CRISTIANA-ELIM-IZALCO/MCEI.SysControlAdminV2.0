@@ -2,6 +2,7 @@
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.BL.Role___BL;
 using MCEI.SysControlAdmin.EN.Role___EN;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador")]
     public class RoleController : Controller
     {
         // Creamos Las Instancias Para Acceder a Los Metodos
@@ -17,6 +19,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA GUARDAR
         // Metodo Para Mostrar La Vista Guardar
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public IActionResult Create()
         {
             ViewBag.Error = "";
@@ -24,6 +27,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
         }
 
         // Metodo Que Recibe y Envia a La Base De Datos
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Role role)
@@ -47,6 +51,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA INDEX
         // Metodo Para Mostrar La Vista Index
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Index(Role role = null!)
         {
             if (role == null)
@@ -59,6 +64,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA MODIFICAR
         // Metodo Para Mostrar La Vista De Modificar
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Edit(int id)
         {
             var role = await roleBL.GetByIdAsync(new Role { Id = id });
@@ -67,6 +73,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
         }
 
         // Metodo Que Recibe y Envia a La Base De Datos
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Role role)
@@ -87,6 +94,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA ELIMINAR
         // Metodo Para Mostrar La Vista De Eliminar
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             var role = await roleBL.GetByIdAsync(new Role { Id = id });
@@ -95,6 +103,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
         }
 
         // Metodo Que Recibe y Envia a La Base De Datos
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, Role role)
