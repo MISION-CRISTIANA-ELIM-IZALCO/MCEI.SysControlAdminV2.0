@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -50,7 +52,7 @@
                             <div class="clearfix d-md-inline-block d-block">
                                 <div class="user-profile m-0">
                                     <h7 class="user-name dropdown-toggle" data-toggle="dropdown">Nivel De Acceso:</h7>
-                                    <h7 class="user-name dropdown-toggle" data-toggle="dropdown" style="margin-left:5px;">"Desarrollador" <i class="fa fa-angle-down"></i></h7>
+                                    <h7 class="user-name dropdown-toggle" data-toggle="dropdown" style="margin-left:5px;">@User.FindFirst(ClaimTypes.Role)?.Value <i class="fa fa-angle-down"></i></h7>
                                     <div class="dropdown-menu">
                                         <p class="dropdown-item"><strong>Acciones:</strong></p>
                                         <a class="dropdown-item" id="logoutLink" href="#!">Cerrar Sesión</a>
