@@ -9,3 +9,21 @@ CREATE TABLE [Role](
 	DateCreated DATETIME NOT NULL,
 	DateModification DATETIME NOT NULL
 );
+GO
+INSERT INTO [Role] VALUES('Desarrollador');
+INSERT INTO [Role] VALUES('Administrador');
+INSERT INTO [Role] VALUES('Digitador');
+GO
+CREATE TABLE [User](
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    [Name] VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    [Password] VARCHAR(32) NOT NULL,
+    [Status] TINYINT NOT NULL,
+    RecoveryEmail VARCHAR(50) NOT NULL,
+    DateCreated DATETIME NOT NULL,
+    DateModification DATETIME NOT NULL,
+	ImageData VARBINARY(MAX) NOT NULL,
+	IdRole INT NOT NULL FOREIGN KEY REFERENCES [Role](Id) ON DELETE CASCADE
+);
