@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MCEI.SysControlAdmin.EN.Role___EN;
 using MCEI.SysControlAdmin.EN.User___EN;
+using MCEI.SysControlAdmin.EN.Membership___EN;
 
 #endregion
 
@@ -20,6 +21,7 @@ namespace MCEI.SysControlAdmin.DAL
         //Coleccion que hace referencia a las tablas de la base de datos
         public DbSet<Role> Role { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Membership> Membership { get; set; }
         #endregion
 
         #region STRING DE CONEXION
