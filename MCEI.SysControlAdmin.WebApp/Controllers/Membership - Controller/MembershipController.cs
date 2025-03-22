@@ -74,5 +74,72 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
             return View(memberships);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Acción que muestra la vista de modificar
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> EditMembership(int id)
+        {
+            try
+            {
+                Membership membership = await membershipBL.GetByIdAsync(new Membership { Id = id });
+                if (membership == null)
+                {
+                    return NotFound();
+                }
+                // Convertir el array de bytes en imagen para mostrar en la vista
+                if (membership.ImageData != null && membership.ImageData.Length > 0)
+                {
+                    ViewBag.ImageUrl = Convert.ToBase64String(membership.ImageData);
+                }
+                return View(membership);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(); // Devolver la vista sin ningún objeto Membership
+            }
+        }
+
+        // Acción que recibe los datos del formulario para ser enviados a la base de datos
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMembership(int id, Membership membership, IFormFile imagen)
+        {
+            try
+            {
+                if (id != membership.Id)
+                {
+                    return BadRequest();
+                }
+                if (imagen != null && imagen.Length > 0) // Verificar si se ha subido una nueva imagen
+                {
+                    byte[] imagenData = null!;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await imagen.CopyToAsync(memoryStream);
+                        imagenData = memoryStream.ToArray();
+                    }
+                    membership.ImageData = imagenData; // Asignar el array de bytes de la nueva imagen a la entidad Membership
+                }
+                else
+                {
+                    // Si no se proporciona una nueva imagen, se conserva la imagen existente
+                    Membership existingMembership = await membershipBL.GetByIdAsync(new Membership { Id = id });
+                    membership.ImageData = existingMembership.ImageData;
+                }
+                membership.DateModification = DateTime.Now;
+                int result = await membershipBL.UpdateAsync(membership);
+                TempData["SuccessMessageUpdate"] = "Miembro Modificado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(membership); // Devolver la vista con el objeto Membership para que el usuario pueda corregir los datos
+            }
+        }
+        #endregion
     }
 }
