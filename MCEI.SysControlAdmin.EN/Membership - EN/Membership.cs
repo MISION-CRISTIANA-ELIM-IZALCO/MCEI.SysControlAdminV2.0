@@ -73,13 +73,13 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         [Required(ErrorMessage = "La Profesion u Oficio Es Requerida")]
         [StringLength(50, ErrorMessage = "Maximo 50 caracteres")]
         [Display(Name = "Profesión u Oficio")]
-        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", ErrorMessage = "Debe contener solo Letras")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "Debe contener solo Letras")]
         public string ProfessionOrStudy { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El Lugar de Trabajo o Estudio Es Requerido")]
         [StringLength(100, ErrorMessage = "Maximo 100 caracteres")]
         [Display(Name = "Lugar de Trabajo o Estudio")]
-        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ-/ ]+$", ErrorMessage = "Debe contener solo Letras")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ/ \\-]+$", ErrorMessage = "Debe contener solo Letras")]
         public string PlaceOfWorkOrStudy { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El Telefono Del Trabajo o Estudio Es Requerido")]
