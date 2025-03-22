@@ -56,7 +56,7 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         [Required(ErrorMessage = "El Estado Civil Es Requerido")]
         [StringLength(30, ErrorMessage = "Maximo 30 caracteres")]
         [Display(Name = "Estado Civil")]
-        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", ErrorMessage = "Debe contener solo Letras")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ/]+$", ErrorMessage = "Debe contener solo Letras")]
         public string CivilStatus { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El Telefono Es Requerido")]
@@ -79,7 +79,7 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         [Required(ErrorMessage = "El Lugar de Trabajo o Estudio Es Requerido")]
         [StringLength(100, ErrorMessage = "Maximo 100 caracteres")]
         [Display(Name = "Lugar de Trabajo o Estudio")]
-        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", ErrorMessage = "Debe contener solo Letras")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ-/ ]+$", ErrorMessage = "Debe contener solo Letras")]
         public string PlaceOfWorkOrStudy { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El Telefono Del Trabajo o Estudio Es Requerido")]
