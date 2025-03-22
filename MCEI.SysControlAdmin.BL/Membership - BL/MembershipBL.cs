@@ -46,5 +46,13 @@ namespace MCEI.SysControlAdmin.BL.Membership___BL
             return await MembershipDAL.SearchAsync(membership);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo Para Guardar Un Nuevo Registro
+        public async Task<int> UpdateAsync(Membership membership)
+        {
+            return await MembershipDAL.UpdateAsync(membership);
+        }
+        #endregion
     }
 }

@@ -126,5 +126,65 @@ namespace MCEI.SysControlAdmin.DAL.Membership___DAL
             return memberships;
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo para modificar un registro
+        public static async Task<int> UpdateAsync(Membership membership)
+        {
+            int result = 0;
+
+            using (var contextDb = new ContextDB())
+            {
+                var membershipDB = await contextDb.Membership.FirstOrDefaultAsync(c => c.Id == membership.Id);
+                if (membershipDB == null)
+                {
+                    throw new Exception("Membresia no encontrada para actualizar.");
+                }
+
+                // Verificar si ya existe otra membresia con el mismo código
+                bool membershipExists = await contextDb.Membership.AnyAsync(c => c.Id != membership.Id && c.InternalIdentityCode == membership.InternalIdentityCode);
+                if (membershipExists)
+                {
+                    throw new Exception("Ya existe otro curso con el mismo código. Vuelve a intentarlo.");
+                }
+
+                // Actualizar los datos de la membresia
+                membershipDB.Name = membership.Name;
+                membershipDB.LastName = membership.LastName;
+                membershipDB.Dui = membership.Dui;
+                membershipDB.DateOfBirth = membership.DateOfBirth;
+                membershipDB.Age = membership.Age;
+                membershipDB.Gender = membership.Gender;
+                membershipDB.CivilStatus = membership.CivilStatus;
+                membershipDB.Phone = membership.Phone;
+                membershipDB.Address = membership.Address;
+                membershipDB.ProfessionOrStudy = membership.ProfessionOrStudy;
+                membershipDB.PlaceOfWorkOrStudy = membership.PlaceOfWorkOrStudy;
+                membershipDB.WorkOrStudyPhone = membership.WorkOrStudyPhone;
+                membershipDB.ConversionDate = membership.ConversionDate;
+                membershipDB.PlaceOfConversion = membership.PlaceOfConversion;
+                membershipDB.WaterBaptism = membership.WaterBaptism;
+                membershipDB.BaptismOfTheHolySpirit = membership.BaptismOfTheHolySpirit;
+                membershipDB.PastorsName = membership.PastorsName;
+                membershipDB.SupervisorsName = membership.SupervisorsName;
+                membershipDB.LeadersName = membership.LeadersName;
+                membershipDB.TimeToGather = membership.TimeToGather;
+                membershipDB.Zone = membership.Zone;
+                membershipDB.District = membership.District;
+                membershipDB.Sector = membership.Sector;
+                membershipDB.Cell = membership.Cell;
+                membershipDB.InternalIdentityCode = membership.InternalIdentityCode;
+                membershipDB.Status = membership.Status;
+                membershipDB.ImageData = membership.ImageData;
+                membershipDB.CommentsOrObservations = membership.CommentsOrObservations;
+                membershipDB.DateCreated = membership.DateCreated;
+                membershipDB.DateModification = membership.DateModification;
+
+                contextDb.Update(membershipDB);
+                result = await contextDb.SaveChangesAsync();
+            }
+            return result;
+        }
+        #endregion
     }
 }
