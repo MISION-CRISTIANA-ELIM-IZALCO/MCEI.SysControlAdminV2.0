@@ -61,5 +61,18 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
             }
         }
         #endregion
+
+        #region METODO PARA MOSTRAR INDEX
+        // Accion Para Mostrar La Vista Index
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> Index(Membership membership = null!)
+        {
+            if (membership == null)
+                membership = new Membership();
+
+            var memberships = await membershipBL.SearchAsync(membership);
+            return View(memberships);
+        }
+        #endregion
     }
 }
