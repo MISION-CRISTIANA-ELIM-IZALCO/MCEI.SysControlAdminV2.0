@@ -100,16 +100,16 @@
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
                 <td style="text-align:center;">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Membresia">
+                    <a asp-action="EditMembership" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Membresia">
                         <i class="ti-pencil-alt"></i>
                     </a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles De La Membresia">
+                    <a asp-action="DetailsMembership" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles De La Membresia">
                         <i class="ti-book"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Membresia">
+                    <a asp-action="DeleteMembership" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Membresia">
                         <i class="ti-trash"></i>
                     </a>
-                    <a asp-action="GeneratePDFfile" asp-route-id="@item.Id" class="btn btn-primary" title="Generar Pdf">
+                    <a asp-action="GeneratePDFfileMembership" asp-route-id="@item.Id" class="btn btn-primary" title="Generar Pdf">
                         <i class="ti-printer"></i>
                     </a>
                 </td>
