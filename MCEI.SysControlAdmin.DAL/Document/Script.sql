@@ -47,7 +47,7 @@ CREATE TABLE Membership(
 	[Address] VARCHAR(100) NOT NULL,
     ProfessionOrStudy VARCHAR(50) NOT NULL ,
     PlaceOfWorkOrStudy VARCHAR(100) NOT NULL,
-    WorkOrStudyPhone VARCHAR(9) NOT NULL,
+    WorkOrStudyPhone VARCHAR(9) NULL,
 	ConversionDate DATE NOT NULL,
     PlaceOfConversion VARCHAR(100) NOT NULL,
     WaterBaptism VARCHAR(25) NOT NULL,
