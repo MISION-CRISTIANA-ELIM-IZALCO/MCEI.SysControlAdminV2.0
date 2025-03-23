@@ -79,7 +79,7 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         [Required(ErrorMessage = "El Lugar de Trabajo o Estudio Es Requerido")]
         [StringLength(100, ErrorMessage = "Maximo 100 caracteres")]
         [Display(Name = "Lugar de Trabajo o Estudio")]
-        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ/. \\-]+$", ErrorMessage = "Debe contener solo Letras")]
+        [RegularExpression("^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ/. \\-]+$", ErrorMessage = "Debe contener solo Letras")]
         public string PlaceOfWorkOrStudy { get; set; } = string.Empty;
 
         [StringLength(9, ErrorMessage = "Maximo 8 caracteres")]
