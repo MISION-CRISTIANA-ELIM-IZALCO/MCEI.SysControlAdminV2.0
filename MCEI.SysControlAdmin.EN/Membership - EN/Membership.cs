@@ -180,6 +180,10 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         #region ATRIBUTOS NO MAPEABLES
         // Propiedad para formatear la fecha automáticamente
         [NotMapped]
+        public string DateOfBirthFormatted => DateOfBirth.ToString(@"dd/MM/yyyy");
+        [NotMapped]
+        public string ConversionDateFormatted => ConversionDate.ToString(@"dd/MM/yyyy");
+        [NotMapped]
         public string DateCreatedFormatted => DateCreated.ToString(@"dd/MM/yyyy");
         [NotMapped]
         public string DateModificationFormatted => DateModification.ToString(@"dd/MM/yyyy");
