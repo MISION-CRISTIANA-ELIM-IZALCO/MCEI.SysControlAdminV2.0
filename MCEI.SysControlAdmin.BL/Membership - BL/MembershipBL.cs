@@ -54,5 +54,13 @@ namespace MCEI.SysControlAdmin.BL.Membership___BL
             return await MembershipDAL.UpdateAsync(membership);
         }
         #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo Para Eliminar Un Registro Existente En La Base De Datos
+        public async Task<int> DeleteAsync(Membership membership)
+        {
+            return await MembershipDAL.DeleteAsync(membership);
+        }
+        #endregion
     }
 }
