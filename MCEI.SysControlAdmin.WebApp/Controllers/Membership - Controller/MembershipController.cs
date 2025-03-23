@@ -131,7 +131,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
                 }
                 membership.DateModification = DateTime.Now;
                 int result = await membershipBL.UpdateAsync(membership);
-                TempData["SuccessMessageUpdate"] = "Miembro Modificado Exitosamente";
+                TempData["SuccessMessageUpdate"] = "Membresia Modificada Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -165,6 +165,57 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
             {
                 ViewBag.Error = ex.Message;
                 return View(); // Devolver la vista sin ningún objeto Membership
+            }
+        }
+        #endregion
+
+        #region METODO PARA ELIMINAR
+        // Accion Que Muestra La Vista De Eliminar
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> DeleteMembership(int id)
+        {
+            try
+            {
+                Membership membership = await membershipBL.GetByIdAsync(new Membership { Id = id });
+
+                if (membership == null)
+                {
+                    return NotFound();
+                }
+                // Convertir el array de bytes en imagen para mostrar en la vista
+                if (membership.ImageData != null && membership.ImageData.Length > 0)
+                {
+                    ViewBag.ImageUrl = Convert.ToBase64String(membership.ImageData);
+                }
+                return View(membership);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(); // Devolver la vista sin ningún objeto Membership
+            }
+        }
+
+        // Accion Que Recibe Los Datos Del Formulario Para Ser Enviados a La BD
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteMembership(int id, Membership membership)
+        {
+            try
+            {
+                Membership membershipDB = await membershipBL.GetByIdAsync(membership);
+                int result = await membershipBL.DeleteAsync(membershipDB);
+                TempData["SuccessMessageDelete"] = "Membresia Eliminada Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                var membershipDB = await membershipBL.GetByIdAsync(membership);
+                if (membershipDB == null)
+                    membershipDB = new Membership();
+                return View(membershipDB);
             }
         }
         #endregion
