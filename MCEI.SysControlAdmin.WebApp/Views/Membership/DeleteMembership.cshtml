@@ -26,7 +26,7 @@
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Dui)</dt>
                 <dd class="col-sm-8">
-                    @(Model.Dui != null ? Model.Dui : "MENOR DE EDAD")
+                    @(Model.Dui != null ? Model.Dui : "Menor de Edad")
                 </dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
@@ -55,8 +55,42 @@
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WorkOrStudyPhone)</dt>
                 <dd class="col-sm-8">
-                    @(Model.WorkOrStudyPhone != null ? Model.WorkOrStudyPhone : "VACIO")
+                    @(Model.WorkOrStudyPhone != null ? Model.WorkOrStudyPhone : "Vacio")
                 </dd>
+            </dl>
+            <h3>Información Del Conyugue</h3>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.NameOfSpouse)</dt>
+                <dd class="col-sm-8">
+                    @(Model.NameOfSpouse != null ? Model.NameOfSpouse : "Vacio")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.LastNameOfSpouse)</dt>
+                <dd class="col-sm-8">
+                    @(Model.LastNameOfSpouse != null ? Model.LastNameOfSpouse : "Vacio")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateOfBirthOfSpouse)</dt>
+                <dd class="col-sm-8">
+                    @(Model.DateOfBirthOfSpouseFormatted != null ? Model.DateOfBirthOfSpouseFormatted : "Vacio")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.AgeOfSpouse)</dt>
+                <dd class="col-sm-8">
+                    @(Model.AgeOfSpouse != null ? Model.AgeOfSpouse : "Vacio") Años
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.GenderOfSpouse)</dt>
+                <dd class="col-sm-8">
+                    @(Model.GenderOfSpouse != null ? Model.GenderOfSpouse : "Vacio")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PhoneOfSpouse)</dt>
+                <dd class="col-sm-8">
+                    @(Model.PhoneOfSpouse != null ? Model.PhoneOfSpouse : "Vacio")
+                </dd>
+
             </dl>
         </div>
 
@@ -118,14 +152,32 @@
                 </dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Sector)</dt>
-                <dd class="col-sm-8">
-                    @(Model.Sector != "0" ? Model.Sector : "SOY SUPERVISOR")
-                </dd>
+                @if (Model.Sector != "0")
+                {
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Sector)</dd>
+                }
+                else if (Model.Sector == "0")
+                {
+                    <dd class="col-sm-8">SOY SUPERVISOR</dd>
+                }
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Cell)</dt>
-                <dd class="col-sm-8">
-                    @(Model.Cell != "0" ? Model.Cell : "SOY SUPERVISOR")
-                </dd>
+                @if (Model.Cell != "0")
+                {
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Cell)</dd>
+                }
+                else if (Model.Sector == "0" && Model.Cell == "0")
+                {
+                    <dd class="col-sm-8">
+                        SOY SUPERVISOR
+                    </dd>
+                }
+                else if (Model.Sector != "0" && Model.Cell == "0")
+                {
+                    <dd class="col-sm-8">
+                        SOY LIDER
+                    </dd>
+                }
             </dl>
         </div>
 
@@ -139,7 +191,7 @@
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Status)</dt>
                 <dd class="col-sm-8">
-                    @(Model.Status == 1 ? "Activo" : "Inactivo")
+                    @(Model.Status == 1 ? "ACTIVO" : "INACTIVO")
                 </dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CommentsOrObservations)</dt>
