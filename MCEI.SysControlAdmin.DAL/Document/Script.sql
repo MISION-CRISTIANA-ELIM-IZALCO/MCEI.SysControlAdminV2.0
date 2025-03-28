@@ -68,7 +68,6 @@ CREATE TABLE Membership(
     DateModification DATETIME NOT NULL,
 	NameOfSpouse VARCHAR(50) NULL,
 	LastNameOfSpouse VARCHAR(50) NULL,
-	NameOfSpouse VARCHAR(50) NULL,
 	DateOfBirthOfSpouse DATE NULL,
 	AgeOfSpouse VARCHAR(3) NULL,
 	GenderOfSpouse VARCHAR(20) NULL,
