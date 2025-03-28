@@ -66,5 +66,12 @@ CREATE TABLE Membership(
 	CommentsOrObservations VARCHAR(300) NULL,
 	DateCreated DATETIME NOT NULL,
     DateModification DATETIME NOT NULL,
+	NameOfSpouse VARCHAR(50) NULL,
+	LastNameOfSpouse VARCHAR(50) NULL,
+	NameOfSpouse VARCHAR(50) NULL,
+	DateOfBirthOfSpouse DATE NULL,
+	AgeOfSpouse VARCHAR(3) NULL,
+	GenderOfSpouse VARCHAR(20) NULL,
+	PhoneOfSpouse VARCHAR(9) NULL,
 );
 GO
