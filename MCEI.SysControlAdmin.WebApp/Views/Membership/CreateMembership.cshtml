@@ -8,6 +8,8 @@
 
 <br />
 <h1>Formulario Crear Membresia</h1>
+<br />
+<p>Los campos con <span style="color: red;">*</span> son de caracter obligatorio</p>
 <span>@ViewBag.Error</span>
 <hr />
 <br />
@@ -18,12 +20,12 @@
             <h3>Información Personal</h3>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
+                    <label asp-for="Name" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="Name" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="LastName" class="control-label"></label>
+                    <label asp-for="LastName" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="LastName" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
@@ -32,19 +34,19 @@
                     <input asp-for="Dui" id="Dui" class="form-control" placeholder="00000000-0" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="DateOfBirth" class="control-label"></label>
+                    <label asp-for="DateOfBirth" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="DateOfBirth" type="date" class="form-control" id="DateOfBirth" required />
                     <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Age" class="control-label"></label>
+                    <label asp-for="Age" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="Age" class="form-control" readonly id="AgeCalculado" />
                     <span asp-validation-for="Age" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="Gender" class="control-label"></label>
+                    <label asp-for="Gender" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="Gender" class="form-control form-control-lg" required>
                         <option value="">SELECCIONAR</option>
                         <option value="MASCULINO">MASCULINO</option>
@@ -53,7 +55,7 @@
                     <span asp-validation-for="Gender" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="CivilStatus" class="control-label"></label>
+                    <label asp-for="CivilStatus" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="CivilStatus" class="form-control form-control-lg" required>
                         <option value="">SELECCIONAR</option>
                         <option value="SOLTERO/A">SOLTERO/A</option>
@@ -64,24 +66,24 @@
                     <span asp-validation-for="CivilStatus" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Phone" class="control-label"></label>
+                    <label asp-for="Phone" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="Phone" id="Phone" class="form-control" placeholder="0000-0000" required />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Address" class="control-label"></label>
+                    <label asp-for="Address" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="Address" required class="form-control" placeholder="Residencial - Colonia, Canton - Caserio, Pol. Pasaje - Casa #0" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="ProfessionOrStudy" class="control-label"></label>
+                    <label asp-for="ProfessionOrStudy" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="ProfessionOrStudy" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="ProfessionOrStudy" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="PlaceOfWorkOrStudy" class="control-label"></label>
+                    <label asp-for="PlaceOfWorkOrStudy" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="PlaceOfWorkOrStudy" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="PlaceOfWorkOrStudy" class="text-danger"></span>
                 </div>
@@ -94,17 +96,17 @@
             <h3>Información Complementaria</h3>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="ConversionDate" class="control-label"></label>
+                    <label asp-for="ConversionDate" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="ConversionDate" type="date" class="form-control" required />
                     <span asp-validation-for="ConversionDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="PlaceOfConversion" class="control-label"></label>
+                    <label asp-for="PlaceOfConversion" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="PlaceOfConversion" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="PlaceOfConversion" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="WaterBaptism" class="control-label"></label>
+                    <label asp-for="WaterBaptism" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="WaterBaptism" class="form-control form-control-lg" required>
                         <option value="">SELECCIONAR</option>
                         <option value="SI, DENTRO DE LA MISIÓN">SI, DENTRO DE LA MISIÓN</option>
@@ -113,7 +115,7 @@
                     <span asp-validation-for="WaterBaptism" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="BaptismOfTheHolySpirit" class="control-label"></label>
+                    <label asp-for="BaptismOfTheHolySpirit" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="BaptismOfTheHolySpirit" class="form-control form-control-lg" required>
                         <option value="">SELECCIONAR</option>
                         <option value="SI">SI</option>
@@ -124,12 +126,12 @@
             </div>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="PastorsName" class="control-label"></label>
+                    <label asp-for="PastorsName" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="PastorsName" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="PastorsName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SupervisorsName" class="control-label"></label>
+                    <label asp-for="SupervisorsName" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="SupervisorsName" class="form-control" placeholder="Ingresar" />
                     <span asp-validation-for="SupervisorsName" class="text-danger"></span>
                 </div>
@@ -141,12 +143,12 @@
             </div>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="TimeToGather" class="control-label"></label>
+                    <label asp-for="TimeToGather" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="TimeToGather" class="form-control" placeholder="Ingresar" required />
                     <span asp-validation-for="TimeToGather" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Zone" class="control-label"></label>
+                    <label asp-for="Zone" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="Zone" class="form-control form-control-lg" required>
                         <option value="0">SELECCIONAR</option>
                         <option value="1">ZONA 1</option>
@@ -155,7 +157,7 @@
                     <span asp-validation-for="Zone" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="District" class="control-label"></label>
+                    <label asp-for="District" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="District" class="form-control form-control-lg" required>
                         <option value="0">SELECCIONAR</option>
                         <option value="1">DISTRITO 1</option>
@@ -165,7 +167,7 @@
                     <span asp-validation-for="District" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Sector" class="control-label"></label>
+                    <label asp-for="Sector" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="Sector" class="form-control form-control-lg" required>
                         <option value="0">SELECCIONAR</option>
                         <option value="1">SECTOR 1</option>
@@ -174,7 +176,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Cell" class="control-label"></label>
+                    <label asp-for="Cell" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="Cell" class="form-control form-control-lg" required>
                         <option value="0">SELECCIONAR</option>
                         <option value="1">CELULA 1</option>
@@ -189,12 +191,12 @@
             <h3>Información Adicional</h3>
             <div class="form-group-row">
                 <div class="form-group">
-                    <label asp-for="InternalIdentityCode" class="control-label"></label>
+                    <label asp-for="InternalIdentityCode" class="control-label"></label><span style="color: red;">*</span>
                     <input asp-for="InternalIdentityCode" id="InternalIdentityCode" class="form-control" readonly />
                     <span asp-validation-for="InternalIdentityCode" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Status" class="control-label"></label>
+                    <label asp-for="Status" class="control-label"></label><span style="color: red;">*</span>
                     <select asp-for="Status" class="form-control form-control-lg" required>
                         <option value="">SELECCIONAR</option>
                         <option selected value="1">ACTIVO</option>
@@ -203,7 +205,7 @@
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageData" class="control-label"></label>
+                    <label asp-for="ImageData" class="control-label"></label><span style="color: red;">*</span>
                     <input type="file" class="form-control" id="imagen" name="imagen" onchange="mostrarImagen()" asp-for="ImageData" required />
                     <span asp-validation-for="ImageData" class="text-danger"></span>
                 </div>
