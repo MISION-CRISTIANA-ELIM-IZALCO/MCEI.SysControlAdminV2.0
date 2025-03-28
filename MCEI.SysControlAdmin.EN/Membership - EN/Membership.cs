@@ -175,12 +175,42 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         [Display(Name = "Fecha de Modificación")]
         public DateTime DateModification { get; set; }
 
+        [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
+        [Display(Name = "Nombres Del Esposo/a")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "El Nombre debe contener solo Letras")]
+        public string? NameOfSpouse { get; set; }
+
+        [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
+        [Display(Name = "Apellidos Del Esposo/a")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "El Apellido debe contener solo Letras")]
+        public string? LastNameOfSpouse { get; set; }
+
+        [Display(Name = "Fecha De Nacimiento Del Esposo/a")]
+        [DataType(DataType.Date, ErrorMessage = "Por favor, Introduce una fecha válida")]
+        public DateTime DateOfBirthOfSpouse { get; set; }
+
+        [StringLength(3, ErrorMessage = "Maximo 3 caracteres")]
+        [Display(Name = "Edad Del Esposo/a")]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "La edad debe contener solo números")]
+        public string? AgeOfSpouse { get; set; }
+
+        [StringLength(20, ErrorMessage = "Maximo 20 caracteres")]
+        [Display(Name = "Genero Del Esposo/a")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", ErrorMessage = "El Genero debe contener solo Letras")]
+        public string? GenderOfSpouse { get; set; }
+
+        [StringLength(9, ErrorMessage = "Maximo 8 caracteres")]
+        [Display(Name = "Telefono Del Esposo/a")]
+        [RegularExpression("^[0-9-]+$", ErrorMessage = "El Telefono debe contener solo números")]
+        public string? PhoneOfSpouse { get; set; }
+
         #endregion
 
         #region ATRIBUTOS NO MAPEABLES
         // Propiedad para formatear la fecha automáticamente
         [NotMapped]
         public string DateOfBirthFormatted => DateOfBirth.ToString(@"dd/MM/yyyy");
+        public string DateOfBirthOfSpouseFormatted => DateOfBirthOfSpouse.ToString(@"dd/MM/yyyy");
         [NotMapped]
         public string ConversionDateFormatted => ConversionDate.ToString(@"dd/MM/yyyy");
         [NotMapped]
