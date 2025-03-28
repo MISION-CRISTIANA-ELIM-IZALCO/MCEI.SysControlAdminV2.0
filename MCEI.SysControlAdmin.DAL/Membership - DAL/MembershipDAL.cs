@@ -179,6 +179,12 @@ namespace MCEI.SysControlAdmin.DAL.Membership___DAL
                 membershipDB.CommentsOrObservations = membership.CommentsOrObservations;
                 membershipDB.DateCreated = membership.DateCreated;
                 membershipDB.DateModification = membership.DateModification;
+                membershipDB.NameOfSpouse = membership.NameOfSpouse;
+                membershipDB.LastNameOfSpouse = membership.LastNameOfSpouse;
+                membershipDB.DateOfBirthOfSpouse = membership.DateOfBirthOfSpouse;
+                membershipDB.AgeOfSpouse = membership.AgeOfSpouse;
+                membershipDB.GenderOfSpouse = membership.GenderOfSpouse;
+                membershipDB.PhoneOfSpouse = membership.PhoneOfSpouse;
 
                 contextDb.Update(membershipDB);
                 result = await contextDb.SaveChangesAsync();
