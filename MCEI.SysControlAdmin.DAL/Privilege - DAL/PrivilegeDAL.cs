@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.EN.Privilege___EN;
+using MCEI.SysControlAdmin.EN.Role___EN;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -46,6 +47,63 @@ namespace MCEI.SysControlAdmin.DAL.Privilege___DAL
                 result = await contextDB.SaveChangesAsync();
             }
             return result;
+        }
+        #endregion
+
+        #region METODO PARA MOSTRAR TODOS
+        // Metodo para listar y mostrar todos los resultados
+        public static async Task<List<Privilege>> GetAllAsync()
+        {
+            var privileges = new List<Privilege>();
+            using (var contextDB = new ContextDB())
+            {
+                privileges = await contextDB.Privilege.ToListAsync();
+            }
+            return privileges;
+        }
+        #endregion
+
+        #region METODO PARA OBTENER POR ID
+        // Metodo para obtener un registro por su id
+        public static async Task<Privilege> GetByIdAsync(Privilege privilege)
+        {
+            var privilegeDb = new Privilege();
+            using (var contextDB = new ContextDB())
+            {
+                privilegeDb = await contextDB.Privilege.FirstOrDefaultAsync(p => p.Id == privilege.Id);
+            }
+            return privilegeDb!;
+        }
+        #endregion
+
+        #region METODO PARA FILTRAR BUSQUEDA
+        // Metodo para filtrar la busqueda por parametros
+        internal static IQueryable<Privilege> QuerySelect(IQueryable<Privilege> query, Privilege privilege)
+        {
+            if (privilege.Id > 0)
+                query = query.Where(r => r.Id == privilege.Id);
+
+            if (!string.IsNullOrWhiteSpace(privilege.Name))
+                query = query.Where(r => r.Name.Contains(privilege.Name));
+
+            query = query.OrderByDescending(r => r.Id);
+
+            return query;
+        }
+        #endregion
+
+        #region METODO PARA BUSCAR
+        // Metodo para buscar registros existentes en la base de datos
+        public static async Task<List<Privilege>> SearchAsync(Privilege privilege)
+        {
+            var privileges = new List<Privilege>();
+            using (var contextDB = new ContextDB())
+            {
+                var select = contextDB.Privilege.AsQueryable();
+                select = QuerySelect(select, privilege);
+                privileges = await select.ToListAsync();
+            }
+            return privileges;
         }
         #endregion
     }
