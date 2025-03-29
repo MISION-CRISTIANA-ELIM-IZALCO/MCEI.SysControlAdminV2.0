@@ -114,3 +114,11 @@ CREATE TABLE MembershipHistory(
 	PhoneOfSpouse VARCHAR(9) NULL,
 );
 GO
+CREATE TABLE Privilege(
+	Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	[Name] VARCHAR(100) NOT NULL,
+	[Status] TINYINT NOT NULL,
+	DateCreated DATETIME NOT NULL,
+    DateModification DATETIME NOT NULL,
+);
+GO
