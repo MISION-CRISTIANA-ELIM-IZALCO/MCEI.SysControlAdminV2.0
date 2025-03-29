@@ -187,7 +187,7 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
 
         [Display(Name = "Fecha De Nacimiento Del Esposo/a")]
         [DataType(DataType.Date, ErrorMessage = "Por favor, Introduce una fecha válida")]
-        public DateTime DateOfBirthOfSpouse { get; set; }
+        public DateTime? DateOfBirthOfSpouse { get; set; }
 
         [StringLength(3, ErrorMessage = "Maximo 3 caracteres")]
         [Display(Name = "Edad Del Esposo/a")]
@@ -210,7 +210,8 @@ namespace MCEI.SysControlAdmin.EN.Membership___EN
         // Propiedad para formatear la fecha automáticamente
         [NotMapped]
         public string DateOfBirthFormatted => DateOfBirth.ToString(@"dd/MM/yyyy");
-        public string DateOfBirthOfSpouseFormatted => DateOfBirthOfSpouse.ToString(@"dd/MM/yyyy");
+        [NotMapped]
+        public string DateOfBirthOfSpouseFormatted => DateOfBirthOfSpouse.HasValue ? DateOfBirthOfSpouse.Value.ToString("dd/MM/yyyy") : "Vacio";
         [NotMapped]
         public string ConversionDateFormatted => ConversionDate.ToString(@"dd/MM/yyyy");
         [NotMapped]
