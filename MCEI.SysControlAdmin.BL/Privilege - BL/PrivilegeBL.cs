@@ -45,5 +45,13 @@ namespace MCEI.SysControlAdmin.BL.Privilege___BL
             return await PrivilegeDAL.SearchAsync(privilege);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo para modificar un resgistro existente
+        public async Task<int> UpdateAsync(Privilege privilege)
+        {
+            return await PrivilegeDAL.UpdateAsync(privilege);
+        }
+        #endregion
     }
 }

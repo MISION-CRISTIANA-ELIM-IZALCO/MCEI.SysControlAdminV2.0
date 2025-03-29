@@ -86,7 +86,7 @@ namespace MCEI.SysControlAdmin.DAL.Privilege___DAL
             if (!string.IsNullOrWhiteSpace(privilege.Name))
                 query = query.Where(r => r.Name.Contains(privilege.Name));
 
-            query = query.OrderByDescending(r => r.Id);
+            query = query.OrderByDescending(r => r.Id).AsQueryable();
 
             return query;
         }
@@ -104,6 +104,39 @@ namespace MCEI.SysControlAdmin.DAL.Privilege___DAL
                 privileges = await select.ToListAsync();
             }
             return privileges;
+        }
+        #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo para modifciar un registro
+        public static async Task<int> UpdateAsync(Privilege privilege)
+        {
+            int result = 0;
+
+            using (var contextDB = new ContextDB())
+            {
+                var privilegeDB = await contextDB.Privilege.FirstOrDefaultAsync(p => p.Id == privilege.Id);
+                if (privilegeDB == null)
+                {
+                    throw new Exception("Privilegio no encontrada para actualizar.");
+                }
+
+                // Verificamos si ya existe otro privilegio con el mismo nombre
+                bool privilegeExists = await contextDB.Privilege.AnyAsync(p => p.Id != privilege.Id && p.Name == privilege.Name);
+                if (privilegeExists)
+                {
+                    throw new Exception("Ya existe otro privilegio con el mismo nombre. Vuelve a intentarlo.");
+                }
+
+                // Actualizar los datos del privilegio
+                privilegeDB.Name = privilege.Name;
+                privilegeDB.Status = privilege.Status;
+                privilegeDB.DateModification = privilege.DateModification;
+
+                contextDB.Update(privilegeDB);
+                result = await contextDB.SaveChangesAsync();
+            }
+            return result;
         }
         #endregion
     }
