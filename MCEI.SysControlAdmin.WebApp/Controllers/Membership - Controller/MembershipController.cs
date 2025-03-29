@@ -1,11 +1,17 @@
 ﻿#region REFERENCIAS
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.BL.Membership___BL;
+using MCEI.SysControlAdmin.BL.MembershipHistory___BL;
 using MCEI.SysControlAdmin.EN.Membership___EN;
+using MCEI.SysControlAdmin.EN.MembershipHistory___EN;
 using MCEI.SysControlAdmin.EN.Role___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Numerics;
+using System.Reflection;
+using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
 
 
@@ -18,6 +24,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
     {
         // Creamos las instancias para acceder a los metodos
         MembershipBL membershipBL = new MembershipBL();
+        MembershipHistoryBL membershipHistoryBL = new MembershipHistoryBL();
 
         #region METODO PARA CREAR
         // Accion Para Mostrar La Vista De Crear
@@ -51,6 +58,50 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
                 membership.DateCreated = DateTime.Now;
                 membership.DateModification = DateTime.Now;
                 int result = await membershipBL.CreateAsync(membership);
+
+                // Crear un nuevo objeto para mapear las propiedades a MembershipHistory
+                var membershipHistory = new MembershipHistory
+                {
+                    Name = membership.Name,
+                    LastName = membership.LastName,
+                    Dui = membership.Dui,
+                    DateOfBirth = membership.DateOfBirth,
+                    Age = membership.Age,
+                    Gender = membership.Gender,
+                    CivilStatus = membership.CivilStatus,
+                    Phone = membership.Phone,
+                    Address = membership.Address,
+                    ProfessionOrStudy = membership.ProfessionOrStudy,
+                    PlaceOfWorkOrStudy = membership.PlaceOfWorkOrStudy,
+                    WorkOrStudyPhone = membership.WorkOrStudyPhone,
+                    ConversionDate = membership.ConversionDate,
+                    PlaceOfConversion = membership.PlaceOfConversion,
+                    WaterBaptism = membership.WaterBaptism,
+                    BaptismOfTheHolySpirit = membership.BaptismOfTheHolySpirit,
+                    PastorsName = membership.PastorsName,
+                    SupervisorsName = membership.SupervisorsName,
+                    LeadersName = membership.LeadersName,
+                    TimeToGather = membership.TimeToGather,
+                    Zone = membership.Zone,
+                    District = membership.District,
+                    Sector = membership.Sector,
+                    Cell = membership.Cell,
+                    InternalIdentityCode = membership.InternalIdentityCode,
+                    Status = membership.Status,
+                    ImageData = membership.ImageData,
+                    CommentsOrObservations = membership.CommentsOrObservations,
+                    DateCreated = membership.DateCreated,
+                    DateModification = membership.DateModification,
+                    NameOfSpouse = membership.NameOfSpouse,
+                    LastNameOfSpouse = membership.LastNameOfSpouse,
+                    DateOfBirthOfSpouse = membership.DateOfBirthOfSpouse,
+                    AgeOfSpouse = membership.AgeOfSpouse,
+                    GenderOfSpouse = membership.GenderOfSpouse,
+                    PhoneOfSpouse = membership.PhoneOfSpouse
+                };
+
+                int resultMembershipHistory = await membershipHistoryBL.CreateAsync(membershipHistory);
+
                 TempData["SuccessMessageCreate"] = "Membresia Agregada Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
@@ -131,6 +182,50 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
                 }
                 membership.DateModification = DateTime.Now;
                 int result = await membershipBL.UpdateAsync(membership);
+
+                // Crear un nuevo objeto para mapear las propiedades a MembershipHistory
+                var membershipHistory = new MembershipHistory
+                {
+                    Name = membership.Name,
+                    LastName = membership.LastName,
+                    Dui = membership.Dui,
+                    DateOfBirth = membership.DateOfBirth,
+                    Age = membership.Age,
+                    Gender = membership.Gender,
+                    CivilStatus = membership.CivilStatus,
+                    Phone = membership.Phone,
+                    Address = membership.Address,
+                    ProfessionOrStudy = membership.ProfessionOrStudy,
+                    PlaceOfWorkOrStudy = membership.PlaceOfWorkOrStudy,
+                    WorkOrStudyPhone = membership.WorkOrStudyPhone,
+                    ConversionDate = membership.ConversionDate,
+                    PlaceOfConversion = membership.PlaceOfConversion,
+                    WaterBaptism = membership.WaterBaptism,
+                    BaptismOfTheHolySpirit = membership.BaptismOfTheHolySpirit,
+                    PastorsName = membership.PastorsName,
+                    SupervisorsName = membership.SupervisorsName,
+                    LeadersName = membership.LeadersName,
+                    TimeToGather = membership.TimeToGather,
+                    Zone = membership.Zone,
+                    District = membership.District,
+                    Sector = membership.Sector,
+                    Cell = membership.Cell,
+                    InternalIdentityCode = membership.InternalIdentityCode,
+                    Status = membership.Status,
+                    ImageData = membership.ImageData,
+                    CommentsOrObservations = membership.CommentsOrObservations,
+                    DateCreated = membership.DateCreated,
+                    DateModification = membership.DateModification,
+                    NameOfSpouse = membership.NameOfSpouse,
+                    LastNameOfSpouse = membership.LastNameOfSpouse,
+                    DateOfBirthOfSpouse = membership.DateOfBirthOfSpouse,
+                    AgeOfSpouse = membership.AgeOfSpouse,
+                    GenderOfSpouse = membership.GenderOfSpouse,
+                    PhoneOfSpouse = membership.PhoneOfSpouse
+                };
+
+                int resultMembershipHistory = await membershipHistoryBL.CreateAsync(membershipHistory);
+
                 TempData["SuccessMessageUpdate"] = "Membresia Modificada Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
