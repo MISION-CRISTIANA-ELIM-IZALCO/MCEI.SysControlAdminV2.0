@@ -48,5 +48,18 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Privilege___Controller
             }
         }
         #endregion
+
+        #region METODO PARA INDEX
+        // Metodo para mostrar la vista Index
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> Index(Privilege privilege = null!)
+        {
+            if (privilege == null)
+                privilege = new Privilege();
+
+            var privileges = await privilegeBL.SearchAsync(privilege);
+            return View(privileges);
+        }
+        #endregion
     }
 }
