@@ -6,6 +6,7 @@ using MCEI.SysControlAdmin.EN.Role___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 
 #endregion
@@ -84,6 +85,36 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Privilege___Controller
                 privilege.DateModification = DateTime.Now;
                 int result = await privilegeBL.UpdateAsync(privilege);
                 TempData["SuccessMessageUpdate"] = "Privilegio Modificado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(privilege);
+            }
+        }
+        #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo para mostrar la vista de eliminar
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> DeletePrivilege(int id)
+        {
+            var privilege = await privilegeBL.GetByIdAsync(new Privilege { Id = id });
+            ViewBag.Error = "";
+            return View(privilege);
+        }
+
+        // Metodo que recibe y envia a la base de datos
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePrivilege(int id, Privilege privilege)
+        {
+            try
+            {
+                int result = await privilegeBL.DeleteAsync(privilege);
+                TempData["SuccessMessageDelete"] = "Privilegio Eliminado Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
