@@ -53,5 +53,13 @@ namespace MCEI.SysControlAdmin.BL.Privilege___BL
             return await PrivilegeDAL.UpdateAsync(privilege);
         }
         #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo para eliminar un registro existente en la base de datos
+        public async Task<int> DeleteAsync(Privilege privilege)
+        {
+            return await PrivilegeDAL.DeleteAsync(privilege);
+        }
+        #endregion
     }
 }

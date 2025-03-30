@@ -139,5 +139,25 @@ namespace MCEI.SysControlAdmin.DAL.Privilege___DAL
             return result;
         }
         #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo para eliminar un registro existente en la base de datos
+        public static async Task<int> DeleteAsync(Privilege privilege)
+        {
+            int result = 0;
+            using (var contextDB = new ContextDB())
+            {
+                var privilegeDB = await contextDB.Privilege.FirstOrDefaultAsync(p => p.Id == privilege.Id);
+                if (privilegeDB != null)
+                {
+                    contextDB.Privilege.Remove(privilegeDB);
+                    result = await contextDB.SaveChangesAsync();
+                }
+                else
+                    throw new Exception("Privilegio no encontrado");
+            }
+            return result;
+        }
+        #endregion
     }
 }
