@@ -22,7 +22,7 @@ namespace MCEI.SysControlAdmin.BL.Privilege___BL
         }
         #endregion
 
-        #region METODO PARA OBTENER POR ID
+        #region METODO PARA OBTENER
         // Metodo para listar y mostrar todos los resultados
         public async Task<List<Privilege>> GetAllAsync()
         {
@@ -35,6 +35,16 @@ namespace MCEI.SysControlAdmin.BL.Privilege___BL
         public async Task<Privilege> GetByIdAsync(Privilege privilege)
         {
             return await PrivilegeDAL.GetByIdAsync(privilege);
+        }
+
+        // Metodo para que admita int al hacer uso del metodo antecesor para automatizacion
+        public async Task<Privilege> GetByIdAsync(int id)
+        {
+            // Crear una instancia de Privilegio y asignarle el ID
+            var privilegio = new Privilege { Id = id};
+
+            // Llamar al método existente con el objeto Privilege
+            return await PrivilegeDAL.GetByIdAsync(privilegio);
         }
         #endregion
 

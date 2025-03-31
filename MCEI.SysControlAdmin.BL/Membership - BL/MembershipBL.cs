@@ -37,6 +37,16 @@ namespace MCEI.SysControlAdmin.BL.Membership___BL
         {
             return await MembershipDAL.GetByIdAsync(membership);
         }
+
+        // Metodo para que admita int al hacer uso del metodo antecesor para automatizacion
+        public async Task<Membership> GetByIdAsync(int id)
+        {
+            // Crear una instancia de Membership y asignarle el ID
+            var membership = new Membership { Id  = id };
+
+            // Llamar al método existente con el objeto Membership
+            return await MembershipDAL.GetByIdAsync(membership);
+        }
         #endregion
 
         #region METODO PARA BUSCAR
