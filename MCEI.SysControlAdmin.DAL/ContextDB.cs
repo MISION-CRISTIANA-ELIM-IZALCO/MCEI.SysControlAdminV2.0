@@ -12,6 +12,7 @@ using MCEI.SysControlAdmin.EN.User___EN;
 using MCEI.SysControlAdmin.EN.Membership___EN;
 using MCEI.SysControlAdmin.EN.MembershipHistory___EN;
 using MCEI.SysControlAdmin.EN.Privilege___EN;
+using MCEI.SysControlAdmin.EN.Server___EN;
 
 #endregion
 
@@ -26,6 +27,7 @@ namespace MCEI.SysControlAdmin.DAL
         public DbSet<Membership> Membership { get; set; }
         public DbSet<MembershipHistory> MembershipHistory { get; set; }
         public DbSet<Privilege> Privilege { get; set; }
+        public DbSet<Server> Server { get; set; }
         #endregion
 
         #region STRING DE CONEXION
