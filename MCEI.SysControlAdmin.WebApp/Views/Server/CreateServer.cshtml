@@ -1,0 +1,319 @@
+﻿@using MCEI.SysControlAdmin.EN.Membership___EN
+@using MCEI.SysControlAdmin.EN.Privilege___EN
+@model MCEI.SysControlAdmin.EN.Server___EN.Server
+
+@{
+	ViewData["Title"] = "Crear Servidor";
+	List<Membership> memberships = ViewBag.Membership as List<Membership>;
+	List<Privilege> privileges = ViewBag.Privilege as List<Privilege>;
+}
+
+<link href="/css/Server/DesignCreateAndEdit.css" rel="stylesheet" />
+
+<br />
+<h1>Formulario Crear Servidor</h1>
+<span>@ViewBag.Error</span>
+<hr />
+<br />
+<div class="row">
+	<div class="col-md-12">
+		<form id="Form" asp-action="CreateServer" onsubmit="CreateRecord(event)">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- Area de Membresia-->
+			<h4>Información Personal Del Miembro</h4>
+            <br />
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="IdMembership" class="control-label"></label>
+                    <select class="form-control-lg select2" name="IdMembership" id="IdMembership">
+                        <option selected value="">Seleccionar</option>
+                        @foreach (var item in memberships!)
+                        {
+                            <option value="@item.Id">@item.Name @item.LastName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdMembership" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Dui</label>
+                    <input type="text" id="Dui" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Fecha De Nacimiento</label>
+                    <input type="text" id="DateOfBirth" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Edad</label>
+                    <input type="text" id="Age" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="" class="control-label">Genero</label>
+                    <input type="text" id="Gender" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Estado Civil</label>
+                    <input type="text" id="CivilStatus" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Profesión u Oficio</label>
+                    <input type="text" id="ProfessionOrStudy" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Bautizmo Por El Espiritu Santo</label>
+                    <input type="text" id="BaptismOfTheHolySpirit" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="" class="control-label">Zona</label>
+                    <input type="text" id="Zone" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Distrito</label>
+                    <input type="text" id="District" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Sector</label>
+                    <input type="text" id="Sector" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Celula</label>
+                    <input type="text" id="Cell" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Estado</label>
+                    <input type="text" id="Status" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Codigo De Identidad Interna</label>
+                    <input type="text" id="InternalIdentityCode" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="" class="control-label">Comentarios u Observaciones</label>
+                    <input type="text" id="CommentsOrObservations" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label">Fotografia:</label> <br />
+                <img id="imagenPreview" src="" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
+            </div>
+            <br />
+            <!-- Area de Privilegio-->
+            <h4>Información Del Privilegio</h4>
+            <br />
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="IdPrivilege" class="control-label"></label><br />
+                    <select class="form-control-lg select2" name="IdPrivilege" id="IdPrivilege">
+                        <option selected value="">Seleccionar</option>
+                        @foreach (var item in privileges!)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdPrivilege" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Estado</label>
+                    <input type="text" id="StatusPrivilege" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Fecha De Creación</label>
+                    <input type="text" id="DateCreated" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Fecha De Modificación</label>
+                    <input type="text" id="DateModification" class="form-control" readonly />
+                </div>
+            </div>
+            <br />
+            @* <!-- Area de Informacion Adicional-->
+            <h4>Información Adicional</h4>
+            <br />
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" class="form-control form-control-lg" required>
+                        <option value="">SELECCIONAR</option>
+                        <option selected value="1">ACTIVO</option>
+                        <option value="2">INACTIVO</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateCreated" class="control-label"></label>
+                    <input asp-for="DateCreated" type="date" class="form-control" readonly />
+                    <span asp-validation-for="DateCreated" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateModification" class="control-label"></label>
+                    <input asp-for="DateModification" type="date" class="form-control" readonly />
+                    <span asp-validation-for="DateModification" class="text-danger"></span>
+                </div>
+            </div> *@
+            <br />
+            <div class="form-group">
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Crear Servidor" class="btn btn-primary" />
+            </div>
+		</form>
+	</div>
+</div>
+<br />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            // Inicializar select2 para los selects de Membership y Privilege
+            $('#IdMembership').select2();
+            $('#IdPrivilege').select2();
+
+            // Automatizar el autocompletado de la información de estudiante
+            $('#IdMembership').on('change', function () {
+                var membershipId = $(this).val();
+
+                if (membershipId) {
+                    $.ajax({
+                        url: '@Url.Action("GetMembershipDetails", "Server")',
+                        type: 'GET',
+                        data: { id: membershipId },
+                        success: function (data) {
+                            if (data.error) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.error,
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                });
+                            } else {
+                                $('#Dui').val(data.dui);
+                                $('#DateOfBirth').val(data.dateOfBirth);
+                                $('#Age').val(data.age);
+                                $('#Gender').val(data.gender);
+                                $('#CivilStatus').val(data.civilStatus);
+                                $('#ProfessionOrStudy').val(data.professionOrStudy);
+                                $('#BaptismOfTheHolySpirit').val(data.baptismOfTheHolySpirit);
+                                $('#Zone').val(data.zone);
+                                $('#District').val(data.district);
+                                $('#Sector').val(data.sector);
+                                $('#Cell').val(data.cell);
+                                $('#Status').val(data.status);
+                                $('#InternalIdentityCode').val(data.internalIdentityCode);
+                                $('#CommentsOrObservations').val(data.commentsOrObservations);
+                                // Actualizar la imagen en la vista previa
+                                $('#imagenPreview').attr('src', 'data:image/jpeg;base64,' + data.photo);
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al obtener los detalles del miembro.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        }
+                    });
+                } else {
+                    // Limpiar los campos si no se selecciona ningún miembro
+
+                    $('#Dui').val('');
+                    $('#DateOfBirth').val('');
+                    $('#Age').val('');
+                    $('#CivilStatus').val('');
+                    $('#ProfessionOrStudy').val('');
+                    $('#BaptismOfTheHolySpirit').val('');
+                    $('#Zone').val('');
+                    $('#District').val('');
+                    $('#Sector').val('');
+                    $('#Cell').val('');
+                    $('#Status').val('');
+                    $('#InternalIdentityCode').val('');
+                    $('#CommentsOrObservations').val('');
+                    $('#imagenPreview').attr('src', ''); // Limpiar la imagen
+                }
+            });
+
+            // Automatizar el autocompletado de la información de curso
+            $('#IdPrivilege').on('change', function () {
+                var privilegeId = $(this).val();
+                if (privilegeId) {
+                    $.ajax({
+                        url: '@Url.Action("GetPrivilegeDetails", "Server")', // Si estás en una vista Razor
+                        type: 'GET',
+                        data: { id: privilegeId },
+                        success: function (data) {
+                            if (data.error) {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.error,
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                });
+                            } else {
+                                $('#StatusPrivilege').val(data.status);
+                                $('#DateCreated').val(data.dateCreated);
+                                $('#DateModification').val(data.dateModification);
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al obtener los detalles del privilegio.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar'
+                            });
+                        }
+                    });
+                } else {
+                    $('#StatusPrivilege').val('');
+                    $('#DateCreated').val('');
+                    $('#DateModification').val('');
+                }
+            });
+
+            // Función para mostrar alertas de error con SweetAlert2
+            function showErrorAlert(message) {
+                Swal.fire({
+                    title: 'Error',
+                    text: message,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+
+            // Mostrar error de ViewBag.Error si es necesario
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                @:showErrorAlert('@ViewBag.Error');
+            }
+
+            // Alerta con SweetAlert2 al crear registro
+            window.CreateRecord = function(e) {
+                e.preventDefault();
+                const form = document.getElementById('Form');
+
+                // Si todos los campos son válidos, muestra la alerta de confirmación
+                Swal.fire({
+                    title: '¿Guardar Nuevo Servidor?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, Guardar Servidor',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            }
+        });
+    </script>
+}
