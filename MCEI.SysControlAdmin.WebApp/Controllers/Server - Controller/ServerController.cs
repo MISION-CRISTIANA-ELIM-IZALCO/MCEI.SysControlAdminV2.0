@@ -140,5 +140,23 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
             }
         }
         #endregion
+
+        #region METODO PARA MOSTRAR INDEX
+        // Accion Para Mostrar La Vista Index
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> Index(Server server = null!)
+        {
+            if (server == null)
+                server = new Server();
+
+            var servers = await serverBL.SearchIncludeAsync(server);
+            var membership = await membershipBL.GetAllAsync();
+            var privilege = await privilegeBL.GetAllAsync();
+
+            ViewBag.Memberships = membership;
+            ViewBag.Privileges = privilege;
+            return View(servers);
+        }
+        #endregion
     }
 }
