@@ -88,5 +88,85 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             return result;
         }
         #endregion
+
+        #region METODO PARA MOSTRAR
+        // Metodo Para Mostrar La Lista De Registros
+        public static async Task<List<Server>> GetAllAsync()
+        {
+            var servers = new List<Server>();
+            using (var dbContext = new ContextDB())
+            {
+                servers = await dbContext.Server.ToListAsync();
+            }
+            return servers;
+        }
+        #endregion
+
+        #region METODO PARA OBTENER POR ID
+        // Metodo Para Mostrar Un Registro En Base A Su Id
+        public static async Task<Server> GetByIdAsync(Server server)
+        {
+            var serverDB = new Server();
+            using (var dbContext = new ContextDB())
+            {
+                serverDB = await dbContext.Server.FirstOrDefaultAsync(c => c.Id == server.Id);
+            }
+            return serverDB!;
+        }
+        #endregion
+
+        #region METODO PARA BUSCAR REGISTROS MEDIANTE EL USO DE FILTROS
+        // Metodo Para Buscar Por Filtros
+        // IQueryable es una interfaz que toma un coleccion a la cual se le pueden implementar multiples consultas (Filtros)
+        internal static IQueryable<Server> QuerySelect(IQueryable<Server> query, Server server)
+        {
+            // Por ID
+            if (server.Id > 0)
+                query = query.Where(c => c.Id == server.Id);
+
+            // Por Miembro
+            if (server.IdMembership > 0)
+                query = query.Where(c => c.IdMembership == server.IdMembership);
+
+            // Por Privilegio
+            if (server.IdPrivilege > 0)
+                query = query.Where(c => c.IdPrivilege == server.IdPrivilege);
+
+            // Ordenamos de Manera Desendente
+            query = query.OrderByDescending(c => c.Id).AsQueryable();
+
+            return query;
+        }
+        #endregion
+
+        #region METODO PARA BUSCAR
+        // Metodo para Buscar Registros Existentes
+        public static async Task<List<Server>> SearchAsync(Server server)
+        {
+            var servers = new List<Server>();
+            using (var dbContext = new ContextDB())
+            {
+                var select = dbContext.Server.AsQueryable();
+                select = QuerySelect(select, server);
+                servers = await select.ToListAsync();
+            }
+            return servers;
+        }
+        #endregion
+
+        #region METODO PARA INCLUIR MEMBRESIA Y PRIVILEGIOS
+        // Método que incluye el membresia y el privilegio para la búsqueda
+        public static async Task<List<Server>> SearchIncludeAsync(Server server)
+        {
+            var servers = new List<Server>();
+            using (var dbContext = new ContextDB())
+            {
+                var select = dbContext.Server.AsQueryable();
+                select = QuerySelect(select, server).Include(c => c.Membership).Include(c => c.Privilege).AsQueryable();
+                servers = await select.ToListAsync();
+            }
+            return servers;
+        }
+        #endregion
     }
 }

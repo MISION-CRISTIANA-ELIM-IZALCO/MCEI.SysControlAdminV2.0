@@ -21,5 +21,36 @@ namespace MCEI.SysControlAdmin.BL.Server___BL
             return await ServerDAL.CreateAsync(server);
         }
         #endregion
+
+        #region METODO PARA MOSTRAR
+        // Metodo Para Mostrar Una Lista De Registros
+        public async Task<List<Server>> GetAllAsync()
+        {
+            return await ServerDAL.GetAllAsync();
+        }
+        #endregion
+
+        #region METODO PARA MOSTRAR POR ID
+        // Metodo Para Mostrar Un Registro Especifico Bajo Un Id
+        public async Task<Server> GetByIdAsync(Server server)
+        {
+            return await ServerDAL.GetByIdAsync(server);
+        }
+        #endregion
+
+        #region METODO PARA BUSCAR
+        // Metodo Para Buscar Registros Existentes
+        public async Task<List<Server>> SearchAsync(Server server)
+        {
+            return await ServerDAL.SearchAsync(server);
+        }
+        #endregion
+
+        #region METODO PARA INCLUIR PRIVILEGIO Y PRIVILEGIO
+        public async Task<List<Server>> SearchIncludeAsync(Server server)
+        {
+            return await ServerDAL.SearchIncludeAsync(server);
+        }
+        #endregion
     }
 }
