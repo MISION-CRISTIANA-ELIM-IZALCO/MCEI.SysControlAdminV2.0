@@ -30,7 +30,7 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
         // Metodo Para Validar Si El Miembro Esta Activo
         private static async Task<bool> IsMembershipActive(int membershipId, ContextDB contextDB)
         {
-            var membership = await contextDB.Server.FirstOrDefaultAsync(m => m.Id == membershipId);
+            var membership = await contextDB.Membership.FirstOrDefaultAsync(m => m.Id == membershipId);
             if (membership == null)
             {
                 throw new Exception("El Miembro No Existe");
@@ -66,17 +66,17 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
                 // Validar si ya existe el servidor
                 if (await ExistServer(server, contextDB))
                 {
-                    throw new Exception("Privilegio ya existente, vuelve a intentarlo nuevamente.");
+                    throw new Exception("Servidor ya existente, vuelve a intentarlo nuevamente.");
                 }
 
                 // Validar si el miembro esta activo
-                if (await IsMembershipActive(server.IdMembership, contextDB))
+                if (!await IsMembershipActive(server.IdMembership, contextDB))
                 {
                     throw new Exception("No se puede crear el servidor ya que el Miembro no esta activo.");
                 }
 
-                // Validar si el miembro esta activo
-                if (await IsPrivilegeActive(server.IdPrivilege, contextDB))
+                // Validar si el privilegio esta activo
+                if (!await IsPrivilegeActive(server.IdPrivilege, contextDB))
                 {
                     throw new Exception("No se puede crear el servidor ya que el Privilegio no esta activo.");
                 }
