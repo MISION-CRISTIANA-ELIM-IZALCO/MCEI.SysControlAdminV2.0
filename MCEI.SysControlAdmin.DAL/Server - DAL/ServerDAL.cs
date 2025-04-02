@@ -168,5 +168,55 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             return servers;
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        public static async Task<int> UpdateAsync(Server server)
+        {
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server), "El Servidor no puede ser nula.");
+            }
+
+            int result = 0;
+
+            using (var dbContext = new ContextDB())
+            {
+                var serverDB = await dbContext.Server.FirstOrDefaultAsync(c => c.Id == server.Id);
+                if (serverDB == null)
+                {
+                    throw new Exception("Servidor no encontrado para actualizar.");
+                }
+
+                // Validar si ya existe el servidor
+                if (await ExistServer(server, dbContext))
+                {
+                    throw new Exception("Servidor ya existente, vuelve a intentarlo nuevamente.");
+                }
+
+                // Validar si el miembro está activo
+                if (!await IsMembershipActive(server.IdMembership, dbContext))
+                {
+                    throw new Exception("No se puede modificar el servidor ya que el Miembro no está activo.");
+                }
+
+                // Validar si el privilegio está activo
+                if (!await IsPrivilegeActive(server.IdPrivilege, dbContext))
+                {
+                    throw new Exception("No se puede modificar el servidor ya que el Privilegio no está activo.");
+                }
+
+                // Actualizar la asignación en la base de datos
+                serverDB.IdMembership = server.IdMembership;
+                serverDB.IdPrivilege = server.IdPrivilege;
+                serverDB.Status = server.Status;
+                serverDB.DateModification = server.DateModification;
+
+                dbContext.Update(serverDB);
+                result = await dbContext.SaveChangesAsync();
+            }
+
+            return result;
+        }
+        #endregion
     }
 }

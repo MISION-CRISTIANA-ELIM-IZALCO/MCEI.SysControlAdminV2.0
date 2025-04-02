@@ -52,5 +52,13 @@ namespace MCEI.SysControlAdmin.BL.Server___BL
             return await ServerDAL.SearchIncludeAsync(server);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo Para Modificar Un Registro Existente
+        public async Task<int> UpdateAsync(Server server)
+        {
+            return await ServerDAL.UpdateAsync(server);
+        }
+        #endregion
     }
 }
