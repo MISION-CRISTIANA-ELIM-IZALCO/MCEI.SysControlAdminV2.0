@@ -158,5 +158,55 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
             return View(servers);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Acción que muestra la vista de modificar
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> EditServer(int id)
+        {
+            try
+            {
+                Server server = await serverBL.GetByIdAsync(new Server { Id = id });
+                if (server == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Membership = await membershipBL.GetAllAsync();
+                ViewBag.Privilege = await privilegeBL.GetAllAsync();
+                return View(server);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        // Acción que recibe los datos del formulario para ser enviados a la base de datos
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditServer(int id, Server server)
+        {
+            try
+            {
+                if (id != server.Id)
+                {
+                    return BadRequest();
+                }
+                server.DateModification = DateTime.Now;
+                int result = await serverBL.UpdateAsync(server);
+                TempData["SuccessMessageUpdate"] = "Servidor Modificado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                ViewBag.Membership = await membershipBL.GetAllAsync();
+                ViewBag.Privilege = await privilegeBL.GetAllAsync();
+                return View(server);
+            }
+        }
+        #endregion
     }
 }
