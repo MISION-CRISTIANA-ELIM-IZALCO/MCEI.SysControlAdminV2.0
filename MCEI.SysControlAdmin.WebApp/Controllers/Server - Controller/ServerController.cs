@@ -3,6 +3,8 @@
 using MCEI.SysControlAdmin.BL.Membership___BL;
 using MCEI.SysControlAdmin.BL.Privilege___BL;
 using MCEI.SysControlAdmin.BL.Server___BL;
+using MCEI.SysControlAdmin.EN.Membership___EN;
+using MCEI.SysControlAdmin.EN.Privilege___EN;
 using MCEI.SysControlAdmin.EN.Server___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -205,6 +207,37 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
                 ViewBag.Membership = await membershipBL.GetAllAsync();
                 ViewBag.Privilege = await privilegeBL.GetAllAsync();
                 return View(server);
+            }
+        }
+        #endregion
+
+        #region METODO PARA MOSTRAR DETALLES
+        // Acción Que Muestra El Detalle De Un Registro
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> DetailsServer(int id)
+        {
+            try
+            {
+                var server = await serverBL.GetByIdAsync(new Server { Id = id });
+                if (server == null)
+                {
+                    return NotFound();
+                }
+
+                server.Membership = await membershipBL.GetByIdAsync(new Membership { Id = server.IdMembership });
+                server.Privilege = await privilegeBL.GetByIdAsync(new Privilege { Id = server.IdPrivilege });
+
+                // Comprueba si las entidades relacionadas existen
+                if (server.Membership == null || server.Privilege == null)
+                {
+                    return NotFound();
+                }
+                return View(server); // Retorna los detalles a la vista
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(); // Devuelve la vista sin ningún objeto Course
             }
         }
         #endregion

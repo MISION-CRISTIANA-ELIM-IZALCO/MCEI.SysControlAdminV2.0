@@ -1,0 +1,263 @@
+﻿@model MCEI.SysControlAdmin.EN.Server___EN.Server
+
+@{
+    ViewData["Title"] = "Detalles Del Servidor";
+}
+
+<br />
+<h1>Formulario Detalles Del Servidor</h1>
+<hr />
+<br />
+
+<div class="container">
+    <div class="row">
+        <!-- Columna de información personal del miembro-->
+        <div class="col-md-8">
+            <h3>Información Personal Del Miembro</h3>
+            <br />
+            <dl class="row">
+                <input type="hidden" id="IdMembership" value="@Model.IdMembership" />
+
+                <dt class="col-sm-4">Nombre</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Membership!.Name)</dd>
+
+                <dt class="col-sm-4">Apellido</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Membership!.LastName)</dd>
+
+                <dt class="col-sm-4">Dui</dt>
+                <dd class="col-sm-8" id="Dui"></dd>
+
+                <dt class="col-sm-4">Fecha De Nacimiento</dt>
+                <dd class="col-sm-8" id="DateOfBirth"></dd>
+
+                <dt class="col-sm-4">Edad</dt>
+                <dd class="col-sm-8" id="Age"></dd>
+
+                <dt class="col-sm-4">Genero</dt>
+                <dd class="col-sm-8" id="Gender"></dd>
+
+                <dt class="col-sm-4">Estado Civil</dt>
+                <dd class="col-sm-8" id="CivilStatus"></dd>
+
+                <dt class="col-sm-4">Profesión u Oficio</dt>
+                <dd class="col-sm-8" id="ProfessionOrStudy"></dd>
+
+                <dt class="col-sm-4">Bautizmo Por El Espiritu Santo</dt>
+                <dd class="col-sm-8" id="BaptismOfTheHolySpirit"></dd>
+
+                <dt class="col-sm-4">Zona</dt>
+                <dd class="col-sm-8" id="Zone"></dd>
+
+                <dt class="col-sm-4">Distrito</dt>
+                <dd class="col-sm-8" id="District"></dd>
+                
+                <dt class="col-sm-4">Sector</dt>
+                <dd class="col-sm-8" id="Sector"></dd>
+
+                <dt class="col-sm-4">Celula</dt>
+                <dd class="col-sm-8" id="Cell"></dd>
+
+                <dt class="col-sm-4">Estado</dt>
+                <dd class="col-sm-8" id="Status"></dd>
+
+                <dt class="col-sm-4">Codigo De Identidad Interna</dt>
+                <dd class="col-sm-8" id="InternalIdentityCode"></dd>
+
+                <dt class="col-sm-4">Comnetarios u Observaciones</dt>
+                <dd class="col-sm-8" id="CommentsOrObservations"></dd>
+
+            </dl>
+        </div>
+
+        <!-- Columna de la imagen -->
+        <div class="col-md-4 text-center">
+            <h5>Fotografía</h5>
+            <br />
+            <img id="imagenPreview" src="" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
+        </div>
+    </div>
+
+    <!-- Sección de información del privilegio -->
+    <div class="row">
+        <div class="col-md-6">
+            <br />
+            <h3>Información Del Privilegio</h3>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.IdPrivilege)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Privilege!.Name)</dd>
+
+                <dt class="col-sm-4">Estado</dt>
+                <dd class="col-sm-8" id="StatusPrivilege"></dd>
+
+                <dt class="col-sm-4">Fecha De Creación</dt>
+                <dd class="col-sm-8" id="DateCreated"></dd>
+
+                <dt class="col-sm-4">Fecha De Modificación</dt>
+                <dd class="col-sm-8" id="DateModification"></dd>
+
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <br />
+            <h3>Información Complementaria</h3>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Status)</dt>
+                <dd class="col-sm-8">@(Model.Status == 1 ? "ACTIVO" : "INACTIVO")</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateModification)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <br />
+
+    <div>
+        @Html.ActionLink("Modificar Servidor", "EditServer", new { id = Model.Id }, new { @class = "btn btn-primary", id = "modifyButton" }) |
+        <a class="btn btn-outline-secondary" asp-action="Index">Regresar a la Lista</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+         // Función para mostrar alertas de error utilizando SweetAlert2
+        function showErrorAlert(message) {
+            Swal.fire({
+                title: 'Error',
+                text: message,
+                icon: 'error'
+            });
+        }
+
+        // Evento que se ejecuta una vez que el DOM ha sido completamente cargado
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Mostrar alerta de ViewBag.Error si es necesario
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                @:showErrorAlert('@ViewBag.Error');
+            }
+
+            // Agregar el evento de clic al botón de modificar
+            const modifyButton = document.getElementById('modifyButton');
+            if (modifyButton) {
+                modifyButton.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevenir la acción predeterminada del enlace
+                    Swal.fire({
+                        title: '¿Ir a La Vista Modificar?',
+                        text: "¿Estás seguro de que quieres ir a la vista Modificar?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, Ir a La Vista Modificar',
+                        cancelButtonText: 'Cancelar',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '@Url.Action("EditServer", "Server", new { id = Model.Id })';
+                        }
+                    });
+                });
+            }
+        });
+
+        $(document).ready(function () {
+            // Función para autocompletar información del Estudiante
+            function autocompleteMembershipDetails(membershipId) {
+                if (membershipId) {
+                    $.ajax({
+                        url: '@Url.Action("GetMembershipDetails", "Server")',
+                        type: 'GET',
+                        data: { id: membershipId },
+                        success: function (data) {
+                            if (data.error) {
+                                showErrorAlert(data.error);
+                            } else {
+                                $('#Dui').text(data.dui);
+                                $('#DateOfBirth').text(data.dateOfBirth);
+                                $('#Age').text(data.age);
+                                $('#Gender').text(data.gender);
+                                $('#CivilStatus').text(data.civilStatus);
+                                $('#ProfessionOrStudy').text(data.professionOrStudy);
+                                $('#BaptismOfTheHolySpirit').text(data.baptismOfTheHolySpirit);
+                                $('#Zone').text(data.zone);
+                                $('#District').text(data.district);
+                                $('#Sector').text(data.sector);
+                                $('#Cell').text(data.cell);
+                                $('#Status').text(data.status);
+                                $('#InternalIdentityCode').text(data.internalIdentityCode);
+                                $('#CommentsOrObservations').text(data.commentsOrObservations);
+                                // Actualizar la imagen en la vista previa
+                                $('#imagenPreview').attr('src', 'data:image/jpeg;base64,' + data.photo);
+                            }
+                        },
+                        error: function () {
+                            showErrorAlert('Error al obtener los detalles del miembro.');
+                        }
+                    });
+                } else {
+                    // Limpiar los campos si no se selecciona ningún miembro
+                    $$('#Dui').val('');
+                    $('#DateOfBirth').val('');
+                    $('#Age').val('');
+                    $('#CivilStatus').val('');
+                    $('#ProfessionOrStudy').val('');
+                    $('#BaptismOfTheHolySpirit').val('');
+                    $('#Zone').val('');
+                    $('#District').val('');
+                    $('#Sector').val('');
+                    $('#Cell').val('');
+                    $('#Status').val('');
+                    $('#InternalIdentityCode').val('');
+                    $('#CommentsOrObservations').val('');
+                    $('#imagenPreview').attr('src', ''); // Limpiar la imagen
+                }
+            }
+
+            // Función para autocompletar información del Curso
+            function autocompletePrivilegeDetails(privilegeId) {
+                if (privilegeId) {
+                    $.ajax({
+                        url: '@Url.Action("GetPrivilegeDetails", "Server")',
+                        type: 'GET',
+                        data: { id: privilegeId },
+                        success: function (data) {
+                            if (data.error) {
+                                showErrorAlert(data.error);
+                            } else {
+                                $('#StatusPrivilege').text(data.status);
+                                $('#DateCreated').text(data.dateCreated);
+                                $('#DateModification').text(data.dateModification);
+                            }
+                        },
+                        error: function () {
+                            showErrorAlert('Error al obtener los detalles del privilegio.');
+                        }
+                    });
+                } else {
+                    // Limpiar los campos si no se selecciona ningún miembro
+                    $('#StatusPrivilege').val('');
+                    $('#DateCreated').val('');
+                    $('#DateModification').val('');
+                }
+            }
+
+            // Obtener el Id del modelo
+            var selectedMembershipId = '@Model.IdMembership';
+            var selectedPrivilegeId = '@Model.IdPrivilege';
+
+            // Autocompletar al cargar la página si hay un Id seleccionado
+            autocompleteMembershipDetails(selectedMembershipId);
+            autocompletePrivilegeDetails(selectedPrivilegeId);
+        });
+    </script>
+}
