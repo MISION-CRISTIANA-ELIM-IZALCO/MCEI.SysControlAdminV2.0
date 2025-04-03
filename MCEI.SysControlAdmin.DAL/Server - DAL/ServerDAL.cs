@@ -218,5 +218,24 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             return result;
         }
         #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo Para Eliminar Un Registro Existente En La Base De Datos
+        public static async Task<int> DeleteAsync(Server server)
+        {
+            int result = 0;
+            // Un bloque de conexion que mientras se permanezca en el bloque la base de datos permanecera abierta y al terminar se destruira
+            using (var dbContext = new ContextDB())
+            {
+                var serverDB = await dbContext.Server.FirstOrDefaultAsync(c => c.Id == server.Id);
+                if (serverDB != null)
+                {
+                    dbContext.Server.Remove(serverDB);
+                    result = await dbContext.SaveChangesAsync();
+                }
+            }
+            return result;
+        }
+        #endregion
     }
 }

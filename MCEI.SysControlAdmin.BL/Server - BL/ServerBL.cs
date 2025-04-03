@@ -60,5 +60,13 @@ namespace MCEI.SysControlAdmin.BL.Server___BL
             return await ServerDAL.UpdateAsync(server);
         }
         #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo Para Eliminar Un Registro Existente En La Base De Datos
+        public async Task<int> DeleteAsync(Server server)
+        {
+            return await ServerDAL.DeleteAsync(server);
+        }
+        #endregion
     }
 }
