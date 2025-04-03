@@ -241,5 +241,62 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
             }
         }
         #endregion
+
+        #region METODO PARA ELIMINAR
+        // Accion Que Muestra La Vista De Eliminar
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<IActionResult> DeleteServer(int id)
+        {
+            try
+            {
+                Server server = await serverBL.GetByIdAsync(new Server { Id = id });
+                if (server == null)
+                {
+                    return NotFound();
+                }
+
+                server.Membership = await membershipBL.GetByIdAsync(new Membership { Id = server.IdMembership });
+                server.Privilege = await privilegeBL.GetByIdAsync(new Privilege { Id = server.IdPrivilege});
+
+                // Comprueba si las entidades relacionadas existen
+                if (server.Membership == null || server.Privilege == null)
+                {
+                    return NotFound();
+                }
+                return View(server); // Retorna los detalles a la vista
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        // Accion Que Recibe Los Datos Del Formulario Para Ser Enviados a La BD
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteServer(int id, Server server)
+        {
+            try
+            {
+                Server serverDB = await serverBL.GetByIdAsync(server);
+                int result = await serverBL.DeleteAsync(serverDB);
+                TempData["SuccessMessageDelete"] = "Servidor Eliminado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                var serverDB = await serverBL.GetByIdAsync(server);
+                if (serverDB == null)
+                    serverDB = new Server();
+                if (serverDB.Id > 0)
+                    serverDB.Membership = await membershipBL.GetByIdAsync(new Membership { Id = serverDB.IdMembership });
+                serverDB.Privilege = await privilegeBL.GetByIdAsync(new Privilege { Id = serverDB.IdPrivilege });
+                return View(serverDB);
+            }
+        }
+        #endregion
     }
 }
