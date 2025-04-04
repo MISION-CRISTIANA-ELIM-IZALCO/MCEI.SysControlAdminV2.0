@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MCEI.SysControlAdmin.DAL.Server___DAL;
+
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.DAL.ServerHistory___DAL;
+using MCEI.SysControlAdmin.EN.Server___EN;
 using MCEI.SysControlAdmin.EN.ServerHistory___EN;
 
 #endregion
@@ -43,6 +46,13 @@ namespace MCEI.SysControlAdmin.BL.ServerHistory___BL
         public async Task<List<ServerHistory>> SearchAsync(ServerHistory serverHistory)
         {
             return await ServerHistoryDAL.SearchAsync(serverHistory);
+        }
+        #endregion
+
+        #region METODO PARA INCLUIR PRIVILEGIO Y PRIVILEGIO
+        public async Task<List<ServerHistory>> SearchIncludeAsync(ServerHistory serverHistory)
+        {
+            return await ServerHistoryDAL.SearchIncludeAsync(serverHistory);
         }
         #endregion
     }

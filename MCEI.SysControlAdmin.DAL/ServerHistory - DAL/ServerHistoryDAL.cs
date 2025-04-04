@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MCEI.SysControlAdmin.EN.Server___EN;
+
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.EN.ServerHistory___EN;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +98,21 @@ namespace MCEI.SysControlAdmin.DAL.ServerHistory___DAL
                 serverHistorys = await select.ToListAsync();
             }
             return serverHistorys;
+        }
+        #endregion
+
+        #region METODO PARA INCLUIR MEMBRESIA Y PRIVILEGIOS
+        // Método que incluye el membresia y el privilegio para la búsqueda
+        public static async Task<List<ServerHistory>> SearchIncludeAsync(ServerHistory serverHistory)
+        {
+            var serversHistory = new List<ServerHistory>();
+            using (var dbContext = new ContextDB())
+            {
+                var select = dbContext.ServerHistory.AsQueryable();
+                select = QuerySelect(select, serverHistory).Include(c => c.Membership).Include(c => c.Privilege).AsQueryable();
+                serversHistory = await select.ToListAsync();
+            }
+            return serversHistory;
         }
         #endregion
     }
