@@ -1,11 +1,15 @@
 ﻿#region REFERENCIAS
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.BL.Membership___BL;
+using MCEI.SysControlAdmin.BL.MembershipHistory___BL;
 using MCEI.SysControlAdmin.BL.Privilege___BL;
 using MCEI.SysControlAdmin.BL.Server___BL;
+using MCEI.SysControlAdmin.BL.ServerHistory___BL;
 using MCEI.SysControlAdmin.EN.Membership___EN;
+using MCEI.SysControlAdmin.EN.MembershipHistory___EN;
 using MCEI.SysControlAdmin.EN.Privilege___EN;
 using MCEI.SysControlAdmin.EN.Server___EN;
+using MCEI.SysControlAdmin.EN.ServerHistory___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +26,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
         ServerBL serverBL = new ServerBL();
         MembershipBL membershipBL = new MembershipBL();
         PrivilegeBL privilegeBL = new PrivilegeBL();
+        ServerHistoryBL serverHistoryBL = new ServerHistoryBL();
 
         #region METODOS PARA AUTOCOMPLETADO
         // Metodo que extrae por Id y devolver a la vista en formato Json
@@ -130,6 +135,18 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
                 server.DateCreated = DateTime.Now;
                 server.DateModification = DateTime.Now;
                 int result = await serverBL.CreateAsync(server);
+
+                var serverHistory = new ServerHistory
+                {
+                    IdMembership = server.IdMembership,
+                    IdPrivilege = server.IdPrivilege,
+                    Status = server.Status,
+                    DateCreated = server.DateCreated,
+                    DateModification = server.DateModification,
+                };
+
+                int resultServerHistory = await serverHistoryBL.CreateAsync(serverHistory);
+
                 TempData["SuccessMessageCreate"] = "Servidor Agregado Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
@@ -198,6 +215,18 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
                 }
                 server.DateModification = DateTime.Now;
                 int result = await serverBL.UpdateAsync(server);
+
+                var serverHistory = new ServerHistory
+                {
+                    IdMembership = server.IdMembership,
+                    IdPrivilege = server.IdPrivilege,
+                    Status = server.Status,
+                    DateCreated = server.DateCreated,
+                    DateModification = server.DateModification,
+                };
+
+                int resultServerHistory = await serverHistoryBL.CreateAsync(serverHistory);
+
                 TempData["SuccessMessageUpdate"] = "Servidor Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
