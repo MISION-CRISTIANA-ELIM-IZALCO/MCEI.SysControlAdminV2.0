@@ -1,0 +1,165 @@
+﻿@using MCEI.SysControlAdmin.EN.Membership___EN
+@using MCEI.SysControlAdmin.EN.Privilege___EN
+@model IEnumerable<MCEI.SysControlAdmin.EN.ServerHistory___EN.ServerHistory>
+
+@{
+    ViewData["Title"] = "Historial De Servidor";
+    List<Membership> memberships = ViewBag.Memberships as List<Membership>;
+    List<Privilege> privileges = ViewBag.Privileges as List<Privilege>;
+}
+
+<link href="/css/ServerHistory/DesignCreateAndEdit.css" rel="stylesheet" />
+
+<br />
+<h3>Historial De Servidores</h3>
+<hr />
+<form asp-action="Index">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label class="control-label">Membresia</label>
+                    <select class="form-control-lg select2" name="IdMembership" id="IdMembership">
+                        <option selected value="">Seleccionar</option>
+                        @foreach (var item in memberships!)
+                        {
+                            <option value="@item.Id">@item.Name @item.LastName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Privilegio</label>
+                    <select class="form-control-lg select2" name="IdPrivilege" id="IdPrivilege">
+                        <option selected value="">Seleccionar</option>
+                        @foreach (var item in privileges!)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="submit" class="btn btn-outline-success m-1" value="Buscar Servidor" />
+            </div>
+        </div>
+    </div>
+</form>
+<br />
+<h2 style="text-align:center;">Tabla de Resultados</h2>
+<br />
+<table id="ResultData" class="hover" style="width:100%; text-align:center;">
+    <thead>
+        <tr>
+            <th style="text-align:center;">
+                Nombre
+            </th>
+            <th style="text-align:center;">
+                Apellido
+            </th>
+            <th style="text-align:center;">
+                Codigo De Identidad Interna
+            </th>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.IdPrivilege)
+            </th>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th style="text-align:center;">
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Membership!.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Membership!.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Membership!.InternalIdentityCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Privilege!.Name)
+                </td>
+                @if (item.Status == 1)
+                {
+                    <td>ACTIVO</td>
+                }
+                else if (item.Status == 2)
+                {
+                    <td>INACTIVO</td>
+                }
+                <td style="text-align:center;">
+                    <a asp-action="DetailsServerHistory" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles Del Servidor">
+                        <i class="ti-book"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+@section Scripts {
+    <script>
+        // Inicializamos el Plugin de Autocompletado y Busqueda De Profesion u Oficio
+        $(document).ready(function () {
+            $('#IdMembership').select2();
+            $('#IdPrivilege').select2();
+        });
+
+        // Configuración De La Tabla
+        new DataTable('#ResultData', {
+            info: false,
+            order: false,
+            Response: true,
+            pagingType: 'simple_numbers',
+            language: {
+                search: 'Busqueda Rapida :',
+                searchPlaceholder: 'Ingresar',
+                lengthMenu: '_MENU_ Mostrar',
+                emptyTable: 'No Hay Datos Que Coincidan Con Su Criterio De Búsqueda.',
+                zeroRecords: 'No Existen Registros Segun La Busqueda',
+                processing: 'Procesando...',
+            }
+        });
+        // Configuramos La Alerta a Mostrar
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 8000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+        // Comprobar si hay mensajes de éxito y mostrar notificaciones del sistema
+        const successMessages = {
+            Creado: '@TempData["SuccessMessageCreate"]',
+            Modificado: '@TempData["SuccessMessageUpdate"]',
+            Eliminado: '@TempData["SuccessMessageDelete"]'
+        };
+        // Bucle, Cuando Exista un Mensaje Se Muestra La Alerta
+        for (const messageType in successMessages) {
+            const message = successMessages[messageType];
+            if (message) {
+                Toast.fire({
+                    icon: "success",
+                    title: `¡${messageType} Exitosamente!`,
+                    text: message
+                });
+            }
+        }
+    </script>
+}
