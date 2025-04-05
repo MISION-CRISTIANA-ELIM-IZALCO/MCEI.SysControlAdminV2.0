@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCEI.SysControlAdmin.DAL", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCEI.SysControlAdmin.BL", "MCEI.SysControlAdmin.BL\MCEI.SysControlAdmin.BL.csproj", "{32C74C86-258D-4422-BC78-98F5C6BFD378}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Core - BC", "Business Core - BC", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCEI.SysControlAdmin.Core", "MCEI.SysControlAdmin.Core\MCEI.SysControlAdmin.Core.csproj", "{CA2C1E4F-5D95-4B19-8EC3-19A5CE9615AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{32C74C86-258D-4422-BC78-98F5C6BFD378}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32C74C86-258D-4422-BC78-98F5C6BFD378}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32C74C86-258D-4422-BC78-98F5C6BFD378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA2C1E4F-5D95-4B19-8EC3-19A5CE9615AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA2C1E4F-5D95-4B19-8EC3-19A5CE9615AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA2C1E4F-5D95-4B19-8EC3-19A5CE9615AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA2C1E4F-5D95-4B19-8EC3-19A5CE9615AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{18FCDD69-CD1E-4493-907B-597AA0786691} = {3D92AAD5-DBAF-4367-BE03-FADDDC8FD53D}
 		{31394FBB-8BD0-4752-AAC1-BE689BDACD96} = {A7F51BB4-80DA-41A1-A929-06141C57173D}
 		{32C74C86-258D-4422-BC78-98F5C6BFD378} = {BB84C925-86CF-4A32-ACDD-CB667C63E50D}
+		{CA2C1E4F-5D95-4B19-8EC3-19A5CE9615AF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {822DDD4A-8CD0-4B38-956E-613FFE9DE0CF}
