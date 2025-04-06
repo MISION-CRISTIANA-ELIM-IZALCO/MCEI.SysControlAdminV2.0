@@ -13,7 +13,7 @@ using MCEI.SysControlAdmin.EN.ServerHistory___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using MCEI.SysControlAdmin.Core.Utils;
 
 #endregion
 
@@ -132,8 +132,8 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
             try
             {
                 server.Status = 1;
-                server.DateCreated = DateTime.Now;
-                server.DateModification = DateTime.Now;
+                server.DateCreated = DateTime.Now.GetFechaZonaHoraria();
+                server.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await serverBL.CreateAsync(server);
 
                 var serverHistory = new ServerHistory
@@ -213,7 +213,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
                 {
                     return BadRequest();
                 }
-                server.DateModification = DateTime.Now;
+                server.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await serverBL.UpdateAsync(server);
 
                 var serverHistory = new ServerHistory

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-
+using MCEI.SysControlAdmin.Core.Utils;
 
 #endregion
 
@@ -37,8 +37,8 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Privilege___Controller
             try
             {
                 privilege.Status = 1;
-                privilege.DateCreated = DateTime.Now;
-                privilege.DateModification = DateTime.Now;
+                privilege.DateCreated = DateTime.Now.GetFechaZonaHoraria();
+                privilege.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await privilegeBL.CreateAsync(privilege);
                 TempData["SuccessMessageCreate"] = "Privilegio Agregado Exitosamente";
                 return RedirectToAction(nameof(Index));
@@ -82,7 +82,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Privilege___Controller
         {
             try
             {
-                privilege.DateModification = DateTime.Now;
+                privilege.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await privilegeBL.UpdateAsync(privilege);
                 TempData["SuccessMessageUpdate"] = "Privilegio Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));

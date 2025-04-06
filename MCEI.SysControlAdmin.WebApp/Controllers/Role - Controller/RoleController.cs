@@ -5,7 +5,7 @@ using MCEI.SysControlAdmin.EN.Role___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using MCEI.SysControlAdmin.Core.Utils;
 
 #endregion
 
@@ -35,8 +35,8 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
             try
             {
                 role.Status = 1;
-                role.DateCreated = DateTime.Now;
-                role.DateModification = DateTime.Now;
+                role.DateCreated = DateTime.Now.GetFechaZonaHoraria();
+                role.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await roleBL.CreateAsync(role);
                 TempData["SuccessMessageCreate"] = "Rol Agregado Exitosamente";
                 return RedirectToAction(nameof(Index));
@@ -80,6 +80,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Role___Controller
         {
             try
             {
+                role.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await roleBL.UpdateAsync(role);
                 TempData["SuccessMessageUpdate"] = "Rol Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));

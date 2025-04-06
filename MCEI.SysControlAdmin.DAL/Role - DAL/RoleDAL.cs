@@ -119,7 +119,7 @@ namespace MCEI.SysControlAdmin.DAL.Role___DAL
                     {
                         roleDb.Name = role.Name;
                         roleDb.Status = role.Status;
-                        roleDb.DateModification = DateTime.Now;
+                        roleDb.DateModification = role.DateModification;
                         dbContext.Role.Update(roleDb);
                         result = await dbContext.SaveChangesAsync();
                     }

@@ -13,7 +13,7 @@ using System.Numerics;
 using System.Reflection;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
-
+using MCEI.SysControlAdmin.Core.Utils;
 
 #endregion
 
@@ -55,8 +55,8 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
 
                     membership.ImageData = imagenData; // Asigna el array de bytes al campo de la imagen en tu modelo Membership
                 }
-                membership.DateCreated = DateTime.Now;
-                membership.DateModification = DateTime.Now;
+                membership.DateCreated = DateTime.Now.GetFechaZonaHoraria();
+                membership.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await membershipBL.CreateAsync(membership);
 
                 // Crear un nuevo objeto para mapear las propiedades a MembershipHistory
@@ -180,7 +180,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
                     Membership existingMembership = await membershipBL.GetByIdAsync(new Membership { Id = id });
                     membership.ImageData = existingMembership.ImageData;
                 }
-                membership.DateModification = DateTime.Now;
+                membership.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await membershipBL.UpdateAsync(membership);
 
                 // Crear un nuevo objeto para mapear las propiedades a MembershipHistory

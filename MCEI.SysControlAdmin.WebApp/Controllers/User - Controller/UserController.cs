@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-
+using MCEI.SysControlAdmin.Core.Utils;
 
 #endregion
 
@@ -52,8 +52,8 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
 
                     user.ImageData = imagenData; // Asigna el array de bytes al campo de la imagen en tu modelo Membership
                 }
-                user.DateCreated = DateTime.Now;
-                user.DateModification = DateTime.Now;
+                user.DateCreated = DateTime.Now.GetFechaZonaHoraria();
+                user.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await userBL.CreateAsync(user);
                 TempData["SuccessMessageCreate"] = "Usuario Agregado Exitosamente";
                 return RedirectToAction(nameof(Index));
@@ -133,7 +133,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
                 }
 
                 // Actualizar la fecha de modificación
-                user.DateModification = DateTime.Now;
+                user.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await userBL.UpdateAsync(user);
                 TempData["SuccessMessageUpdate"] = "Usuario Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));
