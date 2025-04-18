@@ -1,0 +1,76 @@
+﻿body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    vertical-align: top;
+    padding: 10px;
+}
+
+.logo {
+    width: 30%;
+}
+
+.text {
+    width: 70%;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    margin: 5px 0;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.signature {
+    margin-top: 50px;
+    text-align: right;
+    margin-right: 80px;
+}
+
+.signature-line {
+    border-top: 1px solid black;
+    width: 300px;
+    text-align: center;
+}
+
+.date {
+    text-align: right;
+    margin: 20px 40px 40px 0;
+}
+
+img {
+    max-width: 90%;
+    height: auto;
+    margin-top: 20px;
+    float: left;
+    margin-right: 50px;
+}

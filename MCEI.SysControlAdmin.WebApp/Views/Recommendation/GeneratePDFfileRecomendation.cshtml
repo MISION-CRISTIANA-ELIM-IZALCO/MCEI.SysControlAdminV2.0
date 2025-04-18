@@ -1,0 +1,69 @@
+﻿@model MCEI.SysControlAdmin.EN.Membership___EN.Membership
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartaDeRecomendación_@Model.Name @Model.LastName _MCEI</title>
+    <link href="/css/Recommendation/DesignGeneratePDF.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Cabecera con logo e información -->
+        <table>
+            <tr>
+                <td class="logo">
+                    <img src="/assets/images/logos/Logo-Elim-Black.png" alt="Logo Oficial">
+                </td>
+                <td class="text">
+                    <h1>Carta de Recomendación</h1>
+                    <h3>Lotificación San Francisco Psje C Casa 5 Pol 6 Izalco</h3>
+                    <h3>Celular: 7435-4408  |  Teléfono: 2445-4322</h3>
+                    <h3>Correo: elimizalco@gmail.com</h3>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <!-- Fecha -->
+        <div class="date">
+            Izalco, Sonsonate, @Model.DateNow.
+        </div>
+
+        <div class="info-complementaria" style="margin-top:30px">
+            <p><strong>A quien corresponda,</strong></p><br />
+
+            <p>Mediante la presente, me permito recomendar ampliamente a <strong>@Model.Name @Model.LastName</strong>, a quien identifico con su número de Dui <strong>@Model.Dui</strong>, y quien es residente en @Model.Address.</p>
+
+            <p>He tenido el privilegio de conocer a <strong>@Model.Name @Model.LastName</strong> durante aproximadamente @Model.TimeToGather, tiempo en el que ha formado parte activa de la <strong>Iglesia Misión Cristiana Elim</strong> de esta jurisdicción.</p>
+
+            <p>Durante este período, he podido observar su dedicación y compromiso en diversas actividades, destacándose como una persona íntegra, responsable y con una marcada vocación de servicio.</p>
+
+            <p><strong>@Model.Name @Model.LastName</strong> ha demostrado siempre una actitud de colaboración y respeto hacia los demás, y su comportamiento intachable, junto con su disposición para el trabajo en equipo, han sido fundamentales en su participación dentro de nuestra congregación.</p>
+
+            <p>Además, su carácter honesto y su ética personal hacen que sea digna de la confianza depositada en ella.</p>
+
+            <p>Por todo lo anteriormente expuesto, no tengo la menor duda en recomendar a <strong>@Model.Name @Model.LastName</strong> para cualquier responsabilidad o cargo que requiera de alguien con su alto nivel de compromiso y ética personal. </p>
+
+            <p>Confío plenamente en su capacidad para asumir nuevos retos con la misma dedicación y excelencia que ha demostrado hasta ahora.</p>
+
+            <p>Quedo a disposición para cualquier consulta adicional que considere pertinente.</p>
+            <br />
+            <p>Atentamente,</p>
+
+            <br><br><br>
+
+            <p>F.____________________________________</p>
+            <p>
+                Lic. @Model.PastorsName<br>
+                Pastor Iglesia Elim Izalco<br>
+            </p>
+        </div>
+    </div>
+    <br />
+</body>
+</html>
