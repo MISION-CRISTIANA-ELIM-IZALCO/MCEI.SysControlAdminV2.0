@@ -1,11 +1,14 @@
 ﻿#region REFERENCIAS
 // Referencias Necesarias Para El Correcto Funcionamiento
 using MCEI.SysControlAdmin.BL.Baptisms___BL;
+using MCEI.SysControlAdmin.BL.Membership___BL;
 using MCEI.SysControlAdmin.Core.Utils;
 using MCEI.SysControlAdmin.EN.Baptisms___EN;
+using MCEI.SysControlAdmin.EN.Membership___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.Serialization;
 
 #endregion
 
@@ -16,6 +19,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Baptisms___Controller
     {
         // Creamos las instancias para acceder a los metodos
         BaptismsBL baptismsBL = new BaptismsBL();
+        MembershipBL membershipBL = new MembershipBL();
 
         #region METODO PARA CREAR
         // Accion para mostrar la vista de crear
@@ -50,6 +54,42 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Baptisms___Controller
                 baptisms.DateCreated = DateTime.Now.GetFechaZonaHoraria();
                 baptisms.DateModification = DateTime.Now.GetFechaZonaHoraria();
                 int result = await baptismsBL.CreateAsync(baptisms);
+
+                // Creamos un nuevo objeto para mapear las propiedades a membership
+                var membership = new Membership
+                {
+                    Name = baptisms.Name,
+                    LastName = baptisms.LastName,
+                    Dui = "",
+                    DateOfBirth = DateTime.Now.GetFechaZonaHoraria(),
+                    Age = baptisms.Age,
+                    Gender = "",
+                    CivilStatus = baptisms.CivilStatus,
+                    Phone = baptisms.Phone,
+                    Address = baptisms.Address,
+                    ProfessionOrStudy = "",
+                    PlaceOfWorkOrStudy = baptisms.PlaceOfWorkOrStudy,
+                    WorkOrStudyPhone = baptisms.WorkOrStudyPhone,
+                    ConversionDate = baptisms.ConversionDate,
+                    PlaceOfConversion = baptisms.PlaceOfConversion,
+                    WaterBaptism = baptisms.WaterBaptism,
+                    BaptismOfTheHolySpirit = baptisms.BaptismOfTheHolySpirit,
+                    PastorsName = baptisms.PastorsName,
+                    SupervisorsName = baptisms.SupervisorsName,
+                    LeadersName = baptisms.LeadersName,
+                    TimeToGather = baptisms.TimeToGather,
+                    Zone = baptisms.Zone,
+                    District = baptisms.District,
+                    Sector = baptisms.Sector,
+                    Cell = baptisms.Cell,
+                    InternalIdentityCode = "",
+                    Status = 0,
+                    ImageData = baptisms.ImageData,
+                    CommentsOrObservations = baptisms.CommentsOrObservations,
+                    DateCreated = baptisms.DateCreated,
+                    DateModification = baptisms.DateModification,
+                };
+                int resultMembership = await membershipBL.CreateAsync(membership);
 
                 TempData["SuccessMessageCreate"] = "Bautismo Agregado Exitosamente";
                 return RedirectToAction(nameof(Index));
