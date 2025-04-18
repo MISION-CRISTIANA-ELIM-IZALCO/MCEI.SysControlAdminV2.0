@@ -55,5 +55,13 @@ namespace MCEI.SysControlAdmin.BL.ServerHistory___BL
             return await ServerHistoryDAL.SearchIncludeAsync(serverHistory);
         }
         #endregion
+
+        #region METODO PARA OBTENER UNA LISTA POR SU CODIGO DE IDENTIDAD INTERNA
+        // Metodo Para Mostrar Todos Los Registros De Un Servidor En Base A Su Codigo de Identidad Interna
+        public async Task<List<ServerHistory>> GetByInternalIdentityCodeAsync(string internalIdentityCode)
+        {
+            return await ServerHistoryDAL.GetByInternalIdentityCodeAsync(internalIdentityCode);
+        }
+        #endregion
     }
 }

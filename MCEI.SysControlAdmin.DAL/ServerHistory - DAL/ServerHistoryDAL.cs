@@ -115,5 +115,18 @@ namespace MCEI.SysControlAdmin.DAL.ServerHistory___DAL
             return serversHistory;
         }
         #endregion
+
+        #region METODO PARA OBTENER UNA LISTA POR SU CODIGO DE IDENTIDAD INTERNA
+        public static async Task<List<ServerHistory>> GetByInternalIdentityCodeAsync(string internalIdentityCode)
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.ServerHistory
+                                      .Include(h => h.Membership).Include(h => h.Privilege) // Cargar propiedad de navegación
+                                      .Where(c => c.Membership!.InternalIdentityCode == internalIdentityCode)
+                                      .ToListAsync();
+            }
+        }
+        #endregion
     }
 }
