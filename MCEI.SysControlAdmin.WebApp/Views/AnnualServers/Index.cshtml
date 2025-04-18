@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Lista De Servidores Anual";
+}
+
+<script>
+    window.onload = function () {
+        // Mostrar la alerta inicial
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Quieres generar el listado de servidores anual?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir al backend con el parámetro para ejecutar el método
+                window.location.href = '/AnnualServers/GenerateGroupedServersPDF';
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Si el usuario cancela, redirigir a la vista Index de Home
+                window.location.href = '/Home/Index';
+            }
+        });
+    }
+
+    function showMessage() {
+        // Mostrar el mensaje centrado
+        document.getElementById('message').style.display = 'block';
+    }
+
+    // Mostrar un mensaje de éxito o cualquier otra condición
+    // Después de un intervalo, mostrar el mensaje centrado
+    setTimeout(() => {
+        showMessage();
+    }, 8000);  // Ajusta el tiempo según cuando quieras que aparezca el mensaje
+</script>
+
+<div id="message" style="display: none; text-align: center; margin-top: 100px;">
+    <p style="font-size: 24px;">
+        Si el PDF está generado, redirígete al <a href="/Home/Index" style="font-size: 28px;">Inicio</a>. Si no ha sido así, vuelve a intentarlo <a href="/AnnualServers/GenerateGroupedServersPDF" style="font-size: 28px;">Aquí</a>.
+    </p>
+</div>

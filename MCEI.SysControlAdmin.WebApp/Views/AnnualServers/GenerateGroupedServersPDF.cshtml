@@ -1,0 +1,83 @@
+﻿@model Dictionary<int, List<MCEI.SysControlAdmin.EN.Server___EN.Server>>
+
+@{
+    Layout = null;
+
+    // Función para obtener el nombre del privilegio desde la lista de servidores
+    Func<int, string> GetPrivilegeName = key =>
+    {
+        var serverList = Model.ContainsKey(key) ? Model[key] : null;
+        return serverList != null && serverList.Any()
+            ? serverList.First().Privilege?.Name ?? "Desconocido"
+            : "Desconocido";
+    };
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Servidores Activos Por Su Privilegio</title>
+    <link href="/css/AnnualServers/GenerateGroupedServersPDF.css" rel="stylesheet" />
+    <script>
+        function displayCurrentYear() {
+            const yearElement = document.getElementById('currentYear');
+            const currentYear = new Date().getFullYear();
+            yearElement.textContent = currentYear;
+        }
+
+        // Ejecutar al cargar la página
+        window.onload = displayCurrentYear;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabecera con logo e información -->
+        <table>
+            <tr>
+                <td class="logo">
+                    <img src="/assets/images/logos/Logo-Elim-Black.png" alt="Logo Oficial">
+                </td>
+                <td class="text">
+                    <h1>Lista de Servidores Activos Segun Su Privilegio</h1>
+                    <h3>Lotificación San Francisco Psje C Casa 5 Pol 6 Izalco</h3>
+                    <h3>Celular: 7435-4408  |  Teléfono: 2445-4322</h3>
+                    <h3>Correo: elimizalco@gmail.com</h3>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+        <!-- Contenido de la tabla -->
+        <div class="info-complementaria" style="margin-top:30px">
+            <h1 style="text-align:center"><strong>Lista De Servidores <span id="currentYear"></span></strong></h1>
+            <br />
+            @foreach (var group in Model)
+            {
+                <!-- Privilegio oculto y nombre visible -->
+                <input type="hidden" value="@group.Key" />
+                <h2><strong>Privilegio: @GetPrivilegeName(group.Key)</strong></h2>
+                <table class="table table-bordered" style="width:100%; border-collapse:collapse; text-align:left; margin-top:20px;">
+                    <thead>
+                        <tr style="background-color:#f2f2f2;">
+                            <th style="padding:8px; border:1px solid #ddd;">Nombre Completo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var server in group.Value)
+                        {
+                            <tr>
+                                <td style="padding:8px; border:1px solid #ddd;">@server.Membership!.Name @server.Membership.LastName - @server.Membership.InternalIdentityCode</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+            }
+        </div>
+    </div>
+    <br />
+</body>
+</html>
