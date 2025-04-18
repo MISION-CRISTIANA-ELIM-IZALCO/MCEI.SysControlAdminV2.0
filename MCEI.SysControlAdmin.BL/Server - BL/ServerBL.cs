@@ -68,5 +68,13 @@ namespace MCEI.SysControlAdmin.BL.Server___BL
             return await ServerDAL.DeleteAsync(server);
         }
         #endregion
+
+        #region METODO PARA OBTENER DICCIONARIO DE SERVIDORES TOTALES Y AGRUPADOS POR PRIVILEGIO
+        // Método para obtener servidores activos agrupados por privilegio
+        public async Task<Dictionary<int, List<Server>>> GetActiveServersGroupedByPrivilegeAsync()
+        {
+            return await ServerDAL.GetActiveServersGroupedByPrivilegeAsync();
+        }
+        #endregion
     }
 }

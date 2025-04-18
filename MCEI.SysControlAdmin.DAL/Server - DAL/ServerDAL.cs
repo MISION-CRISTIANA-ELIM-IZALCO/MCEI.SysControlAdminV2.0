@@ -237,5 +237,26 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             return result;
         }
         #endregion
+
+        #region METODO PARA OBTENER DICCIONARIO DE SERVIDORES TOTALES Y AGRUPADOS POR PRIVILEGIO
+        public static async Task<Dictionary<int, List<Server>>> GetActiveServersGroupedByPrivilegeAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var activeServers = await dbContext.Server
+                    .Where(s => s.Status == 1) // Filtrar por status = 1
+                    .Include(s => s.Membership) // Incluir propiedades relacionadas si es necesario
+                    .Include(s => s.Privilege)
+                    .ToListAsync();
+
+                // Agrupar por PrivilegeId
+                var groupedServers = activeServers
+                    .GroupBy(s => s.IdPrivilege) // Agrupar por IdPrivilege
+                    .ToDictionary(g => g.Key, g => g.ToList()); // Convertir a un diccionario
+
+                return groupedServers;
+            }
+        }
+        #endregion
     }
 }
