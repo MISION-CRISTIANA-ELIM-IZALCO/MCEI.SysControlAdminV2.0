@@ -1,0 +1,255 @@
+﻿@model MCEI.SysControlAdmin.EN.Baptisms___EN.Baptisms
+
+@{
+    ViewData["Title"] = "Crear Bautismo";
+}
+
+<link href="/css/Baptisms/DesignCreateAndEdit.css" rel="stylesheet" />
+
+<br />
+<h1>Formulario Crear Bautismo</h1>
+<br />
+<p>Los campos con <span style="color: red;">*</span> son de caracter obligatorio</p>
+<span>@ViewBag.Error</span>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <form id="Form" asp-action="CreateBaptisms" onsubmit="CreateRecord(event)" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h3>Información Personal</h3>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="Name" class="form-control" placeholder="Ingresar" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="LastName" class="form-control" placeholder="Ingresar" required />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="Age" type="number" class="form-control" placeholder="0"/>
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CivilStatus" class="control-label"></label><span style="color: red;">*</span>
+                    <select asp-for="CivilStatus" class="form-control form-control-lg" required>
+                        <option value="">SELECCIONAR</option>
+                        <option value="SOLTERO/A">SOLTERO/A</option>
+                        <option value="CASADO/A">CASADO/A</option>
+                        <option value="DIVORCIADO/A">DIVORCIADO/A</option>
+                        <option value="VIUDO/A">VIUDO/A</option>
+                    </select>
+                    <span asp-validation-for="CivilStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="Phone" id="Phone" class="form-control" placeholder="0000-0000" required />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="Address" required class="form-control" placeholder="Residencial - Colonia, Canton - Caserio, Pol. Pasaje - Casa #0" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="PlaceOfWorkOrStudy" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="PlaceOfWorkOrStudy" class="form-control" placeholder="Ingresar" required />
+                    <span asp-validation-for="PlaceOfWorkOrStudy" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="WorkOrStudyPhone" class="control-label"></label>
+                    <input asp-for="WorkOrStudyPhone" id="WorkOrStudyPhone" class="form-control" placeholder="0000-0000" />
+                </div>
+            </div>
+            <br />
+            <h3>Información Complementaria</h3>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="ConversionDate" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="ConversionDate" type="date" class="form-control" required />
+                    <span asp-validation-for="ConversionDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PlaceOfConversion" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="PlaceOfConversion" class="form-control" placeholder="Ingresar" required />
+                    <span asp-validation-for="PlaceOfConversion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BaptismOfTheHolySpirit" class="control-label"></label><span style="color: red;">*</span>
+                    <select asp-for="BaptismOfTheHolySpirit" class="form-control form-control-lg" required>
+                        <option value="">SELECCIONAR</option>
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                    </select>
+                    <span asp-validation-for="BaptismOfTheHolySpirit" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="PastorsName" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="PastorsName" class="form-control" placeholder="Ingresar" required />
+                    <span asp-validation-for="PastorsName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SupervisorsName" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="SupervisorsName" class="form-control" placeholder="Ingresar" />
+                    <span asp-validation-for="SupervisorsName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LeadersName" class="control-label"></label>
+                    <input asp-for="LeadersName" class="form-control" placeholder="Ingresar" />
+                    <span asp-validation-for="LeadersName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="TimeToGather" class="control-label"></label><span style="color: red;">*</span>
+                    <input asp-for="TimeToGather" class="form-control" placeholder="Ingresar" required />
+                    <span asp-validation-for="TimeToGather" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Zone" class="control-label"></label><span style="color: red;">*</span>
+                    <select asp-for="Zone" class="form-control form-control-lg" required>
+                        <option value="0">SELECCIONAR</option>
+                        <option value="1">ZONA 1</option>
+                        <option value="2">ZONA 2</option>
+                    </select>
+                    <span asp-validation-for="Zone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="District" class="control-label"></label><span style="color: red;">*</span>
+                    <select asp-for="District" class="form-control form-control-lg" required>
+                        <option value="0">SELECCIONAR</option>
+                        <option value="1">DISTRITO 1</option>
+                        <option value="2">DISTRITO 2</option>
+                        <option value="3">DISTRITO 3</option>
+                    </select>
+                    <span asp-validation-for="District" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sector" class="control-label"></label><span style="color: red;">*</span>
+                    <select asp-for="Sector" class="form-control form-control-lg" required>
+                        <option value="0">SELECCIONAR</option>
+                        <option value="1">SECTOR 1</option>
+                        <option value="2">SECTOR 2</option>
+                        <option value="3">SECTOR 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cell" class="control-label"></label><span style="color: red;">*</span>
+                    <select asp-for="Cell" class="form-control form-control-lg" required>
+                        <option value="0">SELECCIONAR</option>
+                        <option value="1">CELULA 1</option>
+                        <option value="2">CELULA 2</option>
+                        <option value="3">CELULA 3</option>
+                        <option value="4">CELULA 4</option>
+                        <option value="5">CELULA 5</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <h3>Información Adicional</h3>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="ImageData" class="control-label"></label><span style="color: red;">*</span>
+                    <input type="file" class="form-control" id="imagen" name="imagen" onchange="mostrarImagen()" asp-for="ImageData" required />
+                    <span asp-validation-for="ImageData" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="CommentsOrObservations" class="control-label"></label>
+                    <input asp-for="CommentsOrObservations" class="form-control" placeholder="Opcional" />
+                </div>
+            </div>
+            <br />
+            <div>
+                <p><strong>Vista previa de la Fotografia:</strong></p>
+                <img id="imagenPreview" src="#" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px; display: none; border: 1px solid #d3d3d3;" />
+            </div>
+            <br />
+            <div>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Guardar Bautismo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        // -------- FORMATO DE TELÉFONO EN TIEMPO REAL --------
+        function formatoTelefono(id) {
+            const input = document.getElementById(id);
+            input.addEventListener("input", function (e) {
+                let valor = input.value.replace(/\D/g, ""); // Quitar todo lo que no sea dígito
+                if (valor.length > 4) {
+                    valor = valor.slice(0, 4) + "-" + valor.slice(4, 8);
+                }
+                input.value = valor;
+            });
+
+            input.addEventListener("keydown", function (e) {
+                const valor = input.value;
+                if (e.key === "Backspace" && valor.endsWith("-")) {
+                    input.value = valor.slice(0, -1);
+                }
+            });
+        }
+
+        formatoTelefono("Phone");
+        formatoTelefono("WorkOrStudyPhone");
+
+        // -------- VISTA PREVIA DE IMAGEN --------
+        function mostrarImagen() {
+            const input = document.getElementById("imagen");
+            const preview = document.getElementById("imagenPreview");
+
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // -------- ALERTA DE CONFIRMACIÓN SWEETALERT2 --------
+        document.getElementById("Form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '¿Deseas guardar el registro de bautismo?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, Guardar Bautismo',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit(); // Si confirma, se envía el formulario
+                }
+            });
+        });
+
+        // -------- CÓDIGO ORIGINAL QUE YA TENÍAS --------
+        function CreateRecord(e) {
+            e.preventDefault();
+            const btnSubmit = document.querySelector('input[type="submit"]');
+            btnSubmit.disabled = true;
+            btnSubmit.value = "Guardando...";
+            document.getElementById("Form").submit();
+        }
+    </script>
+}

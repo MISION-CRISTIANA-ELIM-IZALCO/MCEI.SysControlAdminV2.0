@@ -1,0 +1,150 @@
+﻿@model IEnumerable<MCEI.SysControlAdmin.EN.Baptisms___EN.Baptisms>
+
+@{
+    ViewData["Title"] = "Bautismos";
+}
+
+<link href="/css/Baptisms/DesignCreateAndEdit.css" rel="stylesheet" />
+
+<br />
+<h3>Mantenimiento De Bautismos</h3>
+<hr />
+<form asp-action="Index">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="Name">Nombre</label>
+                    <input type="text" class="form-control" name="Name" placeholder="Ingresar" />
+                </div>
+                <div class="form-group">
+                    <label for="LastName">Apellido</label>
+                    <input type="text" class="form-control" name="LastName" placeholder="Ingresar" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="CivilStatus">Estado Civil</label>
+                    <select class="form-control form-control-lg" name="CivilStatus">
+                        <option value="">SELECCIONAR</option>
+                        <option value="SOLTERO/A">SOLTERO/A</option>
+                        <option value="CASADO/A">CASADO/A</option>
+                        <option value="DIVORCIADO/A">DIVORCIADO/A</option>
+                        <option value="VIUDO/A">VIUDO/A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="submit" class="btn btn-outline-success m-1" value="Buscar Bautismo" /> |
+                <a asp-action="CreateBaptisms" class="btn btn-primary">Crear Nuevo Bautismo</a>
+            </div>
+        </div>
+    </div>
+</form>
+<br />
+<h2 style="text-align:center;">Tabla de Resultados</h2>
+<br />
+<table id="ResultData" class="hover" style="width:100%; text-align:center;">
+    <thead>
+        <tr>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.BaptismOfTheHolySpirit)
+            </th>
+            <th style="text-align:center;">
+                @Html.DisplayNameFor(model => model.CivilStatus)
+            </th>
+            <th style="text-align:center;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td style="text-align:center;">
+                    @Html.DisplayFor(modelItem => item.BaptismOfTheHolySpirit)
+                </td>
+                <td style="text-align:center;">
+                    @Html.DisplayFor(modelItem => item.CivilStatus)
+                </td>
+                <td style="text-align:center;">
+                    <a asp-action="EditBaptisms" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Bautismo">
+                        <i class="ti-pencil-alt"></i>
+                    </a>
+                    <a asp-action="DetailsBaptisms" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles Del Bautismo">
+                        <i class="ti-book"></i>
+                    </a>
+                    <a asp-action="DeleteBaptisms" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Bautismo">
+                        <i class="ti-trash"></i>
+                    </a>
+                    <a asp-action="GeneratePDFfileBaptisms" asp-route-id="@item.Id" class="btn btn-primary" title="Generar Pdf">
+                        <i class="ti-printer"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+@section Scripts {
+    <script>
+        // Configuracion para la tabla principal
+        new DataTable('#ResultData', {
+            info: false,
+            order: false,
+            Response: true,
+            pagingType: 'simple_numbers',
+            language: {
+                search: 'Busqueda Rapida :',
+                searchPlaceholder: 'Ingresar',
+                lengthMenu: '_MENU_ Mostrar',
+                emptyTable: 'No Hay Datos Que Coincidan Con Su Criterio De Búsqueda.',
+                zeroRecords: 'No Existen Registros Segun La Busqueda',
+                processing: 'Procesando...',
+            }
+        });
+
+        // Configuración de las notificaciones
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 8000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
+        // Comprobar si hay mensajes de éxito y mostrar notificaciones del sistema
+        const successMessages = {
+            Creado: '@TempData["SuccessMessageCreate"]',
+            Modificado: '@TempData["SuccessMessageUpdate"]',
+            Eliminado: '@TempData["SuccessMessageDelete"]'
+        };
+
+        for (const messageType in successMessages) {
+            const message = successMessages[messageType];
+            if (message) {
+                Toast.fire({
+                    icon: "success",
+                    title: `¡${messageType} Exitosamente!`,
+                    text: message
+                });
+            }
+        }
+    </script>
+}

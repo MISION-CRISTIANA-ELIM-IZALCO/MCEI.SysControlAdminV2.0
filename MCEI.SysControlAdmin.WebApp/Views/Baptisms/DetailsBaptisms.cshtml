@@ -1,0 +1,193 @@
+﻿@model MCEI.SysControlAdmin.EN.Baptisms___EN.Baptisms
+@{
+    ViewData["Title"] = "Detalles De Bautismo";
+}
+
+<br />
+<h1>Formulario Detalles De Bautismo</h1>
+<hr />
+<br />
+
+<div class="container">
+    <div class="row">
+        <!-- Columna de información personal -->
+        <div class="col-md-8">
+            <h3>Información Personal</h3>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Name)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.LastName)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.LastName)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Age)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Age) Años</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CivilStatus)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.CivilStatus)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Phone)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PlaceOfWorkOrStudy)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PlaceOfWorkOrStudy)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WorkOrStudyPhone)</dt>
+                <dd class="col-sm-8">
+                    @(Model.WorkOrStudyPhone != null ? Model.WorkOrStudyPhone : "Vacio")
+                </dd>
+            </dl>
+        </div>
+
+        <!-- Columna de la imagen -->
+        <div class="col-md-4 text-center">
+            <h5>Fotografía</h5>
+            <br />
+            <img id="imagenPreview"
+                 src="@(ViewBag.ImageUrl != null ? "data:image/jpeg;base64," + ViewBag.ImageUrl : "https://via.placeholder.com/200")"
+                 alt="Imagen del miembro"
+                 class="img-thumbnail img-fluid"
+                 style="max-width: 100%; max-height: 250px;" />
+        </div>
+    </div>
+
+    <!-- Sección de información complementaria -->
+    <div class="row">
+        <div class="col-md-6">
+            <br />
+            <h3>Información Complementaria</h3>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.ConversionDate)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ConversionDateFormatted)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PlaceOfConversion)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PlaceOfConversion)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WaterBaptism)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.WaterBaptism)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.BaptismOfTheHolySpirit)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.BaptismOfTheHolySpirit)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PastorsName)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PastorsName)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.SupervisorsName)</dt>
+                <dd class="col-sm-8">
+                    @(Model.SupervisorsName != null ? Model.SupervisorsName : "Vacío")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.LeadersName)</dt>
+                <dd class="col-sm-8">
+                    @(Model.LeadersName != null ? Model.LeadersName : "Vacío")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.TimeToGather)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.TimeToGather)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Zone)</dt>
+                <dd class="col-sm-8">
+                    @(Model.Zone != null ? Model.Zone : "Vacío")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.District)</dt>
+                <dd class="col-sm-8">
+                    @(Model.District != null ? Model.District : "Vacío")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Sector)</dt>
+                @if (Model.Sector != "0")
+                {
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Sector)</dd>
+                }
+                else if (Model.Sector == "0")
+                {
+                    <dd class="col-sm-8">SOY SUPERVISOR</dd>
+                }
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Cell)</dt>
+                @if (Model.Cell != "0")
+                {
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Cell)</dd>
+                }
+                else if (Model.Sector == "0" && Model.Cell == "0")
+                {
+                    <dd class="col-sm-8">
+                        SOY SUPERVISOR
+                    </dd>
+                }
+                else if (Model.Sector != "0" && Model.Cell == "0")
+                {
+                    <dd class="col-sm-8">
+                        SOY LIDER
+                    </dd>
+                }
+
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <br />
+            <h3>Información Adicional</h3>
+            <br />
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CommentsOrObservations)</dt>
+                <dd class="col-sm-8">
+                    @(Model.CommentsOrObservations != null ? Model.CommentsOrObservations : "Vacío")
+                </dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateModification)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <br />
+
+    <div>
+        @Html.ActionLink("Modificar Bautismo", "EditBatisms", new { id = Model.Id }, new { @class = "btn btn-primary", id = "modifyButton" }) |
+        <a class="btn btn-outline-secondary" asp-action="Index">Regresar a la Lista</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Mostrar error si existe
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                @:Swal.fire({ title: 'Error', text: '@ViewBag.Error', icon: 'error' });
+            }
+
+            // Confirmación antes de modificar
+            document.getElementById('modifyButton').addEventListener('click', function (event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: '¿Ir a La Vista Modificar?',
+                    text: "¿Estás seguro de que quieres modificar esta membresía?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, Ir a Modificar',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '@Url.Action("EditBaptisms", "Baptisms", new { id = Model.Id })';
+                    }
+                });
+            });
+        });
+    </script>
+}
