@@ -140,3 +140,31 @@ CREATE TABLE ServerHistory(
     DateModification DATETIME NOT NULL
 );
 GO
+CREATE TABLE Baptisms(
+	Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	[Name] VARCHAR(50) NOT NULL,
+	LastName VARCHAR(50) NOT NULL,
+	Age VARCHAR(3) NOT NULL,
+	[Address] VARCHAR(100) NOT NULL,
+	Phone VARCHAR(9) NOT NULL,
+	PlaceOfWorkOrStudy VARCHAR(100) NOT NULL,
+    WorkOrStudyPhone VARCHAR(9) NULL,
+	CivilStatus VARCHAR(20) NOT NULL,
+	WaterBaptism VARCHAR(25) NOT NULL,
+    BaptismOfTheHolySpirit VARCHAR(2) NOT NULL,
+	ConversionDate DATE NOT NULL,
+	PlaceOfConversion VARCHAR(100) NOT NULL,
+	TimeToGather VARCHAR(50) NOT NULL,
+	PastorsName VARCHAR(100) NOT NULL,
+	SupervisorsName VARCHAR(100) NOT NULL,
+    LeadersName VARCHAR(100) NOT NULL,
+	[Zone] VARCHAR(1) NOT NULL,
+    District VARCHAR(1) NOT NULL,
+    Sector VARCHAR(1) NOT NULL,
+    Cell VARCHAR(1) NOT NULL,
+	CommentsOrObservations VARCHAR(300) NULL,
+	ImageData VARBINARY(MAX) NOT NULL,
+	DateCreated DATETIME NOT NULL,
+    DateModification DATETIME NOT NULL 
+);
+GO
