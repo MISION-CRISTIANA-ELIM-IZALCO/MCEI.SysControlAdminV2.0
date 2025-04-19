@@ -43,7 +43,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.ServerReport___Controller
         #endregion
 
         #region METODO PARA REPORTE POR SU CODIGO DE IDENTIDAD INTERNA
-        // Metodo Para Generar Reporte En PDF Basado En El DUI
+        // Metodo Para Generar Reporte En PDF Basado En El Codigo De Identidad Interna
         [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<ActionResult> GeneratePDFfileByInternalIdentityCode(string internalIdentityCode)
         {
