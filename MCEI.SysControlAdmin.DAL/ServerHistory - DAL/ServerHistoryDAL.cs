@@ -122,8 +122,11 @@ namespace MCEI.SysControlAdmin.DAL.ServerHistory___DAL
             using (var dbContext = new ContextDB())
             {
                 return await dbContext.ServerHistory
-                                      .Include(h => h.Membership).Include(h => h.Privilege) // Cargar propiedad de navegación
-                                      .Where(c => c.Membership!.InternalIdentityCode == internalIdentityCode)
+                                      .Include(h => h.Membership)
+                                      .Include(h => h.Privilege)
+                                      .Where(c => c.Membership != null &&
+                                                  c.Membership.InternalIdentityCode != null &&
+                                                  c.Membership.InternalIdentityCode.Trim().ToLower() == internalIdentityCode.Trim().ToLower())
                                       .ToListAsync();
             }
         }
