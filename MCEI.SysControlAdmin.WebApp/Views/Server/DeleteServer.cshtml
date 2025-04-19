@@ -1,19 +1,19 @@
 ﻿@model MCEI.SysControlAdmin.EN.Server___EN.Server
 
 @{
-    ViewData["Title"] = "Elimnar Servidor";
+    ViewData["Title"] = "Eliminar Servidor";
 }
 
 <br />
 <h1>Formulario Eliminar Servidor</h1>
 <br />
-<p class="alert alert-danger">¿Estas Seguro De Eliminar Este Servidor? Recuerda Que No Podras Revertir Los Cambios</p>
+<p class="alert alert-danger">¿Estás seguro de eliminar este servidor? Recuerda que no podrás revertir los cambios.</p>
 <hr />
 <br />
 
 <div class="container">
     <div class="row">
-        <!-- Columna de información personal del miembro-->
+        <!-- Columna de información personal del miembro -->
         <div class="col-md-8">
             <h3>Información Personal Del Miembro</h3>
             <br />
@@ -44,7 +44,7 @@
                 <dt class="col-sm-4">Profesión u Oficio</dt>
                 <dd class="col-sm-8" id="ProfessionOrStudy"></dd>
 
-                <dt class="col-sm-4">Bautizmo Por El Espiritu Santo</dt>
+                <dt class="col-sm-4">Bautismo Por El Espíritu Santo</dt>
                 <dd class="col-sm-8" id="BaptismOfTheHolySpirit"></dd>
 
                 <dt class="col-sm-4">Zona</dt>
@@ -62,12 +62,11 @@
                 <dt class="col-sm-4">Estado</dt>
                 <dd class="col-sm-8" id="Status"></dd>
 
-                <dt class="col-sm-4">Codigo De Identidad Interna</dt>
+                <dt class="col-sm-4">Código De Identidad Interna</dt>
                 <dd class="col-sm-8" id="InternalIdentityCode"></dd>
 
-                <dt class="col-sm-4">Comnetarios u Observaciones</dt>
+                <dt class="col-sm-4">Comentarios u Observaciones</dt>
                 <dd class="col-sm-8" id="CommentsOrObservations"></dd>
-
             </dl>
         </div>
 
@@ -79,7 +78,7 @@
         </div>
     </div>
 
-    <!-- Sección de información del privilegio -->
+    <!-- Información del privilegio y complementaria -->
     <div class="row">
         <div class="col-md-6">
             <br />
@@ -97,7 +96,6 @@
 
                 <dt class="col-sm-4">Fecha De Modificación</dt>
                 <dd class="col-sm-8" id="DateModification"></dd>
-
             </dl>
         </div>
 
@@ -120,7 +118,7 @@
 
     <br />
 
-    <form id="Form" asp-action="DeleteServer" onsubmit="CreateRecord(event)">
+    <form id="Form" asp-action="DeleteServer">
         <input type="hidden" asp-for="Id" />
         <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
         <input type="submit" value="Eliminar Servidor" class="btn btn-danger" />
@@ -128,12 +126,9 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script>
-         // Función para mostrar alertas de error utilizando SweetAlert2
         function showErrorAlert(message) {
             Swal.fire({
                 title: 'Error',
@@ -142,37 +137,32 @@
             });
         }
 
-        // Evento que se ejecuta una vez que el DOM ha sido completamente cargado
-        document.addEventListener("DOMContentLoaded", function () {
-
-            // Mostrar alerta de ViewBag.Error si es necesario
-            @if (!string.IsNullOrEmpty(ViewBag.Error))
-            {
-                @:showErrorAlert('@ViewBag.Error');
-            }
-
-            function CreateRecord(e) {
-            e.preventDefault();
-            const form = document.getElementById('Form');
-
-            Swal.fire({
-                title: '¿Eliminar Este Servidor?',
-                text: '¿Estas Seguro De Eliminar El Siguiente Servidor? Recuerda No Puedes Revertir Los Cambios',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Si, Eliminar Servidor',
-                cancelButtonText: 'Cancelar',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        }
-        });
-
         $(document).ready(function () {
-            // Función para autocompletar información del Estudiante
+            // Mostrar alerta de error si existe
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <text>showErrorAlert('@ViewBag.Error');</text>
+        }
+
+            // Confirmar eliminación con SweetAlert
+            $('#Form').on('submit', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Eliminar Este Servidor?',
+                    text: '¿Estás seguro de eliminar el siguiente servidor? Recuerda que no puedes revertir los cambios.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, eliminar servidor',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
+
+            // Autocompletar datos del miembro
             function autocompleteMembershipDetails(membershipId) {
                 if (membershipId) {
                     $.ajax({
@@ -197,7 +187,6 @@
                                 $('#Status').text(data.status);
                                 $('#InternalIdentityCode').text(data.internalIdentityCode);
                                 $('#CommentsOrObservations').text(data.commentsOrObservations);
-                                // Actualizar la imagen en la vista previa
                                 $('#imagenPreview').attr('src', 'data:image/jpeg;base64,' + data.photo);
                             }
                         },
@@ -205,26 +194,10 @@
                             showErrorAlert('Error al obtener los detalles del miembro.');
                         }
                     });
-                } else {
-                    // Limpiar los campos si no se selecciona ningún miembro
-                    $$('#Dui').val('');
-                    $('#DateOfBirth').val('');
-                    $('#Age').val('');
-                    $('#CivilStatus').val('');
-                    $('#ProfessionOrStudy').val('');
-                    $('#BaptismOfTheHolySpirit').val('');
-                    $('#Zone').val('');
-                    $('#District').val('');
-                    $('#Sector').val('');
-                    $('#Cell').val('');
-                    $('#Status').val('');
-                    $('#InternalIdentityCode').val('');
-                    $('#CommentsOrObservations').val('');
-                    $('#imagenPreview').attr('src', ''); // Limpiar la imagen
                 }
             }
 
-            // Función para autocompletar información del Curso
+            // Autocompletar datos del privilegio
             function autocompletePrivilegeDetails(privilegeId) {
                 if (privilegeId) {
                     $.ajax({
@@ -244,21 +217,15 @@
                             showErrorAlert('Error al obtener los detalles del privilegio.');
                         }
                     });
-                } else {
-                    // Limpiar los campos si no se selecciona ningún miembro
-                    $('#StatusPrivilege').val('');
-                    $('#DateCreated').val('');
-                    $('#DateModification').val('');
                 }
             }
 
-            // Obtener el Id del modelo
-            var selectedMembershipId = '@Model.IdMembership';
-            var selectedPrivilegeId = '@Model.IdPrivilege';
+            // Autocompletar al cargar la página
+            const membershipId = '@Model.IdMembership';
+            const privilegeId = '@Model.IdPrivilege';
 
-            // Autocompletar al cargar la página si hay un Id seleccionado
-            autocompleteMembershipDetails(selectedMembershipId);
-            autocompletePrivilegeDetails(selectedPrivilegeId);
+            autocompleteMembershipDetails(membershipId);
+            autocompletePrivilegeDetails(privilegeId);
         });
     </script>
 }
