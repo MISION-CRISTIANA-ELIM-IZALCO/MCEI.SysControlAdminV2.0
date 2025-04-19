@@ -1,0 +1,78 @@
+﻿@model List<MCEI.SysControlAdmin.EN.ServerHistory___EN.ServerHistory>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        HistorialDelServidor_@if (Model.Any()){ @Model.First().Membership!.Name @Model.First().Membership!.LastName}
+    </title>
+    <link href="/css/ServerReport/DesignGeneratePDF.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Cabecera con logo e información -->
+        <table>
+            <tr>
+                <td class="logo">
+                    <img src="/assets/images/logos/Logo-Elim-Black.png" alt="Logo Oficial">
+                </td>
+                <td class="text">
+                    <h1>Historial del Servidor</h1>
+                    <h3>Lotificación San Francisco Psje C Casa 5 Pol 6 Izalco</h3>
+                    <h3>Celular: 7435-4408  |  Teléfono: 2445-4322</h3>
+                    <h3>Correo: elimizalco@gmail.com</h3>
+                </td>
+            </tr>
+        </table>
+        <br />
+
+        <!-- Tabla de registros -->
+        <div class="info-complementaria" style="margin-top:30px">
+            <p>
+                <strong>Historial del Servidor:</strong>
+                @if (Model.Any())
+                {
+                    <span>@Model.First().Membership!.Name @Model.First().Membership!.LastName</span>
+                }
+            </p>
+            <p style="margin-top: 2px">
+                <strong>Codigo de Identidad Interna:</strong>
+                @if (Model.Any())
+                {
+                    <span>@Model.First().Membership!.InternalIdentityCode</span>
+                }
+            </p>
+            <br />
+            <h2 style="text-align:center;"><strong>Lista de Resultados</strong></h2>
+            <table class="table table-bordered" style="width:100%; border-collapse:collapse; text-align:left; margin-top:20px; text-align:center;">
+                <thead>
+                    <tr style="background-color:#f2f2f2;">
+                        <th style="padding:8px; border:1px solid #ddd;">Nombre</th>
+                        <th style="padding:8px; border:1px solid #ddd;">Apellido</th>
+                        <th style="padding:8px; border:1px solid #ddd;">Privilegio</th>
+                        <th style="padding:8px; border:1px solid #ddd;">Fecha de Asignacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="padding:8px; border:1px solid #ddd; text-align:center;">@item.Membership!.Name</td>
+                            <td style="padding:8px; border:1px solid #ddd; text-align:center;">@item.Membership!.LastName</td>
+                            <td style="padding:8px; border:1px solid #ddd; text-align:center;">@item.Privilege!.Name</td>
+                            <td style="padding:8px; border:1px solid #ddd; text-align:center;">@item.DateModification.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+</body>
+</html>
