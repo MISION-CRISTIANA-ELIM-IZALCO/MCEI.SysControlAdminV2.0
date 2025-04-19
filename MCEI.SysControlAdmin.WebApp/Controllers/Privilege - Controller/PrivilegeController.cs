@@ -21,7 +21,7 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Privilege___Controller
 
         #region METODO PARA GUARDAR
         // Metodo Para Mostrar La Vista Guardar
-        [Authorize(Roles = "Desarrollador, Administrador. Digitador")]
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
         public IActionResult CreatePrivilege()
         {
             ViewBag.Error = "";
