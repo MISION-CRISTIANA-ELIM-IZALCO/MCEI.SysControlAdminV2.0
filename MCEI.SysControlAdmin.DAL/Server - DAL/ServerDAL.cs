@@ -27,6 +27,15 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             return existingServer != null;
         }
 
+        // Metodo para validar si ya existe el servidor en base al codigo de identidad interna
+        private static async Task<bool> ExistServerByInternalIdentityCode(Server server, ContextDB contextDB)
+        {
+            var existingServerInternalIdentityCode = await contextDB.Server.FirstOrDefaultAsync(s =>
+            s.Membership!.InternalIdentityCode == server.Membership!.InternalIdentityCode);
+
+            return existingServerInternalIdentityCode != null;
+        }
+
         // Metodo Para Validar Si El Miembro Esta Activo
         private static async Task<bool> IsMembershipActive(int membershipId, ContextDB contextDB)
         {
@@ -67,6 +76,12 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
                 if (await ExistServer(server, contextDB))
                 {
                     throw new Exception("Servidor ya existente, vuelve a intentarlo nuevamente.");
+                }
+
+                // Validar si ya existe en base al Codigo De Identidad Interna
+                if (await ExistServerByInternalIdentityCode(server, contextDB))
+                {
+                    throw new Exception("Servidor Con Codigo De Identidad Interna ya existente, vuelve a intentarlo nuevamente.");
                 }
 
                 // Validar si el miembro esta activo
