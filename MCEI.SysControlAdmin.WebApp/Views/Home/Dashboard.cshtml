@@ -1,0 +1,418 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid px-4">
+    <br />
+
+    <!-- Tarjetas informativas -->
+    <div class="row" style="text-align:center;">
+        <!-- Total de Miembros -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Total de Miembros</h3>
+                    <h5 class="card-text fs-4 text-white">@ViewData["TotalMiembros"] Miembros</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Privilegios -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Total de Privilegios</h3>
+                    <h5 class="card-text fs-4 text-white">@ViewData["TotalPrivilegios"] Privilegios</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total de Servidores -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card text-white bg-warning shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Total de Servidores</h3>
+                    <h5 class="card-text fs-4 text-white">@ViewData["TotalServidores"] Servidores</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acordeón con gráficas -->
+    <div class="accordion" id="accordionGraficas">
+
+        <!-- Membresía -->
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white" id="headingMembresia"
+                 data-toggle="collapse" data-target="#collapseMembresia" aria-expanded="true" aria-controls="collapseMembresia" style="cursor: pointer;">
+                <h5 class="mb-0">📊 Gráficas de Membresía</h5>
+            </div>
+
+            <div id="collapseMembresia" class="collapse show" aria-labelledby="headingMembresia" data-parent="#accordionGraficas">
+                <!-- Contenedor principal -->
+                <div class="container-fluid mt-4">
+                    <div class="row justify-content-center">
+                        <!-- Gráfico Miembros Categorizados Por Su Edad -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Resumen De Miembros Categorizados Por Edad</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="miembrosCategorizadosPorEdadChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gráfico Miembros Masculinos y Femeninos -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Resumen De Miembros Por Genero</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="miembrosPorGeneroChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gráfico Total de Miembros por Estado Civil -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Miembros por Estado Civil</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="miembrosPorEstadoCivilChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contenedor principal -->
+                <div class="container-fluid mt-4">
+                    <div class="row justify-content-center">
+                        <!-- Gráfico: Bautismo en el Espíritu Santo -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Miembros Bautizados en el Espíritu Santo</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="bautizadosEspirituChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gráfico: Miembros Activos e Inactivos -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Miembros Activos e Inactivos</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="miembrosActivosInactivosChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Servidores -->
+        <div class="card">
+            <div class="card-header bg-secondary text-white" id="headingServidores"
+                 data-toggle="collapse" data-target="#collapseServidores" aria-expanded="false" aria-controls="collapseServidores" style="cursor: pointer;">
+                <h5 class="mb-0">📈 Gráficas de Servidores</h5>
+            </div>
+
+            <div id="collapseServidores" class="collapse" aria-labelledby="headingServidores" data-parent="#accordionGraficas">
+                <!-- Contenedor principal -->
+                <div class="container-fluid mt-4">
+                    <div class="row justify-content-center">
+                        <!-- Gráfico: Servidores por género -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Resumen De Servidores Por Genero</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="servidoresPorGeneroChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gráfico: Servidores Bautismo en el Espíritu Santo -->
+                        <div class="col-md-4 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow" style="height: 350px;">
+                                <h5 class="text-center">Servidores Bautizados en el Espíritu Santo</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="servidoresBautizadosPorElEspirituSantoChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenedor principal -->
+                <div class="container-fluid mt-4">
+                    <div class="row justify-content-center">
+                        <!-- Gráfico: Total de Servidores Segun Su Privilegio -->
+                        <div class="col-md-12 d-flex justify-content-center mb-3">
+                            <div class="card p-3 shadow w-100" style="height: 400px;">
+                                <h5 class="text-center">Total de Servidores Según Privilegio</h5>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                    <canvas id="servidoresPorPrivilegioChart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+@section Scripts {
+
+    <script>
+        // Grafico miembros categorizados por edad
+        var ctx = document.getElementById("miembrosCategorizadosPorEdadChart").getContext("2d");
+
+        var totalNinos = parseInt('@ViewData["TotalNinos"]') || 0;
+        var totalAdolescentes = parseInt('@ViewData["TotalAdolescentes"]') || 0;
+        var totalJovenes = parseInt('@ViewData["TotalJovenes"]') || 0;
+        var totalAdultos = parseInt('@ViewData["TotalAdultos"]') || 0;
+
+        var miembrosCategorizadosPorEdadChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["NIÑOS (5-12 años)", "ADOLECENTES (13-17 años)", "JÓVENES (18-25 años)", "ADULTOS (26+ años)"],
+                datasets: [{
+                    label: "Cantidad de Miembros",
+                    data: [totalNinos, totalAdolescentes, totalJovenes, totalAdultos],
+                    backgroundColor: [
+                        "rgba(54, 162, 235, 0.6)",  // Azul para Niños
+                        "rgba(255, 206, 86, 0.6)",  // Amarillo para Adolescentes
+                        "rgba(75, 192, 192, 0.6)",  // Verde para Jóvenes
+                        "rgba(255, 99, 132, 0.6)"   // Rojo para Adultos
+                    ],
+                    borderColor: [
+                        "rgba(54, 162, 235, 1)",
+                        "rgba(255, 206, 86, 1)",
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(255, 99, 132, 1)"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Asegura que los valores sean enteros
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Oculta la leyenda
+                    }
+                }
+            }
+        });
+
+        // Grafico Miembros Por Genero Masculino y Femenino
+        var totalMasculinos = @ViewData["TotalMiembrosMasculinos"];
+        var totalFemeninos = @ViewData["TotalMiembrosFemeninos"];
+
+        // Obtener el contexto del canvas
+        var ctx = document.getElementById("miembrosPorGeneroChart").getContext("2d");
+
+        // Crear el gráfico de barras
+        var alumnosPorGeneroChart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico: Barra
+            data: {
+                labels: ["MASCULINO", "FEMENINO"], // Etiquetas
+                datasets: [{
+                    label: "Cantidad de Miembros",
+                    data: [totalMasculinos, totalFemeninos], // Valores desde ViewData
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)', // Azul para Masculinos
+                        'rgba(255, 99, 132, 0.7)' // Rojo para Femeninos
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Para evitar valores decimales si los datos son enteros
+                        }
+                    }
+                }
+            }
+        });
+
+        fetch('/Home/GetMiembrosPorEstadoCivil')
+        .then(response => response.json())
+        .then(result => {
+            const ctx = document.getElementById('miembrosPorEstadoCivilChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: result.labels,
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: result.data,
+                        backgroundColor: '#17a2b8',
+                        borderColor: '#138496',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1 // Para evitar valores decimales si los datos son enteros
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        var ctxBautismo = document.getElementById('bautizadosEspirituChart').getContext('2d');
+        var bautismoChart = new Chart(ctxBautismo, {
+            type: 'pie',
+            data: {
+                labels: ['SI', 'NO'],
+                datasets: [{
+                    data: [@ViewData["BautizadosEspirituSanto"], @ViewData["NoBautizadosEspirituSanto"]],
+                    backgroundColor: ['#17a2b8', 'rgba(255, 99, 132, 0.7)'], // Verde y rojo
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+            var ctxActivosInactivos = document.getElementById('miembrosActivosInactivosChart').getContext('2d');
+        var miembrosActivosInactivosChart = new Chart(ctxActivosInactivos, {
+            type: 'pie',
+            data: {
+                labels: ['Activos', 'Inactivos'],
+                datasets: [{
+                    data: [@ViewData["TotalMiembrosActivos"], @ViewData["TotalMiembrosInactivos"]],
+                    backgroundColor: ['#17a2b8', '#6c757d'], // Azul y gris
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+        // Grafico Servidores Por Genero Masculino y Femenino
+        var totalMasculinosServidores = @ViewData["TotalServidoresMasculinos"];
+        var totalFemeninosServerdores = @ViewData["TotalServidoresFemeninos"];
+
+        // Obtener el contexto del canvas
+        var ctx = document.getElementById("servidoresPorGeneroChart").getContext("2d");
+
+        // Crear el gráfico de barras
+        var servidoresPorGeneroChart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico: Barra
+            data: {
+                labels: ["MASCULINO", "FEMENINO"], // Etiquetas
+                datasets: [{
+                    label: "Cantidad de Servidores",
+                    data: [totalMasculinosServidores, totalFemeninosServerdores], // Valores desde ViewData
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)', // Azul para Masculinos
+                        'rgba(255, 99, 132, 0.7)' // Rojo para Femeninos
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Para evitar valores decimales si los datos son enteros
+                        }
+                    }
+                }
+            }
+        });
+
+
+        var ctxBautismoServer = document.getElementById('servidoresBautizadosPorElEspirituSantoChart').getContext('2d');
+        var bautismoServerChart = new Chart(ctxBautismoServer, {
+            type: 'pie',
+            data: {
+                labels: ['SI', 'NO'],
+                datasets: [{
+                    data: [@ViewData["TotalServidoresBautisadosPorElEspirituSanto"], @ViewData["TotalServidoresNoBautisadosPorElEspirituSanto"]],
+                    backgroundColor: ['#17a2b8', 'rgba(255, 99, 132, 0.7)'], // Verde y rojo
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+        const servidoresData = @Html.Raw(Json.Serialize(ViewData["ServersByPrivilege"]));
+
+        const labelsServidores = Object.keys(servidoresData);
+        const dataServidores = Object.values(servidoresData);
+
+        const ctxServidoresPrivilegio = document.getElementById('servidoresPorPrivilegioChart').getContext('2d');
+        new Chart(ctxServidoresPrivilegio, {
+            type: 'bar',
+            data: {
+                labels: labelsServidores,
+                datasets: [{
+                    label: 'Cantidad de Servidores',
+                    data: dataServidores,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1 // Para evitar valores decimales si los datos son enteros
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
