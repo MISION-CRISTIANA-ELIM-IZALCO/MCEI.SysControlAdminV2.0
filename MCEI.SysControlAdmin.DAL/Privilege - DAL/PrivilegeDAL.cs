@@ -159,5 +159,16 @@ namespace MCEI.SysControlAdmin.DAL.Privilege___DAL
             return result;
         }
         #endregion
+
+        #region METODOS PARA OBTENCION DE DATOS PARA EL DASHBOARD
+        // Metodo para obtener el total de privilegios
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Privilege.CountAsync();
+            }
+        }
+        #endregion
     }
 }

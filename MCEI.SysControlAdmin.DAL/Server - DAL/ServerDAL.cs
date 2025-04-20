@@ -273,5 +273,64 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             }
         }
         #endregion
+
+        #region METODOS PARA OBTENCION DE DATOS PARA EL DASHBOARD
+        // Metodo para obtener el total de servidores
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Server.CountAsync();
+            }
+        }
+
+        // Metodo para obtener el total de servidores por genero masculino y femenino
+        public static async Task<(int masculino, int femenino)> GetServerByGenderAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var masculino = await dbContext.Server.Where(s => s.Membership!.Gender == "MASCULINO").CountAsync();
+                var femenino = await dbContext.Server.Where(s => s.Membership!.Gender == "FEMENINO").CountAsync();
+
+                return (masculino, femenino);
+            }
+        }
+
+        // Metodo para obtener el total de servidores bautisados y no bautisados por el espiritu santo
+        public static async Task<(int si, int no)> GetBautizadosEspirituSantoAsync()
+        {
+            using ( var dbContext = new ContextDB())
+            {
+                var si = await dbContext.Server.Where(s => s.Membership!.BaptismOfTheHolySpirit == "SI").CountAsync();
+                var no = await dbContext.Server.Where(s => s.Membership!.BaptismOfTheHolySpirit == "NO").CountAsync();
+
+                return (si, no);
+            }
+        }
+
+        // Metodo para obtener y mostrar los servidores por su privilegio asignado
+        public async Task<Dictionary<string, int>> GetServerCountByPrivilegeAsync()
+        {
+            using (var context = new ContextDB())
+            {
+                var allPrivileges = await context.Privilege.ToListAsync();
+
+                var serversGrouped = await context.Server
+                    .GroupBy(s => s.IdPrivilege)
+                    .Select(g => new { PrivilegeId = g.Key, Count = g.Count() })
+                    .ToListAsync();
+
+                var result = allPrivileges
+                    .Select(p => new
+                    {
+                        PrivilegeName = p.Name,
+                        Count = serversGrouped.FirstOrDefault(g => g.PrivilegeId == p.Id)?.Count ?? 0
+                    })
+                    .ToDictionary(x => x.PrivilegeName, x => x.Count);
+
+                return result;
+            }
+        }
+        #endregion
     }
 }

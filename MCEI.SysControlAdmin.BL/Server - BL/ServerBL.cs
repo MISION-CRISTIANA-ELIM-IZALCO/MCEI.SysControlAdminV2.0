@@ -76,5 +76,32 @@ namespace MCEI.SysControlAdmin.BL.Server___BL
             return await ServerDAL.GetActiveServersGroupedByPrivilegeAsync();
         }
         #endregion
+
+        #region METODOS PARA OBTENCION DE DATOS PARA EL DASHBOARD
+        // Metodo para obtener el total de servidores
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await ServerDAL.GetTotalCountAsync();
+        }
+
+        // Metodo para obtener el total de servidores por genero masculino y femenino
+        public async Task<(int masculino, int femenino)> GetServerByGenderAsync()
+        {
+            return await ServerDAL.GetServerByGenderAsync();
+        }
+
+        // Metodo para obtener el total de servidores bautisados y no bautisados por el espiritu santo
+        public async Task<(int si, int no)> GetBautizadosEspirituSantoAsync()
+        {
+            return await ServerDAL.GetBautizadosEspirituSantoAsync();
+        }
+
+        // Metodo para obtener y mostrar los servidores por su privilegio asignado
+        public async Task<Dictionary<string, int>> GetServerCountByPrivilegeAsync()
+        {
+            ServerDAL serverDAL = new ServerDAL();
+            return await serverDAL.GetServerCountByPrivilegeAsync();
+        }
+        #endregion
     }
 }

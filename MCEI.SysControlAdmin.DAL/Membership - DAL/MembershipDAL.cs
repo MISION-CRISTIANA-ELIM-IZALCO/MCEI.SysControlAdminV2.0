@@ -211,5 +211,121 @@ namespace MCEI.SysControlAdmin.DAL.Membership___DAL
             return result;  // Si se realizo con exito devuelve 1 sino devuelve 0
         }
         #endregion
+
+        #region METODOS PARA OBTENCION DE DATOS PARA EL DASHBOARD
+        // Metodo para obtener el total de miembros
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Membership.CountAsync();
+            }
+        }
+
+        // Metodo para obtener la edad de los miembros y categorizarla
+        public Dictionary<string, int> GetMembershipsByAgeCategory()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var memberships = dbContext.Membership
+                    .Where(s => !string.IsNullOrEmpty(s.Age)) // Filtrar edades no nulas o vacías
+                    .ToList();
+
+                // Inicializar categorías
+                int totalNinos = 0;
+                int totalAdolescentes = 0;
+                int totalJovenes = 0;
+                int totalAdultos = 0;
+
+                foreach (var student in memberships)
+                {
+                    // Intentar convertir la edad de string a int
+                    if (int.TryParse(student.Age, out int age))
+                    {
+                        if (age >= 5 && age <= 12) totalNinos++;
+                        else if (age >= 13 && age <= 17) totalAdolescentes++;
+                        else if (age >= 18 && age <= 25) totalJovenes++;
+                        else if (age >= 26) totalAdultos++;
+                    }
+                }
+
+                return new Dictionary<string, int>
+                {
+                    { "Niños (5-12)", totalNinos },
+                    { "Adolescentes (13-17)", totalAdolescentes },
+                    { "Jóvenes (18-25)", totalJovenes },
+                    { "Adultos (26+)", totalAdultos }
+                };
+            }
+        }
+
+        // Metodo para obtener el total de mimebros por genero masculino y femenino
+        public static async Task<(int masculino, int femenino)> GetMembershipsByGenderAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var masculino = await dbContext.Membership.Where(s => s.Gender == "Masculino").CountAsync();
+                var femenino = await dbContext.Membership.Where(s => s.Gender == "Femenino").CountAsync();
+
+                return (masculino, femenino);
+            }
+        }
+
+        // Formateo de Estados Civiles
+        private static readonly List<string> CivilStatus = new List<string>
+        {
+            "SOLTERO/A",
+            "CASADO/A",
+            "DIVORCIADO/A",
+            "VIUDO/A",
+        };
+
+        // Metodo para obtener el total de miembros segun su estado civil
+        public async Task<Dictionary<string, int>> GetTotalByEstadoCivilAsync()
+        {
+            using (var db = new ContextDB())
+            {
+                var conteo = await db.Membership
+                    .GroupBy(m => m.CivilStatus)
+                    .Select(g => new { CivilStatus = g.Key ?? "No Especificado", Total = g.Count() })
+                    .ToListAsync();
+
+                var resultado = new Dictionary<string, int>();
+
+                // Asegurar que todos los estados estén presentes, incluso con 0
+                foreach (var estado in CivilStatus)
+                {
+                    var existente = conteo.FirstOrDefault(x => x.CivilStatus == estado);
+                    resultado[estado] = existente?.Total ?? 0;
+                }
+
+                return resultado;
+            }
+        }
+
+        // Metodo para obtener el total de miembros segun si son o no bautisados por el espiritu santo
+        public async Task<(int bautizados, int noBautizados)> GetBautizadosEspirituSantoAsync()
+        {
+            using (var db = new ContextDB())
+            {
+                int bautizados = await db.Membership.CountAsync(m => m.BaptismOfTheHolySpirit == "SI");
+                int noBautizados = await db.Membership.CountAsync(m => m.BaptismOfTheHolySpirit == "NO");
+
+                return (bautizados, noBautizados);
+            }
+        }
+
+        // Metodo para obtener el total de miembros por estado activo o inactivo
+        public static async Task<(int totalActivos, int totalInactivos)> GetTotalByStatusAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                int totalActivos = await dbContext.Membership.CountAsync(t => t.Status == 1);
+                int totalInactivos = await dbContext.Membership.CountAsync(t => t.Status == 2);
+
+                return (totalActivos, totalInactivos);
+            }
+        }
+        #endregion
     }
 }

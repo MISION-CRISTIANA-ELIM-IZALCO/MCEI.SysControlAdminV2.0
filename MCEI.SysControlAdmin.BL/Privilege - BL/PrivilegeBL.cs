@@ -71,5 +71,13 @@ namespace MCEI.SysControlAdmin.BL.Privilege___BL
             return await PrivilegeDAL.DeleteAsync(privilege);
         }
         #endregion
+
+        #region METODOS PARA OBTENCION DE DATOS PARA EL DASHBOARD
+        // Metodo para obtener el total de privilegios
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await PrivilegeDAL.GetTotalCountAsync();
+        }
+        #endregion
     }
 }

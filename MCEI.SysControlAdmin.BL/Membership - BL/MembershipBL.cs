@@ -72,5 +72,46 @@ namespace MCEI.SysControlAdmin.BL.Membership___BL
             return await MembershipDAL.DeleteAsync(membership);
         }
         #endregion
+
+        #region METODOS PARA OBTENCION DE DATOS PARA EL DASHBOARD
+        // Metodo para obtener el total de miembros
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await MembershipDAL.GetTotalCountAsync();
+        }
+
+        // Metodo para obtener la edad de los miembros y categorizarla
+        public Dictionary<string, int> GetMembershipsAgeCategories()
+        {
+            MembershipDAL membershipDAL = new MembershipDAL();
+            return membershipDAL.GetMembershipsByAgeCategory();
+        }
+
+        // Metodo para obtener el total de miembros por genero masculino y femenino
+        public async Task<(int masculino, int femenino)> GetMembershipsByGenderAsync()
+        {
+            return await MembershipDAL.GetMembershipsByGenderAsync();
+        }
+
+        // Metodo para obtener el total de miembros segun su estado civil
+        public async Task<Dictionary<string, int>> GetTotalByEstadoCivilAsync()
+        {
+            MembershipDAL membershipDAL = new MembershipDAL();
+            return await membershipDAL.GetTotalByEstadoCivilAsync();
+        }
+
+        // Metodo para obtener el total de miembros segun si son o no bautisados por el espiritu santo
+        public async Task<(int bautizados, int noBautizados)> GetBautizadosEspirituSantoAsync()
+        {
+            MembershipDAL membershipDAL = new MembershipDAL();
+            return await membershipDAL.GetBautizadosEspirituSantoAsync();
+        }
+
+        // Método para obtener el total de miembros por estado (Activo/Inactivo)
+        public async Task<(int totalActivos, int totalInactivos)> GetTotalByStatusAsync()
+        {
+            return await MembershipDAL.GetTotalByStatusAsync();
+        }
+        #endregion
     }
 }
