@@ -1,108 +1,229 @@
-﻿body {
+﻿/* Config. general */
+body {
     font-family: 'Roboto', sans-serif;
 }
 
-.container {
-    width: 100%;
-    margin: 0 auto;
+/*Estilo del encavezado*/
+.encavezado {
+    margin: 0px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.logo-principal {
+    padding-left: 53px;
 }
 
-td {
-    vertical-align: top;
-    padding: 10px;
-}
-
-.logo {
-    width: 30%;
-}
-
-.text {
-    width: 70%;
+.membretado {
+    padding-left: 30px;
     text-align: center;
 }
 
-h1, h2, h3 {
-    margin: 5px 0;
+.membretado h1 {
+    font-size: 25px;
+    margin-bottom: 0px;
 }
 
-h1 {
-    font-size: 24px;
-    font-weight: 700;
+.membretado p {
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-h2 {
-    font-size: 20px;
-    font-weight: 500;
+.fotografia {
+    padding-left: 30px;
 }
 
-h3 {
-    font-size: 16px;
-    font-weight: 400;
-}
-
-/* Estilos para la nueva sección de información complementaria */
-.info-complementaria {
-    width: 100%;
-}
-
-.info-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px; /* Añade espacio entre los grupos de dos elementos */
-}
-
-    .info-group p {
-        width: 48%; /* Asegura que los párrafos ocupen el 48% del ancho para dejar espacio entre ellos */
-        margin: 0;
-        font-size: 18px;
-    }
-
-.info-group-wide {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px; /* Añade espacio entre los grupos especiales como Zona, Distrito y Sector */
-}
-
-    .info-group-wide p {
-        width: 32%; /* Ajusta el ancho para que los tres párrafos quepan en una línea */
-        margin: 0;
-        font-size: 18px;
-    }
-
-/* Otros estilos existentes */
-.info {
-    width: 70%;
-}
-
-.image {
-    width: 30%;
+/*Estilo sub-encavezados*/
+.sub-encavezado-1 {
+    background-color: #f0f0f0;
+    border: 1px solid #000;
     text-align: center;
 }
 
-p {
-    margin: 10px 0; /* Aumenta el espacio entre los párrafos */
-    font-size: 20px; /* Tamaño de la fuente más grande */
-}
-
-.label {
-    font-weight: bold;
-}
-
-.line-group {
+.content{
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px; /* Aumenta el espacio entre los grupos de línea */
 }
 
-img {
-    max-width: 90%; /* Ajusta el tamaño máximo de la imagen */
-    height: auto;
-    margin-top: 20px; /* Añade un margen superior a la imagen */
-    float: left; /* Hace que la imagen flote hacia la izquierda */
-    margin-right: 50px; /* Añade espacio entre la imagen y el texto */
+.nombre {
+    display: inline;
+    margin-left: 25px;
+}
+
+.apellido {
+    display: inline;
+    margin-left: 25px;
+}
+
+.dui {
+    display: inline;
+    margin-left: 25px;
+}
+
+.genero {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-nacimiento {
+    display: inline;
+    margin-left: 25px;
+}
+
+.edad {
+    display: inline;
+    margin-left: 25px;
+}
+
+.estado-civil {
+    display: inline;
+    margin-left: 25px;
+}
+
+.telefono {
+    display: inline;
+    margin-left: 25px;
+}
+
+.direccion-de-residencia {
+    display: inline;
+    margin-left: 25px;
+}
+
+.profesion-u-oficio {
+    display: inline;
+    margin-left: 25px;
+}
+
+.lugar-de-trabajo-u-estudio {
+    display: inline;
+    margin-left: 15px;
+}
+
+.nombres-del-esposo-a {
+    display: inline;
+    margin-left: 25px;
+}
+
+.apellidos-del-esposo-a {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-nacimiento-del-esposo-a {
+    display: inline;
+    margin-left: 25px;
+}
+
+.edad-del-esposo-a {
+    display: inline;
+    margin-left: 25px;
+}
+
+.genero-del-esposo-a {
+    display: inline;
+    margin-left: 25px;
+}
+
+.telefono-del-esposo-a {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-conversion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.lugar-de-conversion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.bautismo-en-agua {
+    display: inline;
+    margin-left: 25px;
+}
+
+.bautismos-en-espiritu-santo {
+    display: inline;
+    margin-left: 25px;
+}
+
+.tiempo-de-asistir {
+    display: inline;
+    margin-left: 25px;
+}
+
+.nombre-del-pastor {
+    display: inline;
+    margin-left: 25px;
+}
+
+.nombre-del-supervisor {
+    display: inline;
+    margin-left: 10px;
+}
+
+.nombre-del-lider {
+    display: inline;
+    margin-left: 25px;
+}
+
+.zona {
+    display: inline;
+    margin-left: 25px;
+}
+
+.distrito {
+    display: inline;
+    margin-left: 25px;
+}
+
+.sector {
+    display: inline;
+    margin-left: 25px;
+}
+
+.celula {
+    display: inline;
+    margin-left: 25px;
+}
+
+.codigo-de-identidad-interna {
+    display: inline;
+    margin-left: 25px;
+}
+
+.estado {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-creacion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-modificacion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.comentarios-u-observaciones {
+    display: inline; /* Muy importante: inline-block, no inline */
+    margin-left: 25px;
+    max-width: 800px; /* Aproximadamente 50 caracteres de ancho */
+    overflow-wrap: break-word; /* Permite saltar palabra si es necesario */
+    word-break: break-word; /* Asegura que se corte si una palabra es larga */
+}
+
+.footer {
+    position: fixed; /* Fija el footer */
+    bottom: 0; /* Lo coloca en la parte inferior */
+    width: 100%; /* Ocupa todo el ancho */
+    background-color: #f8f9fa; /* Fondo claro (puedes cambiarlo) */
+    color: #6c757d; /* Texto más tenue (gris Bootstrap) */
+    text-align: center; /* Centrado */
+    padding: 10px 0; /* Espaciado */
+    font-size: 0.9rem; /* Tamaño un poco más pequeño */
+    border-top: 1px solid #dee2e6; /* Línea superior sutil */
 }

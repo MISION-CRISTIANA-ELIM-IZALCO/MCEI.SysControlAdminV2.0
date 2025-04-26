@@ -14,6 +14,7 @@ using System.Reflection;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
 using MCEI.SysControlAdmin.Core.Utils;
+using Rotativa.AspNetCore;
 
 #endregion
 
@@ -312,6 +313,20 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
                     membershipDB = new Membership();
                 return View(membershipDB);
             }
+        }
+        #endregion
+
+        #region METODO PARA FICHA OFICIAL
+        // Metodo Para Generar Ficha o Reporte En PDF 
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<ActionResult> GeneratePDFfileMembership(int id)
+        {
+            var generatePDF = await membershipBL.GetByIdAsync(new Membership { Id = id });
+            string fileName = $"Ficha_{generatePDF.Name}_{generatePDF.LastName}_{generatePDF.InternalIdentityCode}_MCEI.pdf";
+            return new ViewAsPdf("GeneratePDFfileMembership", generatePDF)
+            {
+                FileName = fileName
+            };
         }
         #endregion
     }
