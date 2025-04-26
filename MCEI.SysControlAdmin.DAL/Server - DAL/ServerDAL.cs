@@ -124,7 +124,7 @@ namespace MCEI.SysControlAdmin.DAL.Server___DAL
             var serverDB = new Server();
             using (var dbContext = new ContextDB())
             {
-                serverDB = await dbContext.Server.FirstOrDefaultAsync(c => c.Id == server.Id);
+                serverDB = await dbContext.Server.Include(m => m.Membership).Include(p => p.Privilege).FirstOrDefaultAsync(c => c.Id == server.Id);
             }
             return serverDB!;
         }
