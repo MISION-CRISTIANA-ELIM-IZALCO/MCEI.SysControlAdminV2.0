@@ -1,0 +1,157 @@
+﻿@model MCEI.SysControlAdmin.EN.Server___EN.Server
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>FichaServidor_@Model.Membership?.Name @Model.Membership?.LastName - @Model.Membership?.InternalIdentityCode</title>
+    <link href="~/css/Server/DesignGeneratePDF.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Encavezado -->
+    <table>
+        <tr class="encavezado">
+            <td class="logo-principal">
+                <img src="~/assets/images/logos/Logo-Sin-Letras-Black.png" alt="Alternate Text" width="100" />
+            </td>
+            <td class="membretado">
+                <h1>Ficha Servidor - Misión Cristiana Elim Izalco</h1>
+                <p>Lotificación San Francisco Psje c Casa 5 Pol 6 Izalco</p>
+                <p>Celular: 7435-4408 | Teléfono: 2445-4322</p>
+                <p>Correo Electronico: elimizalco@gmail.com</p>
+            </td>
+            <td>
+                <!-- Fotografía -->
+                @if (Model.Membership?.ImageData != null)
+                {
+                    <img src="data:image/png;base64,@Convert.ToBase64String(Model.Membership.ImageData)" alt="Fotografía" class="fotografia" width="100" />
+                }
+            </td>
+        </tr>
+    </table>
+    <br />
+    <!-- Informacion personal-->
+    <div class="sub-encavezado-1">
+        <h3><strong>Información Personal Del Miembro</strong></h3>
+    </div>
+    <br />
+    <div class="content">
+        <p class="nombre"><strong>Nombre:</strong> @Model.Membership!.Name</p>
+        <p class="apellido"><strong>Apellido:</strong> @Model.Membership.LastName</p>
+        <p class="dui"><strong>Dui:</strong> @(Model.Membership.Dui != null ? Model.Membership.Dui : "Menor de Edad")</p>
+        <p class="genero"><strong>Género:</strong> @Model.Membership.Gender</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="fecha-de-nacimiento"><strong>Fecha de Nacimiento:</strong> @Model.Membership.DateOfBirthFormatted</p>
+        <p class="edad"><strong>Edad:</strong> @Model.Membership.Age Años</p>
+        <p class="estado-civil"><strong>Estado Civil:</strong> @Model.Membership.CivilStatus</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="profesion-u-oficio"><strong>Profesión u Oficio:</strong> @Model.Membership.ProfessionOrStudy</p>
+        <p class="bautismos-en-espiritu-santo"><strong>Bautismo por el Espíritu Santo:</strong> @Model.Membership.BaptismOfTheHolySpirit</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="zona"><strong>Zona:</strong> @(Model.Membership.Zone != null ? Model.Membership.Zone : "Vacío")</p>
+        <p class="distrito"><strong>Distrito:</strong> @(Model.Membership.District != null ? Model.Membership.District : "Vacío")</p>
+        @if (Model.Membership.Sector != "0")
+        {
+            <p class="sector"><strong>Sector:</strong> @Model.Membership.Sector</p>
+        }
+        else if (Model.Membership.Sector == "0")
+        {
+            <p class="sector"><strong>Sector:</strong> SOY SUPERVISOR</p>
+        }
+
+        @if (Model.Membership.Cell != "0")
+        {
+            <p class="celula"><strong>Celula:</strong> @Model.Membership.Cell</p>
+        }
+        else if (Model.Membership.Sector == "0" && Model.Membership.Cell == "0")
+        {
+            <p class="celula"><strong>Celula:</strong> SOY SUPERVISOR</p>
+        }
+        else if (Model.Membership.Sector != "0" && Model.Membership.Cell == "0")
+        {
+            <p class="celula"><strong>Celula:</strong> SOY LIDER</p>
+        }
+        <p class="estado"><strong>Estado:</strong> @(Model.Membership.Status == 1 ? "ACTIVO" : "INACTIVO")</p>
+        <p class="codigo-de-identidad-interna"><strong>Codigo De Identidad Interna:</strong> @Model.Membership.InternalIdentityCode</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="comentarios-u-observaciones"><strong>Comentarios u Observaciones:</strong> @(Model.Membership.CommentsOrObservations != null ? Model.Membership.CommentsOrObservations : "Vacío")</p>
+    </div>
+    <br />
+    <br />
+    <!-- Informacion del privilegio-->
+    <div class="sub-encavezado-1">
+        <h3><strong>Información Del Privilegio</strong></h3>
+    </div>
+    <br />
+    <div class="content">
+        <p class="privilegio"><strong>Privilegio:</strong> @Model.Privilege!.Name</p>
+        <p class="estado-privilegio"><strong>Estado:</strong> @(Model.Privilege.Status == 1 ? "ACTIVO" : "INACTIVO")</p>
+        <p class="fecha-de-creacion-privilegio"><strong>Fecha De Creación</strong> @Model.Privilege.DateCreatedFormatted - @Model.Privilege.TimeCreatedFormatted</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="fecha-de-modificacion-privilegio"><strong>Fecha De Modificación</strong> @Model.Privilege.DateModificationFormatted - @Model.Privilege.TimeModificationFormatted</p>
+    </div>
+    <br />
+    <br />
+    <!-- Informacion complementaria-->
+    <div class="sub-encavezado-1">
+        <h3><strong>Información Complementaria</strong></h3>
+    </div>
+    <br />
+    <div class="content">
+        <p class="estado-servidor"><strong>Estado:</strong> @(Model.Status == 1 ? "ACTIVO" : "INACTIVO")</p>
+        <p class="fecha-de-creacion-servidor"><strong>Fecha De Creación</strong> @Model.DateCreatedFormatted - @Model.TimeCreatedFormatted</p>
+        <p class="fecha-de-modificacion-servidor"><strong>Fecha De Modificación</strong> @Model.DateModificationFormatted - @Model.TimeModificationFormatted</p>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <!-- Pie de pagina-->
+    <footer class="footer">Ficha Servidor Misión Cristiana Elim Izalco <span id="currentYear"></span> © | Generado en Sistema de Control Administrativo Elim Izalco</footer>
+
+    <script>
+        // Obtiene el año actual y lo inserta en el elemento con id "currentYear"
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

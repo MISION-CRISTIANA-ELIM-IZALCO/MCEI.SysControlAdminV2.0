@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MCEI.SysControlAdmin.Core.Utils;
+using Rotativa.AspNetCore;
 
 #endregion
 
@@ -325,6 +326,20 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Server___Controller
                 serverDB.Privilege = await privilegeBL.GetByIdAsync(new Privilege { Id = serverDB.IdPrivilege });
                 return View(serverDB);
             }
+        }
+        #endregion
+
+        #region METODO PARA FICHA OFICIAL
+        // Metodo Para Generar Ficha o Reporte En PDF 
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<ActionResult> GeneratePDFfileServer(int id)
+        {
+            var generatePDF = await serverBL.GetByIdAsync(new Server { Id = id });
+            string fileName = $"FichaServidor_{generatePDF.Membership!.Name}_{generatePDF.Membership.LastName}_{generatePDF.Membership.InternalIdentityCode}_MCEI.pdf";
+            return new ViewAsPdf("GeneratePDFfileServer", generatePDF)
+            {
+                FileName = fileName,
+            };
         }
         #endregion
     }
