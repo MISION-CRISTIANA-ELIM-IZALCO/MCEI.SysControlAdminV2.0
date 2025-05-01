@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MCEI.SysControlAdmin.EN.User___EN;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using MCEI.SysControlAdmin.Core.Utils;
 
 
 #endregion
@@ -327,6 +328,47 @@ namespace MCEI.SysControlAdmin.DAL.User___DAL
                 result = await dbContext.SaveChangesAsync();
             }
             return result;
+        }
+        #endregion
+
+        #region METODO PARA VALIDAR SI EXISTE UN CORREO DE USUARIO
+        // Metodo Para Verificar Si Un Correo Existe En La Base De Datos
+        public static async Task<bool> EmailExistsAsync(string email)
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.User.AnyAsync(u => u.Email == email);
+            }
+        }
+        #endregion
+
+        #region METODO PARA ENVIAR CONTRASEÑA TEMPORAL
+        // Metodo encargado de mandar la contraseña aleatoria al correo
+        public static async Task<bool> SetTemporaryPasswordAsync(string email)
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var user = await dbContext.User.FirstOrDefaultAsync(u => u.Email == email);
+
+                if (user == null || string.IsNullOrEmpty(user.RecoveryEmail))
+                    return false;
+
+                // Generar contraseña temporal
+                string tempPassword = UtilsPasswordGenerator.GenerateTemporaryPassword();
+
+                // Encriptarla
+                var userToEncrypt = new User { Password = tempPassword };
+                EncryptMD5(userToEncrypt);
+
+                // Asignar la nueva contraseña encriptada
+                user.Password = userToEncrypt.Password;
+
+                // Guardar cambios en DB
+                await dbContext.SaveChangesAsync();
+
+                // Enviar contraseña temporal al correo de recuperación
+                return await UtilsEmailService.SendTemporaryPassword(user.RecoveryEmail, tempPassword);
+            }
         }
         #endregion
     }

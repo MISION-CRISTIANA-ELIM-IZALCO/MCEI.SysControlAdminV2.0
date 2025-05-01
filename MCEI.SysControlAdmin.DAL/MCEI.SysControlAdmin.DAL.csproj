@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MCEI.SysControlAdmin.Core\MCEI.SysControlAdmin.Core.csproj" />
     <ProjectReference Include="..\MCEI.SysControlAdmin.EN\MCEI.SysControlAdmin.EN.csproj" />
   </ItemGroup>
 
