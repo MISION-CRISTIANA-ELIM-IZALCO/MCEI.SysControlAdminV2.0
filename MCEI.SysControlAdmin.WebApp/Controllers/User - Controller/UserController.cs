@@ -40,6 +40,12 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
         {
             try
             {
+                const int maxFileSize = 1572864; // 1.5 MB
+                if (imagen.Length > maxFileSize)
+                {
+                    throw new Exception("La imagen no debe exceder los 1.5MB de tamaño.");
+                }
+
                 // Mapeo de img a ArrayByte
                 if (imagen != null && imagen.Length > 0)
                 {
@@ -114,6 +120,14 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
                 {
                     return BadRequest();
                 }
+
+                const int maxFileSize = 1572864; // 1.5 MB
+                if (imagen.Length > maxFileSize)
+                {
+                    throw new Exception("La imagen no debe exceder los 1.5MB de tamaño.");
+
+                }
+
                 // Si se ha subido una nueva imagen, actualizar el campo de imagen
                 if (imagen != null && imagen.Length > 0)
                 {
