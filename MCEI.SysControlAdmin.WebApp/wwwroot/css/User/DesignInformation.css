@@ -32,3 +32,10 @@ p {
     font-size: 18px;
     color: #555; /* Color más suave para los textos */
 }
+
+/* Estilos adicionales opcionales */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
