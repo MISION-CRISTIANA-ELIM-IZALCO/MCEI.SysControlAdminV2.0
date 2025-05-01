@@ -8,6 +8,7 @@ using MCEI.SysControlAdmin.EN.Membership___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rotativa.AspNetCore;
 using System.Runtime.Serialization;
 
 #endregion
@@ -252,6 +253,19 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Baptisms___Controller
                     baptismsDB = new Baptisms();
                 return View(baptismsDB);
             }
+        }
+        #endregion
+
+        #region METODO PARA FICHA OFICIAL DE BAUTISMO
+        [Authorize(Roles = "Desarrollador, Administrador, Digitador")]
+        public async Task<ActionResult> GeneratePDFfileBaptisms(int id)
+        {
+            var generatePDF = await baptismsBL.GetByIdAsync(new Baptisms { Id = id });
+            string fileName = $"FichaBautismo_{generatePDF.Name}_{generatePDF.LastName}_MCEI.pdf";
+            return new ViewAsPdf("GeneratePDFfileBaptisms", generatePDF)
+            {
+                FileName = fileName,
+            };
         }
         #endregion
     }

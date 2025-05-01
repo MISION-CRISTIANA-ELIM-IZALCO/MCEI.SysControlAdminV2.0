@@ -1,0 +1,179 @@
+﻿/* Config. general */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/*Estilo del encavezado*/
+.encavezado {
+    margin: 0px;
+}
+
+.logo-principal {
+    padding-left: 45px;
+}
+
+.membretado {
+    padding-left: 30px;
+    text-align: center;
+}
+
+.membretado h1 {
+    font-size: 25px;
+    margin-bottom: 0px;
+}
+
+.membretado p {
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.fotografia {
+    padding-left: 30px;
+}
+
+/*Estilo sub-encavezados*/
+.sub-encavezado-1 {
+    background-color: #f0f0f0;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+}
+
+.nombre {
+    display: inline;
+    margin-left: 25px;
+}
+
+.apellido {
+    display: inline;
+    margin-left: 25px;
+}
+
+.edad {
+    display: inline;
+    margin-left: 25px;
+}
+
+.estado-civil {
+    display: inline;
+    margin-left: 25px;
+}
+
+.telefono {
+    display: inline;
+    margin-left: 25px;
+}
+
+.direccion-de-residencia {
+    display: inline;
+    margin-left: 25px;
+}
+
+.lugar-de-trabajo-u-estudio {
+    display: inline;
+    margin-left: 25px;
+}
+
+.telefono-de-trabajo-u-estudio {
+    display: inline;
+    margin-left: 15px;
+}
+
+.fecha-de-conversion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.lugar-de-conversion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.bautismo-en-agua {
+    display: inline;
+    margin-left: 25px;
+}
+
+.bautismos-en-espiritu-santo {
+    display: inline;
+    margin-left: 25px;
+}
+
+.nombre-del-pastor {
+    display: inline;
+    margin-left: 25px;
+}
+
+.nombre-del-supervisor {
+    display: inline;
+    margin-left: 10px;
+}
+
+.nombre-del-lider {
+    display: inline;
+    margin-left: 25px;
+}
+
+.tiempo-de-asistir {
+    display: inline;
+    margin-left: 25px;
+}
+
+.zona {
+    display: inline;
+    margin-left: 25px;
+}
+
+.distrito {
+    display: inline;
+    margin-left: 25px;
+}
+
+.sector {
+    display: inline;
+    margin-left: 25px;
+}
+
+.celula {
+    display: inline;
+    margin-left: 25px;
+}
+
+.estado {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-creacion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.fecha-de-modificacion {
+    display: inline;
+    margin-left: 25px;
+}
+
+.comentarios-u-observaciones {
+    display: inline; /* Muy importante: inline-block, no inline */
+    margin-left: 25px;
+    max-width: 800px; /* Aproximadamente 50 caracteres de ancho */
+    overflow-wrap: break-word; /* Permite saltar palabra si es necesario */
+    word-break: break-word; /* Asegura que se corte si una palabra es larga */
+}
+
+.footer {
+    position: fixed; /* Fija el footer */
+    bottom: 0; /* Lo coloca en la parte inferior */
+    width: 100%; /* Ocupa todo el ancho */
+    background-color: #f8f9fa; /* Fondo claro (puedes cambiarlo) */
+    color: #6c757d; /* Texto más tenue (gris Bootstrap) */
+    text-align: center; /* Centrado */
+    padding: 10px 0; /* Espaciado */
+    font-size: 0.9rem; /* Tamaño un poco más pequeño */
+    border-top: 1px solid #dee2e6; /* Línea superior sutil */
+}

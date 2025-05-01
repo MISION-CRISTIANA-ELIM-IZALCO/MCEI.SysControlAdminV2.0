@@ -1,0 +1,159 @@
+﻿@model MCEI.SysControlAdmin.EN.Baptisms___EN.Baptisms
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>FichaBautismo_@Model.Name @Model.LastName</title>
+    <link href="~/css/Baptisms/DesignGeneratePDF.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Encavezado -->
+    <table>
+        <tr class="encavezado">
+            <td class="logo-principal">
+                <img src="~/assets/images/logos/Logo-Sin-Letras-Black.png" alt="Alternate Text" width="100" />
+            </td>
+            <td class="membretado">
+                <h1>Ficha Bautismo - Misión Cristiana Elim Izalco</h1>
+                <p>Lotificación San Francisco Psje c Casa 5 Pol 6 Izalco</p>
+                <p>Celular: 7435-4408 | Teléfono: 2445-4322</p>
+                <p>Correo Electronico: elimizalco@gmail.com</p>
+            </td>
+            <td>
+                <!-- Fotografía -->
+                @if (Model.ImageData != null)
+                {
+                    <img src="data:image/png;base64,@Convert.ToBase64String(Model.ImageData!)" alt="Fotografía" class="fotografia" width="100" />
+                }
+            </td>
+        </tr>
+    </table>
+    <br />
+    <!-- Informacion personal-->
+    <div class="sub-encavezado-1">
+        <h3><strong>Información Personal</strong></h3>
+    </div>
+    <br />
+    <div class="content">
+        <p class="nombre"><strong>Nombre:</strong> @Model.Name</p>
+        <p class="apellido"><strong>Apellido:</strong> @Model.LastName</p>
+        <p class="edad"><strong>Edad:</strong> @Model.Age Años</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="estado-civil"><strong>Estado Civil:</strong> @Model.CivilStatus</p>
+        <p class="telefono"><strong>Teléfono:</strong> @Model.Phone</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="direccion-de-residencia"><strong>Dirección de Residencia:</strong> @Model.Address</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="lugar-de-trabajo-u-estudio"><strong>Lugar de Trabajo o Estudio:</strong> @Model.PlaceOfWorkOrStudy</p>
+        <p class="telefono-de-trabajo-u-estudio"><strong>Telefono de Trabajo o Estudio:</strong> @(Model.WorkOrStudyPhone != null ? Model.WorkOrStudyPhone : "Vacío")</p>
+    </div>
+    <br />
+    <br />
+    <!-- Informacion del complementaria-->
+    <div class="sub-encavezado-1">
+        <h3><strong>Información Complementaria</strong></h3>
+    </div>
+    <br />
+    <div class="content">
+        <p class="fecha-de-conversion"><strong>Fecha de Conversión:</strong> @Model.ConversionDateFormatted</p>
+        <p class="lugar-de-conversion"><strong>Lugar de Conversión:</strong> @Model.PlaceOfConversion</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="bautismo-en-agua"><strong>Bautismo en Agua:</strong> @Model.WaterBaptism</p>
+        <p class="bautismos-en-espiritu-santo"><strong>Bautismo por el Espíritu Santo:</strong> @Model.BaptismOfTheHolySpirit</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="nombre-del-pastor"><strong>Nombre del Pastor:</strong> @Model.PastorsName</p>
+        <p class="nombre-del-supervisor"><strong>Nombre del Supervisor:</strong> @(Model.SupervisorsName != null ? Model.SupervisorsName : "Vacío")</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="nombre-del-lider"><strong>Nombre del Líder:</strong> @(Model.LeadersName != null ? Model.LeadersName : "Vacío")</p>
+        <p class="tiempo-de-asistir"><strong>Tiempo de Asistir:</strong> @Model.TimeToGather</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="zona"><strong>Zona:</strong> @(Model.Zone != null ? Model.Zone : "Vacío")</p>
+        <p class="distrito"><strong>Distrito:</strong> @(Model.District != null ? Model.District : "Vacío")</p>
+        @if (Model.Sector != "0")
+        {
+            <p class="sector"><strong>Sector:</strong> @Model.Sector</p>
+        }
+        else if (Model.Sector == "0")
+        {
+            <p class="sector"><strong>Sector:</strong> SOY SUPERVISOR</p>
+        }
+
+        @if (Model.Cell != "0")
+        {
+            <p class="celula"><strong>Celula:</strong> @Model.Cell</p>
+        }
+        else if (Model.Sector == "0" && Model.Cell == "0")
+        {
+            <p class="celula"><strong>Celula:</strong> SOY SUPERVISOR</p>
+        }
+        else if (Model.Sector != "0" && Model.Cell == "0")
+        {
+            <p class="celula"><strong>Celula:</strong> SOY LIDER</p>
+        }
+    </div>
+    <br />
+    <br />
+    <!-- Informacion del adicional-->
+    <div class="sub-encavezado-1">
+        <h3><strong>Información Adicional</strong></h3>
+    </div>
+    <br />
+    <div class="content">
+        <p class="fecha-de-creacion"><strong>Fecha De Creación:</strong> @Model.DateCreatedFormatted - @Model.TimeCreatedFormatted</p>
+        <p class="fecha-de-modificacion"><strong>Fecha De Modificación:</strong> @Model.DateModificationFormatted - @Model.TimeModificationFormatted</p>
+    </div>
+    <br />
+    <div class="content">
+        <p class="comentarios-u-observaciones"><strong>Comentarios u Observaciones:</strong> @(Model.CommentsOrObservations != null ? Model.CommentsOrObservations : "Vacío")</p>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <!-- Pie de pagina-->
+    <footer class="footer">Ficha Bautismo Misión Cristiana Elim Izalco <span id="currentYear"></span> © | Generado en Sistema de Control Administrativo Elim Izalco</footer>
+
+    <script>
+        // Obtiene el año actual y lo inserta en el elemento con id "currentYear"
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
