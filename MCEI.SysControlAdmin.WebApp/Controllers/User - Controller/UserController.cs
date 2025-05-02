@@ -122,16 +122,16 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
                     return BadRequest();
                 }
 
-                const int maxFileSize = 1572864; // 1.5 MB
-                if (imagen.Length > maxFileSize)
-                {
-                    throw new Exception("La imagen no debe exceder los 1.5MB de tamaño.");
-
-                }
-
                 // Si se ha subido una nueva imagen, actualizar el campo de imagen
                 if (imagen != null && imagen.Length > 0)
                 {
+                    const int maxFileSize = 1572864; // 1.5 MB
+                    if (imagen.Length > maxFileSize)
+                    {
+                        throw new Exception("La imagen no debe pesar mas de los 1.5MB.");
+
+                    }
+
                     byte[] imagenData = null!;
                     using (var memoryStream = new MemoryStream())
                     {
@@ -411,19 +411,20 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.User___Controller
                     throw new Exception("Debe seleccionar una imagen válida.");
                 }
 
-                // Verificar el tamaño del archivo (1.5MB = 1.5 * 1024 * 1024 bytes = 1,572,864 bytes)
-                const int maxFileSize = 1572864; // 1.5 MB
-                if (imagen.Length > maxFileSize)
-                {
-                    throw new Exception("La imagen no debe exceder los 1.5MB de tamaño.");
-                }
-
                 // Obtener al usuario logueado desde su email
                 var users = await userBL.SearchIncludeRoleAsync(new User { Email = User.Identity!.Name! });
                 var actualUser = users.FirstOrDefault();
 
                 if (actualUser == null)
                     throw new Exception("No se encontró información del usuario logueado.");
+
+                // Verificar el tamaño del archivo (1.5MB = 1.5 * 1024 * 1024 bytes = 1,572,864 bytes)
+                const int maxFileSize = 1572864; // 1.5 MB
+                if (imagen.Length > maxFileSize)
+                {
+                    throw new Exception("La imagen no debe pesar mas de los 1.5MB.");
+
+                }
 
                 byte[] imagenData;
                 using (var memoryStream = new MemoryStream())

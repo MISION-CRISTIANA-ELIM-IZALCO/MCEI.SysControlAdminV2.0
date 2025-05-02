@@ -214,11 +214,15 @@ namespace MCEI.SysControlAdmin.DAL.User___DAL
                 }
 
                 var userDb = await dbContext.User.FirstOrDefaultAsync(u => u.Id == user.Id);
-                userDb!.Name = user.Name;
+                if (userDb == null)
+                {
+                    throw new Exception("Usuario no encontrado.");
+                }
+                userDb.Name = user.Name;
                 userDb.LastName = user.LastName;
                 userDb.Email = user.Email;
                 userDb.Status = user.Status;
-                userDb.DateModification = DateTime.Now;
+                userDb.DateModification = user.DateModification;
                 userDb.ImageData = user.ImageData;
                 userDb.IdRole = user.IdRole;
                 userDb.RecoveryEmail = user.RecoveryEmail;

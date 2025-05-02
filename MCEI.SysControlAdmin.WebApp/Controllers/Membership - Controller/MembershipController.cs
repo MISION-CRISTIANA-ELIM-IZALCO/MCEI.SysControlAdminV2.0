@@ -171,14 +171,15 @@ namespace MCEI.SysControlAdmin.WebApp.Controllers.Membership___Controller
                     return BadRequest();
                 }
 
-                const int maxFileSize = 1572864; // 1.5 MB
-                if (imagen.Length > maxFileSize)
-                {
-                    throw new Exception("La imagen no debe exceder los 1.5MB de tamaño.");
-                }
-
                 if (imagen != null && imagen.Length > 0) // Verificar si se ha subido una nueva imagen
                 {
+                    const int maxFileSize = 1572864; // 1.5 MB
+                    if (imagen.Length > maxFileSize)
+                    {
+                        throw new Exception("La imagen no debe pesar mas de los 1.5MB.");
+
+                    }
+
                     byte[] imagenData = null!;
                     using (var memoryStream = new MemoryStream())
                     {
