@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using static MCEI.SysControlAdmin.Core.Utils.UtilsRegion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 // Configuración de autenticación con cookies basada en roles
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+    .AddCookie(static options =>
     {
         options.LoginPath = new PathString("/User/Login");
         options.AccessDeniedPath = new PathString("/Home/Index");
@@ -35,7 +36,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                             _ => TimeSpan.FromMinutes(30),            // Otros roles tienen 30 minutos
                         };
 
-                        context.Properties.ExpiresUtc = DateTime.UtcNow.Add(sessionDuration);
+                        // Usar la zona horaria personalizada definida en UtilsRegion
+                        var fechaZona = DateTime.Now.GetFechaZonaHoraria();
+
+                        // Establecer la expiración en UTC a partir de esa fecha
+                        context.Properties.ExpiresUtc = fechaZona.Add(sessionDuration).ToUniversalTime();
                         context.Properties.IsPersistent = true; // Para asegurar que la cookie persista el tiempo asignado
                     }
                 }
@@ -50,7 +55,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -59,7 +63,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // Importante: Primero autenticación
+app.UseAuthentication(); // Primero autenticación
 app.UseAuthorization();  // Luego autorización
 
 app.MapControllerRoute(

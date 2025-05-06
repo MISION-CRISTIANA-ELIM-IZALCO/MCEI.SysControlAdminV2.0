@@ -307,7 +307,8 @@
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, Cerrar Sesión',
-                    cancelButtonText: 'Cancelar'
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = '@Url.Action("Logout", "User")';
