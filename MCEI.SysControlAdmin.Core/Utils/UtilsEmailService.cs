@@ -24,7 +24,7 @@ namespace MCEI.SysControlAdmin.Core.Utils
 
                 var smtpClient = new SmtpClient("smtp.gmail.com") // Ej: smtp.gmail.com
                 {
-                    Port = 587, // 465 para SSL o 587 para TLS
+                    Port = 465, // 465 para SSL o 587 para TLS
                     Credentials = new NetworkCredential(fromEmail, fromPassword),
                     EnableSsl = true
                 };
