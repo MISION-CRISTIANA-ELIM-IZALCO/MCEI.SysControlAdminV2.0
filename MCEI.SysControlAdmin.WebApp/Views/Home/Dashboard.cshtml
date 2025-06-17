@@ -251,7 +251,7 @@
             }
         });
 
-        fetch('/Home/GetMiembrosPorEstadoCivil')
+        fetch('~/Home/GetMiembrosPorEstadoCivil')
         .then(response => response.json())
         .then(result => {
             const ctx = document.getElementById('miembrosPorEstadoCivilChart').getContext('2d');
