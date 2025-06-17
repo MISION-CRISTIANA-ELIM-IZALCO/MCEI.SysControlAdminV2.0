@@ -16,10 +16,10 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // Redirigir al backend con el parámetro para ejecutar el método
-                window.location.href = '/AnnualServers/GenerateGroupedServersPDF';
+                window.location.href = '@Url.Action("GenerateGroupedServersPDF", "AnnualServers")';
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 // Si el usuario cancela, redirigir a la vista Index de Home
-                window.location.href = '/Home/Index';
+                window.location.href = '@Url.Action("Index", "Home")';
             }
         });
     }
@@ -38,6 +38,6 @@
 
 <div id="message" style="display: none; text-align: center; margin-top: 100px;">
     <p style="font-size: 24px;">
-        Si el PDF está generado, redirígete al <a href="/Home/Index" style="font-size: 28px;">Inicio</a>. Si no ha sido así, vuelve a intentarlo <a href="/AnnualServers/GenerateGroupedServersPDF" style="font-size: 28px;">Aquí</a>.
+        Si el PDF está generado, redirígete al <a href="@Url.Action("Index", "Home")" style="font-size: 28px;">Inicio</a>. Si no ha sido así, vuelve a intentarlo <a href="@Url.Action("GenerateGroupedServersPDF", "AnnualServers")" style="font-size: 28px;">Aquí</a>.
     </p>
 </div>

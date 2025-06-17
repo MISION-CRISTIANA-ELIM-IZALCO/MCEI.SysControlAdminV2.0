@@ -6,7 +6,7 @@
     List<Role> roles = ViewBag.Roles as List<Role>;
 }
 
-<link href="/css/User/DesignCreateAndEdit.css" rel="stylesheet" />
+<link href="~/css/User/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
 <h3>Mantenimiento De Usuarios</h3>
@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label class="control-label">Rol</label>
                     <select class="form-control form-control-lg" name="IdRole">
-                        <option selected>Seleccionar</option>
+                        <option value="" selected>Seleccionar</option>
                         @foreach (var item in roles!.Where(r => r.Id != 1)) // Excluir el rol con Id 1
                         {
                             <option value="@item.Id">@item.Name</option>
