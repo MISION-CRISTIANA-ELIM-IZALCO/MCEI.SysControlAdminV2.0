@@ -297,15 +297,16 @@
                 icon: 'error'
             });
         }
+
         // Mostrar alerta de ViewBag.Error si es necesario
         @if (!string.IsNullOrEmpty(ViewBag.Error))
         {
             @:showErrorAlert('@ViewBag.Error');
         }
 
-        // Función para automatizar el campo de DUI
+        // Automatización del campo DUI
         document.getElementById("Dui").addEventListener("input", function (event) {
-            let duiValue = event.target.value.replace(/\D/g, ''); // Eliminar cualquier caracter no numérico
+            let duiValue = event.target.value.replace(/\D/g, '');
             let formattedDui = '';
 
             if (duiValue.length >= 9) {
@@ -329,7 +330,7 @@
             document.getElementById("AgeCalculado").value = age;
         });
 
-        //Calcular la Edad del Conyuge en tiempo real
+        // Calcular edad del cónyuge
         document.getElementById("DateOfBirthOfSpouse").addEventListener("change", function () {
             let dob = new Date(this.value);
             let today = new Date();
@@ -341,19 +342,20 @@
             document.getElementById("AgeCalculadoOfSpouse").value = age;
         });
 
-        // Formato de teléfono y trabajo
+        // Formato de teléfono
         function formatPhone(input) {
             input.addEventListener("input", function (event) {
-                let phone = event.target.value.replace(/\D/g, ''); // Solo números
+                let phone = event.target.value.replace(/\D/g, '');
                 if (phone.length > 4) phone = phone.substring(0, 4) + '-' + phone.substring(4, 8);
                 event.target.value = phone;
             });
         }
+
         formatPhone(document.getElementById("Phone"));
         formatPhone(document.getElementById("WorkOrStudyPhone"));
         formatPhone(document.getElementById("PhoneOfSpouse"));
 
-        // Generar Código de Identidad Interna
+        // Generar código de identidad interna
         document.getElementById("Name").addEventListener("input", generateInternalCode);
         document.getElementById("LastName").addEventListener("input", generateInternalCode);
         document.getElementById("DateOfBirth").addEventListener("change", generateInternalCode);
@@ -380,17 +382,22 @@
             let input = document.getElementById("imagen");
             let preview = document.getElementById("imagenPreview");
 
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-                preview.style.display = "block";
-            };
-            reader.readAsDataURL(input.files[0]);
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
         }
 
-        // Función para manejar el evento de envío de formulario
+        // Asociar evento de cambio al input file
+        document.getElementById("imagen").addEventListener("change", mostrarImagen);
+
+        // Confirmación al enviar el formulario
         function CreateRecord(e) {
-            e.preventDefault(); // Prevenir el envío del formulario
+            e.preventDefault();
 
             const form = document.getElementById('Form');
 
@@ -403,12 +410,11 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit(); // Enviar el formulario si se confirma la acción
+                    form.submit();
                 }
             });
         }
 
-        // Añadir evento de envío al formulario
         const form = document.getElementById('Form');
         if (form) {
             form.addEventListener('submit', CreateRecord);
